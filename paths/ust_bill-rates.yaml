@@ -1,0 +1,86 @@
+/ust/bill-rates:
+  get:
+    summary: Get US Treasury bill rates
+    description: Returns daily US Treasury bill rates (discount rates for 4-week, 8-week, 13-week, 17-week, 26-week, and 52-week bills).
+    operationId: GetUSTBillRates
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved Treasury bill rates.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Date of the rate.
+                  4_weeks_bank_discount:
+                    type: number
+                    description: 4-week bill bank discount rate.
+                  4_weeks_coupon_equivalent:
+                    type: number
+                    description: 4-week bill coupon equivalent yield.
+                  8_weeks_bank_discount:
+                    type: number
+                    description: 8-week bill bank discount rate.
+                  8_weeks_coupon_equivalent:
+                    type: number
+                    description: 8-week bill coupon equivalent yield.
+                  13_weeks_bank_discount:
+                    type: number
+                    description: 13-week bill bank discount rate.
+                  13_weeks_coupon_equivalent:
+                    type: number
+                    description: 13-week bill coupon equivalent yield.
+                  26_weeks_bank_discount:
+                    type: number
+                    description: 26-week bill bank discount rate.
+                  26_weeks_coupon_equivalent:
+                    type: number
+                    description: 26-week bill coupon equivalent yield.
+                  52_weeks_bank_discount:
+                    type: number
+                    description: 52-week bill bank discount rate.
+                  52_weeks_coupon_equivalent:
+                    type: number
+                    description: 52-week bill coupon equivalent yield.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Data not found for specified date range.
+    tags:
+    - US Treasury

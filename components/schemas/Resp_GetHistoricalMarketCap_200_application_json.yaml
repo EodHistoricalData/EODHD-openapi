@@ -1,0 +1,18 @@
+Resp_GetHistoricalMarketCap_200_application_json:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+            description: The date of the market capitalization value.
+          value:
+            type: number
+            description: Market capitalization value in USD.
+        required:
+        - date
+        - value

@@ -1,0 +1,120 @@
+/news-word-weights:
+  get:
+    summary: Top weighted news keywords for a ticker
+    description: Returns the most relevant words from financial news for the given
+      ticker and period, with weights (frequency ? significance).
+    operationId: getNewsWordWeights
+    parameters:
+    - name: s
+      in: query
+      required: true
+      description: Ticker to analyze, e.g., AAPL or AAPL.US
+      schema:
+        type: string
+    - name: filter[date_from]
+      in: query
+      required: false
+      description: Start date (YYYY-MM-DD)
+      schema:
+        type: string
+        format: date
+    - name: filter[date_to]
+      in: query
+      required: false
+      description: End date (YYYY-MM-DD). Prefer this over the legacy alias `filter[to]`.
+      schema:
+        type: string
+        format: date
+    - name: filter[to]
+      in: query
+      required: false
+      deprecated: true
+      description: Deprecated alias for `filter[date_to]` (YYYY-MM-DD). Use only one
+        of these parameters.
+      schema:
+        type: string
+        format: date
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of top words to return
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 10
+    - name: fmt
+      in: query
+      required: false
+      description: Response format
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Weighted keywords for the requested period
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/WordWeightsResponse.yaml#/WordWeightsResponse
+            examples:
+              sample:
+                summary: AAPL example (2025-04-08 > 2025-04-16, top-10)
+                value:
+                  data:
+                    appl: 0.01922
+                    tariff: 0.01889
+                    stock: 0.01884
+                    trump: 0.01115
+                    companies: 0.00983
+                    market: 0.00919
+                    china: 0.0079
+                    trade: 0.00723
+                    ai: 0.00605
+                    price: 0.00577
+                  meta:
+                    news_processed: 300
+                    news_found: 5748
+                  links:
+                    next: null
+      '400':
+        description: Invalid request parameters
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: No results found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too many requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '500':
+        description: Server error
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - News

@@ -1,0 +1,107 @@
+/intraday/{ticker}:
+  get:
+    summary: Retrieve intraday historical price data
+    description: Retrieve intraday historical stock data for a specific ticker.
+    operationId: GetIntradayHistoricalData
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol with exchange code (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: interval
+      in: query
+      required: true
+      description: Interval for data points. Options are '1m' (1 minute), '5m' (5
+        minutes), and '1h' (1 hour).
+      schema:
+        type: string
+        enum:
+        - 1m
+        - 5m
+        - 1h
+    - name: fmt
+      in: query
+      required: false
+      description: Response format. Defaults to CSV if not specified. Options are
+        'json' and 'csv'.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    - name: from
+      in: query
+      required: false
+      description: Start datetime in Unix timestamp (UTC). For example, 1627896900
+        for '2021-08-02 09:35:00'.
+      schema:
+        type: integer
+    - name: to
+      in: query
+      required: false
+      description: End datetime in Unix timestamp (UTC). For example, 1630575300 for
+        '2021-09-02 09:35:00'.
+      schema:
+        type: integer
+    responses:
+      '200':
+        description: Successful response with intraday historical stock data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: integer
+                  gmtoffset:
+                    type: integer
+                  datetime:
+                    type: string
+                    format: date-time
+                  open:
+                    type: number
+                  high:
+                    type: number
+                  low:
+                    type: number
+                  close:
+                    type: number
+                  volume:
+                    type:
+                    - integer
+                    - 'null'
+            example:
+            - timestamp: 1628876100
+              gmtoffset: 0
+              datetime: '2021-08-13 17:35:00'
+              open: 148.929992
+              high: 149.059997
+              low: 148.929992
+              close: 149.035003
+              volume: 416405
+            - timestamp: 1628876400
+              gmtoffset: 0
+              datetime: '2021-08-13 17:40:00'
+              open: 149.0372
+              high: 149.095001
+              low: 148.940002
+              close: 148.976898
+              volume: 421612
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+      '404':
+        description: No data found for the specified ticker or date range.
+    tags:
+    - Intraday Data

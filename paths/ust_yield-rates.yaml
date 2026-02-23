@@ -1,0 +1,95 @@
+/ust/yield-rates:
+  get:
+    summary: Get US Treasury yield curve rates
+    description: Returns daily US Treasury yield curve rates (constant maturity rates for 1-month through 30-year maturities).
+    operationId: GetUSTYieldRates
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved Treasury yield rates.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Date of the rate.
+                  1_month:
+                    type: number
+                    description: 1-month constant maturity rate.
+                  2_months:
+                    type: number
+                    description: 2-month constant maturity rate.
+                  3_months:
+                    type: number
+                    description: 3-month constant maturity rate.
+                  4_months:
+                    type: number
+                    description: 4-month constant maturity rate.
+                  6_months:
+                    type: number
+                    description: 6-month constant maturity rate.
+                  1_year:
+                    type: number
+                    description: 1-year constant maturity rate.
+                  2_years:
+                    type: number
+                    description: 2-year constant maturity rate.
+                  3_years:
+                    type: number
+                    description: 3-year constant maturity rate.
+                  5_years:
+                    type: number
+                    description: 5-year constant maturity rate.
+                  7_years:
+                    type: number
+                    description: 7-year constant maturity rate.
+                  10_years:
+                    type: number
+                    description: 10-year constant maturity rate.
+                  20_years:
+                    type: number
+                    description: 20-year constant maturity rate.
+                  30_years:
+                    type: number
+                    description: 30-year constant maturity rate.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Data not found for specified date range.
+    tags:
+    - US Treasury

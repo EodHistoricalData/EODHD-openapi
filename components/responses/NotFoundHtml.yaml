@@ -1,0 +1,6 @@
+NotFoundHtml:
+  description: Not Found.
+  content:
+    text/html:
+      schema:
+        type: string

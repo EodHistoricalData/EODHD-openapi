@@ -1,0 +1,6 @@
+UnauthorizedHtml:
+  description: Unauthorized.
+  content:
+    text/html:
+      schema:
+        type: string

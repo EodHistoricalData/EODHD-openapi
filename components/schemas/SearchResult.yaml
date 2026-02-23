@@ -1,0 +1,45 @@
+SearchResult:
+  type: object
+  required:
+  - Code
+  - Exchange
+  - Name
+  - Type
+  - Country
+  - Currency
+  properties:
+    Code:
+      type: string
+      description: Ticker code, e.g., AAPL
+    Exchange:
+      type: string
+      description: Exchange code, e.g., US, NASDAQ
+    Name:
+      type: string
+      description: Instrument/company name
+    Type:
+      type: string
+      description: Instrument type (Common Stock, ETF, Fund, Bond, Index, etc.)
+    Country:
+      type: string
+    Currency:
+      type: string
+    ISIN:
+      type:
+      - string
+      - 'null'
+    previousClose:
+      type:
+      - number
+      - 'null'
+    previousCloseDate:
+      type:
+      - string
+      - 'null'
+      format: date
+    isPrimary:
+      type:
+      - boolean
+      - 'null'
+      description: True if primary exchange for the asset
+  additionalProperties: false

@@ -1,0 +1,175 @@
+OptionsCommonAttributes:
+  type: object
+  description: Common fields for options contract/EOD records. Values may be null.
+  properties:
+    contract:
+      type: string
+    underlying_symbol:
+      type: string
+    exp_date:
+      type: string
+      description: YYYY-MM-DD
+    expiration_type:
+      type:
+      - string
+      - 'null'
+    type:
+      type: string
+      enum:
+      - call
+      - put
+    strike:
+      type:
+      - number
+      - 'null'
+    exchange:
+      type:
+      - string
+      - 'null'
+    currency:
+      type:
+      - string
+      - 'null'
+    open:
+      type:
+      - number
+      - 'null'
+    high:
+      type:
+      - number
+      - 'null'
+    low:
+      type:
+      - number
+      - 'null'
+    last:
+      type:
+      - number
+      - 'null'
+    last_size:
+      type:
+      - integer
+      - 'null'
+    change:
+      type:
+      - number
+      - 'null'
+    pctchange:
+      type:
+      - number
+      - 'null'
+    previous:
+      type:
+      - number
+      - 'null'
+    previous_date:
+      type:
+      - string
+      - 'null'
+    bid:
+      type:
+      - number
+      - 'null'
+    bid_date:
+      type:
+      - string
+      - 'null'
+    bid_size:
+      type:
+      - integer
+      - 'null'
+    ask:
+      type:
+      - number
+      - 'null'
+    ask_date:
+      type:
+      - string
+      - 'null'
+    ask_size:
+      type:
+      - integer
+      - 'null'
+    moneyness:
+      type:
+      - number
+      - 'null'
+    volume:
+      type:
+      - integer
+      - 'null'
+    volume_change:
+      type:
+      - integer
+      - 'null'
+    volume_pctchange:
+      type:
+      - number
+      - 'null'
+    open_interest:
+      type:
+      - integer
+      - 'null'
+    open_interest_change:
+      type:
+      - integer
+      - 'null'
+    open_interest_pctchange:
+      type:
+      - number
+      - 'null'
+    volatility:
+      type:
+      - number
+      - 'null'
+    volatility_change:
+      type:
+      - number
+      - 'null'
+    volatility_pctchange:
+      type:
+      - number
+      - 'null'
+    theoretical:
+      type:
+      - number
+      - 'null'
+    delta:
+      type:
+      - number
+      - 'null'
+    gamma:
+      type:
+      - number
+      - 'null'
+    theta:
+      type:
+      - number
+      - 'null'
+    vega:
+      type:
+      - number
+      - 'null'
+    rho:
+      type:
+      - number
+      - 'null'
+    tradetime:
+      type:
+      - string
+      - 'null'
+      description: YYYY-MM-DD (last trade or last market update; see docs)
+    vol_oi_ratio:
+      type:
+      - number
+      - 'null'
+    dte:
+      type:
+      - integer
+      - 'null'
+      description: Days to expiration
+    midpoint:
+      type:
+      - number
+      - 'null'
+  additionalProperties: false

@@ -1,0 +1,44 @@
+Resp_GetTickData_200_application_json:
+  type: object
+  properties:
+    ex:
+      type: array
+      items:
+        type: string
+      description: List of exchanges where transactions took place.
+    mkt:
+      type: array
+      items:
+        type: string
+      description: Market where trade took place.
+    price:
+      type: array
+      items:
+        type: number
+      description: Price of the transaction.
+    seq:
+      type: array
+      items:
+        type: integer
+      description: Trade sequence number.
+    shares:
+      type: array
+      items:
+        type: integer
+      description: Number of shares in the transaction.
+    sl:
+      type: array
+      items:
+        type: string
+      description: Sales condition codes for the trades.
+    sub_mkt:
+      type: array
+      items:
+        type: string
+      description: Sub-market where trade took place.
+    ts:
+      type: array
+      items:
+        type: integer
+        format: int64
+      description: Timestamp of each transaction in milliseconds since epoch.

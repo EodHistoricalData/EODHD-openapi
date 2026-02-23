@@ -1,0 +1,143 @@
+securitySchemes:
+  EODHDQueryKey:
+    type: apiKey
+    in: query
+    name: api_token
+    description: EODHD API key (stored as a secret in ChatGPT).
+parameters:
+  ApiToken:
+    $ref: ./parameters/ApiToken.yaml#/ApiToken
+  FmtCsvJson:
+    $ref: ./parameters/FmtCsvJson.yaml#/FmtCsvJson
+  FmtJsonXml:
+    $ref: ./parameters/FmtJsonXml.yaml#/FmtJsonXml
+  DateFrom:
+    $ref: ./parameters/DateFrom.yaml#/DateFrom
+  DateTo:
+    $ref: ./parameters/DateTo.yaml#/DateTo
+responses:
+  UnauthorizedHtml:
+    $ref: ./responses/UnauthorizedHtml.yaml#/UnauthorizedHtml
+  ForbiddenHtml:
+    $ref: ./responses/ForbiddenHtml.yaml#/ForbiddenHtml
+  NotFoundHtml:
+    $ref: ./responses/NotFoundHtml.yaml#/NotFoundHtml
+  TooManyHtml:
+    $ref: ./responses/TooManyHtml.yaml#/TooManyHtml
+schemas:
+  Error:
+    $ref: ./schemas/Error.yaml#/Error
+  InternalUser:
+    $ref: ./schemas/InternalUser.yaml#/InternalUser
+  SearchResult:
+    $ref: ./schemas/SearchResult.yaml#/SearchResult
+  WordWeightsResponse:
+    $ref: ./schemas/WordWeightsResponse.yaml#/WordWeightsResponse
+  Links:
+    $ref: ./schemas/Links.yaml#/Links
+  MetaPagination:
+    $ref: ./schemas/MetaPagination.yaml#/MetaPagination
+  OptionsCommonAttributes:
+    $ref: ./schemas/OptionsCommonAttributes.yaml#/OptionsCommonAttributes
+  OptionsContractsItem:
+    $ref: ./schemas/OptionsContractsItem.yaml#/OptionsContractsItem
+  OptionsEODItem:
+    $ref: ./schemas/OptionsEODItem.yaml#/OptionsEODItem
+  OptionsContractsResponse:
+    $ref: ./schemas/OptionsContractsResponse.yaml#/OptionsContractsResponse
+  OptionsEODResponse:
+    $ref: ./schemas/OptionsEODResponse.yaml#/OptionsEODResponse
+  OptionsEODCompactResponse:
+    $ref: ./schemas/OptionsEODCompactResponse.yaml#/OptionsEODCompactResponse
+  UnderlyingSymbolsResponse:
+    $ref: ./schemas/UnderlyingSymbolsResponse.yaml#/UnderlyingSymbolsResponse
+  IndexListItem:
+    $ref: ./schemas/IndexListItem.yaml#/IndexListItem
+  IndexListResponse:
+    $ref: ./schemas/IndexListResponse.yaml#/IndexListResponse
+  IndexGeneral:
+    $ref: ./schemas/IndexGeneral.yaml#/IndexGeneral
+  IndexComponentItem:
+    $ref: ./schemas/IndexComponentItem.yaml#/IndexComponentItem
+  IndexComponentsMap:
+    $ref: ./schemas/IndexComponentsMap.yaml#/IndexComponentsMap
+  HistoricalComponentItem:
+    $ref: ./schemas/HistoricalComponentItem.yaml#/HistoricalComponentItem
+  HistoricalComponentsMap:
+    $ref: ./schemas/HistoricalComponentsMap.yaml#/HistoricalComponentsMap
+  IndexComponentsResponse:
+    $ref: ./schemas/IndexComponentsResponse.yaml#/IndexComponentsResponse
+  Resp_GetTickerLogo_200_image_png:
+    $ref: ./schemas/Resp_GetTickerLogo_200_image_png.yaml#/Resp_GetTickerLogo_200_image_png
+  Resp_GetUpcomingEarnings_200_application_json:
+    $ref: ./schemas/Resp_GetUpcomingEarnings_200_application_json.yaml#/Resp_GetUpcomingEarnings_200_application_json
+  Resp_GetUpcomingIPOs_200_application_json:
+    $ref: ./schemas/Resp_GetUpcomingIPOs_200_application_json.yaml#/Resp_GetUpcomingIPOs_200_application_json
+  Resp_GetUpcomingSplits_200_application_json:
+    $ref: ./schemas/Resp_GetUpcomingSplits_200_application_json.yaml#/Resp_GetUpcomingSplits_200_application_json
+  Resp_GetEarningsTrends_200_application_json:
+    $ref: ./schemas/Resp_GetEarningsTrends_200_application_json.yaml#/Resp_GetEarningsTrends_200_application_json
+  Resp_GetHistoricalDividends_200_application_json:
+    $ref: ./schemas/Resp_GetHistoricalDividends_200_application_json.yaml#/Resp_GetHistoricalDividends_200_application_json
+  Resp_GetEconomicEventsData_200_application_json:
+    $ref: ./schemas/Resp_GetEconomicEventsData_200_application_json.yaml#/Resp_GetEconomicEventsData_200_application_json
+  Resp_GetEODDataByTicker_200_application_json:
+    $ref: ./schemas/Resp_GetEODDataByTicker_200_application_json.yaml#/Resp_GetEODDataByTicker_200_application_json
+  Resp_GetBulkEODData_200_application_json:
+    $ref: ./schemas/Resp_GetBulkEODData_200_application_json.yaml#/Resp_GetBulkEODData_200_application_json
+  Resp_GetExchangeDetails_200_application_json:
+    $ref: ./schemas/Resp_GetExchangeDetails_200_application_json.yaml#/Resp_GetExchangeDetails_200_application_json
+  Resp_GetListOfExchanges_200_application_json:
+    $ref: ./schemas/Resp_GetListOfExchanges_200_application_json.yaml#/Resp_GetListOfExchanges_200_application_json
+  Resp_GetExchangeSymbolList_200_application_json:
+    $ref: ./schemas/Resp_GetExchangeSymbolList_200_application_json.yaml#/Resp_GetExchangeSymbolList_200_application_json
+  Resp_GetFundamentalData_200_application_json:
+    $ref: ./schemas/Resp_GetFundamentalData_200_application_json.yaml#/Resp_GetFundamentalData_200_application_json
+  Resp_GetHistoricalMarketCap_200_application_json:
+    $ref: ./schemas/Resp_GetHistoricalMarketCap_200_application_json.yaml#/Resp_GetHistoricalMarketCap_200_application_json
+  Resp_GetInsiderTransactions_200_application_json:
+    $ref: ./schemas/Resp_GetInsiderTransactions_200_application_json.yaml#/Resp_GetInsiderTransactions_200_application_json
+  Resp_GetIntradayHistoricalData_200_application_json:
+    $ref: ./schemas/Resp_GetIntradayHistoricalData_200_application_json.yaml#/Resp_GetIntradayHistoricalData_200_application_json
+  Resp_GetMacroIndicatorData_200_application_json:
+    $ref: ./schemas/Resp_GetMacroIndicatorData_200_application_json.yaml#/Resp_GetMacroIndicatorData_200_application_json
+  Resp_getOptionsEOD_200_application_json:
+    $ref: ./schemas/Resp_getOptionsEOD_200_application_json.yaml#/Resp_getOptionsEOD_200_application_json
+  Resp_getIndexComponents_401_text_html:
+    $ref: ./schemas/Resp_getIndexComponents_401_text_html.yaml#/Resp_getIndexComponents_401_text_html
+  Resp_getIndexComponents_403_text_html:
+    $ref: ./schemas/Resp_getIndexComponents_403_text_html.yaml#/Resp_getIndexComponents_403_text_html
+  Resp_getIndexComponents_404_text_html:
+    $ref: ./schemas/Resp_getIndexComponents_404_text_html.yaml#/Resp_getIndexComponents_404_text_html
+  Resp_getIndexComponents_429_text_html:
+    $ref: ./schemas/Resp_getIndexComponents_429_text_html.yaml#/Resp_getIndexComponents_429_text_html
+  Resp_listIndicesWithDetails_401_text_html:
+    $ref: ./schemas/Resp_listIndicesWithDetails_401_text_html.yaml#/Resp_listIndicesWithDetails_401_text_html
+  Resp_listIndicesWithDetails_403_text_html:
+    $ref: ./schemas/Resp_listIndicesWithDetails_403_text_html.yaml#/Resp_listIndicesWithDetails_403_text_html
+  Resp_listIndicesWithDetails_429_text_html:
+    $ref: ./schemas/Resp_listIndicesWithDetails_429_text_html.yaml#/Resp_listIndicesWithDetails_429_text_html
+  Resp_GetFinancialNews_200_application_json:
+    $ref: ./schemas/Resp_GetFinancialNews_200_application_json.yaml#/Resp_GetFinancialNews_200_application_json
+  Resp_GetLiveDelayedStockPrices_200_application_json:
+    $ref: ./schemas/Resp_GetLiveDelayedStockPrices_200_application_json.yaml#/Resp_GetLiveDelayedStockPrices_200_application_json
+  Resp_GetStockScreenerData_200_application_json:
+    $ref: ./schemas/Resp_GetStockScreenerData_200_application_json.yaml#/Resp_GetStockScreenerData_200_application_json
+  Resp_SearchStocksByQuery_200_application_json:
+    $ref: ./schemas/Resp_SearchStocksByQuery_200_application_json.yaml#/Resp_SearchStocksByQuery_200_application_json
+  Resp_GetSentimentData_200_application_json:
+    $ref: ./schemas/Resp_GetSentimentData_200_application_json.yaml#/Resp_GetSentimentData_200_application_json
+  Resp_GetHistoricalSplits_200_application_json:
+    $ref: ./schemas/Resp_GetHistoricalSplits_200_application_json.yaml#/Resp_GetHistoricalSplits_200_application_json
+  Resp_GetSymbolChangeHistory_200_application_json:
+    $ref: ./schemas/Resp_GetSymbolChangeHistory_200_application_json.yaml#/Resp_GetSymbolChangeHistory_200_application_json
+  Resp_GetTechnicalIndicatorData_200_application_json:
+    $ref: ./schemas/Resp_GetTechnicalIndicatorData_200_application_json.yaml#/Resp_GetTechnicalIndicatorData_200_application_json
+  Resp_GetTickData_200_application_json:
+    $ref: ./schemas/Resp_GetTickData_200_application_json.yaml#/Resp_GetTickData_200_application_json
+  FinancialStatementRow:
+    $ref: ./schemas/FinancialStatementRow.yaml#/FinancialStatementRow
+  IndexComponent:
+    $ref: ./schemas/IndexComponent.yaml#/IndexComponent
+  HistoricalIndexComponent:
+    $ref: ./schemas/HistoricalIndexComponent.yaml#/HistoricalIndexComponent

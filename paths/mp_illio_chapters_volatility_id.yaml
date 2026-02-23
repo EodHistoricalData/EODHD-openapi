@@ -1,0 +1,64 @@
+/mp/illio/chapters/volatility/{id}:
+  get:
+    summary: Get volatility analysis
+    description: Returns volatility analysis for the specified instrument, including historical and implied volatility metrics.
+    operationId: GetIllioVolatility
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved volatility data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                current_volatility:
+                  type: number
+                  description: Current annualized volatility.
+                volatility_series:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      volatility:
+                        type: number
+                        description: Historical volatility value.
+                      rolling_30d:
+                        type: number
+                        description: 30-day rolling volatility.
+                      rolling_90d:
+                        type: number
+                        description: 90-day rolling volatility.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

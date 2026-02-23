@@ -1,0 +1,242 @@
+/eod-bulk-last-day/{exchange}:
+  get:
+    summary: Retrieve bulk EOD, splits, or dividends data
+    description: Retrieve bulk end-of-day data, splits, or dividends for an entire
+      exchange or specific tickers, with an option for extended data.
+    operationId: GetBulkEODData
+    parameters:
+    - name: exchange
+      in: path
+      required: true
+      description: Exchange symbol (e.g., 'VI' for Vienna or 'US' for the U.S.).
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format ('json' or 'csv').
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    - name: type
+      in: query
+      required: false
+      description: Data type ('eod' for end-of-day data, 'splits' for stock splits,
+        'dividends' for dividend information).
+      schema:
+        type: string
+        enum:
+        - eod
+        - splits
+        - dividends
+        default: eod
+    - name: date
+      in: query
+      required: false
+      description: Specific date for historical data (YYYY-MM-DD). Defaults to the
+        last trading day.
+      schema:
+        type: string
+        format: date
+    - name: symbols
+      in: query
+      required: false
+      description: Comma-separated list of specific tickers to retrieve data for (e.g.,
+        'MSFT,AAPL'). Only available for EOD data.
+      schema:
+        type: string
+    - name: filter
+      in: query
+      required: false
+      description: Extended filter for additional data such as company name, EMA,
+        etc. Only available in JSON format.
+      schema:
+        type: string
+        enum:
+        - extended
+    responses:
+      '200':
+        description: Successful response with bulk data.
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Ticker code.
+                    exchange_short_name:
+                      type: string
+                      description: Exchange symbol.
+                    date:
+                      type: string
+                      format: date
+                      description: Data date.
+                    open:
+                      type: number
+                      description: Open price.
+                    high:
+                      type: number
+                      description: High price.
+                    low:
+                      type: number
+                      description: Low price.
+                    close:
+                      type: number
+                      description: Close price.
+                    adjusted_close:
+                      type: number
+                      description: Adjusted close price.
+                    volume:
+                      type: integer
+                      description: Trading volume.
+                  required:
+                  - exchange_short_name
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Ticker code.
+                    exchange:
+                      type: string
+                      description: Exchange symbol.
+                    date:
+                      type: string
+                      format: date
+                      description: Date of the split.
+                    split:
+                      type: string
+                      description: Stock split ratio.
+                  required:
+                  - split
+                description: Bulk splits data.
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Ticker code.
+                    exchange:
+                      type: string
+                      description: Exchange symbol.
+                    date:
+                      type: string
+                      format: date
+                      description: Date of dividend.
+                    dividend:
+                      type: number
+                      description: Dividend amount.
+                    currency:
+                      type: string
+                      description: Dividend currency.
+                    declarationDate:
+                      type:
+                      - string
+                      - 'null'
+                      format: date
+                      description: Declaration date (if available).
+                    recordDate:
+                      type:
+                      - string
+                      - 'null'
+                      format: date
+                      description: Record date (if available).
+                    paymentDate:
+                      type:
+                      - string
+                      - 'null'
+                      format: date
+                      description: Payment date (if available).
+                    period:
+                      type:
+                      - string
+                      - 'null'
+                      description: Period type (if available).
+                    unadjustedValue:
+                      type: number
+                      description: Unadjusted dividend value.
+                  required:
+                  - dividend
+                description: Bulk dividends data.
+            examples:
+              default:
+                summary: Bulk EOD data example
+                value:
+                - code: ABIN
+                  exchange_short_name: VI
+                  date: '2024-11-05'
+                  open: 54.28
+                  high: 54.28
+                  low: 53.96
+                  close: 53.96
+                  adjusted_close: 53.96
+                  volume: 11
+              extended:
+                summary: Extended EOD data example
+                value:
+                - code: MSFT
+                  name: Microsoft Corporation
+                  type: Common Stock
+                  exchange_short_name: US
+                  date: '2024-11-05'
+                  MarketCapitalization: 3051053121536
+                  Beta: 0.896
+                  open: 408.33
+                  high: 414.9
+                  low: 408.08
+                  close: 411.46
+                  adjusted_close: 411.46
+                  volume: 17429735
+                  ema_50d: 420.793
+                  ema_200d: 408.962
+                  hi_250d: 466.719
+                  lo_250d: 358.003
+                  prev_close: 408.46
+                  change: 3
+                  change_p: 0.7345
+                  avgvol_14d: 21383411
+                  avgvol_50d: 18974565.08
+                  avgvol_200d: 20144592.27
+              splits:
+                summary: Bulk splits data example
+                value:
+                - code: AQMS
+                  exchange: US
+                  date: '2024-11-05'
+                  split: 1.000000/20.000000
+              dividends:
+                summary: Bulk dividends data example
+                value:
+                - code: 18RA
+                  exchange: F
+                  date: '2024-11-05'
+                  dividend: 0.07
+                  currency: USD
+                  declarationDate: null
+                  recordDate: null
+                  paymentDate: null
+                  period: null
+                  unadjustedValue: 0.07
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized request.
+      '404':
+        description: No data found for the specified exchange or date.
+    tags:
+    - End-of-Day Data

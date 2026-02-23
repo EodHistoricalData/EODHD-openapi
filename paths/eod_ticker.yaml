@@ -1,0 +1,124 @@
+/eod/{ticker}:
+  get:
+    summary: Retrieve end-of-day historical price data
+    description: Retrieve end-of-day historical data for a specific company by its
+      ticker symbol, with optional filters for specific data points.
+    operationId: GetEODDataByTicker
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol of the company
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format (e.g., 'json')
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    - name: from
+      in: query
+      required: false
+      description: Start date for historical data (YYYY-MM-DD)
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for historical data (YYYY-MM-DD)
+      schema:
+        type: string
+        format: date
+    - name: period
+      in: query
+      required: false
+      description: Data period (e.g., 'd' for daily, 'w' for weekly, 'm' for monthly)
+      schema:
+        type: string
+        enum:
+        - d
+        - w
+        - m
+    - name: filter
+      in: query
+      required: false
+      description: Filter for specific last known data points
+      schema:
+        type: string
+        enum:
+        - last_date
+        - last_open
+        - last_high
+        - last_low
+        - last_close
+        - last_volume
+    responses:
+      '200':
+        description: Successful response with EOD historical data or single value
+          for filtered data
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                    open:
+                      type: number
+                    high:
+                      type: number
+                    low:
+                      type: number
+                    close:
+                      type: number
+                    adjusted_close:
+                      type: number
+                    volume:
+                      type: integer
+              - type: number
+                description: Single value for the specified filter query (e.g., last
+                  close price)
+            examples:
+              default:
+                summary: Full historical data array example
+                value:
+                - date: '2022-01-03'
+                  open: 177.83
+                  high: 182.88
+                  low: 177.71
+                  close: 182.01
+                  adjusted_close: 179.2736
+                  volume: 104487900
+                - date: '2022-01-04'
+                  open: 182.63
+                  high: 182.94
+                  low: 179.12
+                  close: 179.7
+                  adjusted_close: 176.9984
+                  volume: 99310400
+              filtered_last_close:
+                summary: Filtered last close price example
+                value: 295.21
+      '400':
+        description: Invalid request parameters
+      '401':
+        description: Unauthorized
+      '404':
+        description: Company or data not found
+    tags:
+    - End-of-Day Data

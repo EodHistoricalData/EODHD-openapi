@@ -1,0 +1,34 @@
+Resp_GetFinancialNews_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date-time
+      title:
+        type: string
+      content:
+        type: string
+      link:
+        type: string
+        format: uri
+      symbols:
+        type: array
+        items:
+          type: string
+      tags:
+        type: array
+        items:
+          type: string
+      sentiment:
+        type: object
+        properties:
+          polarity:
+            type: number
+          neg:
+            type: number
+          neu:
+            type: number
+          pos:
+            type: number

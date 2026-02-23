@@ -1,0 +1,63 @@
+Resp_GetExchangeDetails_200_application_json:
+  type: object
+  properties:
+    Name:
+      type: string
+    Code:
+      type: string
+    OperatingMIC:
+      type: string
+    Country:
+      type: string
+    Currency:
+      type: string
+    Timezone:
+      type: string
+    ExchangeHolidays:
+      type: array
+      items:
+        type: object
+        properties:
+          Holiday:
+            type: string
+          Date:
+            type: string
+            format: date
+          Type:
+            type: string
+    ExchangeEarlyCloseDays:
+      type: array
+      items:
+        type: object
+        properties:
+          Date:
+            type: string
+            format: date
+          CloseTime:
+            type: string
+            format: time
+    isOpen:
+      type: boolean
+    TradingHours:
+      type: object
+      properties:
+        Open:
+          type: string
+          format: time
+        Close:
+          type: string
+          format: time
+        OpenUTC:
+          type: string
+          format: time
+        CloseUTC:
+          type: string
+          format: time
+        WorkingDays:
+          type: string
+    ActiveTickers:
+      type: integer
+    PreviousDayUpdatedTickers:
+      type: integer
+    UpdatedTickers:
+      type: integer

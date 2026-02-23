@@ -1,0 +1,88 @@
+/insider-transactions:
+  get:
+    summary: Retrieve insider transaction data
+    description: Fetch insider transaction data for US-listed companies. Covers insider
+      buys and sells, providing transaction details such as date, shares, and price.
+    operationId: GetInsiderTransactions
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication
+      schema:
+        type: string
+    - name: limit
+      in: query
+      required: false
+      description: Max number of entries per result, from 1 to 1000. Default is 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+    - name: from
+      in: query
+      required: false
+      description: 'Start date for transactions (format: YYYY-MM-DD). Defaults to
+        one year before current date.'
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: 'End date for transactions (format: YYYY-MM-DD). Defaults to current
+        date.'
+      schema:
+        type: string
+        format: date
+    - name: code
+      in: query
+      required: false
+      description: Ticker symbol for filtering results (e.g., 'AAPL.US'). If omitted,
+        returns data for all symbols.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format (only 'json' supported).
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successful response with insider transaction data
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetInsiderTransactions_200_application_json.yaml#/Resp_GetInsiderTransactions_200_application_json
+            examples:
+              example1:
+                summary: Sample insider transaction data
+                value:
+                - code: AAPL
+                  exchange: US
+                  date: '2023-03-09'
+                  reportDate: '2023-03-13'
+                  ownerCik: '0000320193'
+                  ownerName: Tim Cook
+                  ownerRelationship: CEO
+                  ownerTitle: CEO
+                  transactionDate: '2023-03-09'
+                  transactionCode: P
+                  transactionAmount: 5000
+                  transactionPrice: 120.5
+                  transactionAcquiredDisposed: A
+                  postTransactionAmount: 5000
+                  link: https://www.sec.gov/Archives/edgar/data/0000320193/000141588922012089/xslF345X03/form4.xml
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized access, invalid or missing API token.
+      '404':
+        description: No insider transaction data found for the specified criteria.
+    tags:
+    - Corporate Actions

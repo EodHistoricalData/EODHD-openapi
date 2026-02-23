@@ -1,0 +1,110 @@
+/calendar/dividends:
+  get:
+    summary: Retrieve upcoming dividends calendar
+    description: Fetches upcoming and historical dividend events, with optional date ranges and symbol filters.
+    operationId: GetUpcomingDividends
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for accessing the API.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format. Defaults to today.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format. Defaults to 7 days from today.
+      schema:
+        type: string
+        format: date
+    - name: symbols
+      in: query
+      required: false
+      description: Comma-separated ticker symbols (e.g., 'AAPL.US,MSFT.US').
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format. Defaults to 'csv'.
+      schema:
+        type: string
+        enum:
+        - csv
+        - json
+        default: csv
+    responses:
+      '200':
+        description: Successfully retrieved dividends calendar data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Type of data, e.g., 'Dividends'.
+                description:
+                  type: string
+                  description: Description of the data.
+                from:
+                  type: string
+                  format: date
+                to:
+                  type: string
+                  format: date
+                dividends:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        description: Ticker symbol.
+                      ex_date:
+                        type: string
+                        format: date
+                        description: Ex-dividend date.
+                      payment_date:
+                        type: string
+                        format: date
+                        description: Payment date.
+                      record_date:
+                        type: string
+                        format: date
+                        description: Record date.
+                      declaration_date:
+                        type: string
+                        format: date
+                        description: Declaration date.
+                      currency:
+                        type: string
+                        description: Currency of the dividend.
+                      value:
+                        type: number
+                        description: Dividend amount per share.
+                      unadjusted_value:
+                        type: number
+                        description: Unadjusted dividend value.
+                      period:
+                        type: string
+                        description: Dividend period (e.g., 'Quarterly').
+                    required:
+                    - code
+                    - ex_date
+                    - currency
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Dividend data not found for specified parameters.
+    tags:
+    - Calendar

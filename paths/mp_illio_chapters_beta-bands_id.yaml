@@ -1,0 +1,64 @@
+/mp/illio/chapters/beta-bands/{id}:
+  get:
+    summary: Get beta bands analysis
+    description: Returns beta bands analysis for the specified instrument, showing the historical beta range relative to the market.
+    operationId: GetIllioBetaBands
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved beta bands data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                beta_current:
+                  type: number
+                  description: Current beta value.
+                beta_bands:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      beta:
+                        type: number
+                        description: Beta value at date.
+                      upper_band:
+                        type: number
+                        description: Upper beta band.
+                      lower_band:
+                        type: number
+                        description: Lower beta band.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

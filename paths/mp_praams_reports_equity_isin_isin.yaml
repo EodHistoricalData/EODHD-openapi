@@ -1,0 +1,83 @@
+/mp/praams/reports/equity/isin/{isin}:
+  get:
+    summary: Get equity report by ISIN
+    description: Returns a comprehensive PRAAMS report for a specific equity identified by ISIN.
+    operationId: GetPRAAMSEquityReportByISIN
+    parameters:
+    - name: isin
+      in: path
+      required: true
+      description: Equity ISIN code.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved equity report.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isin:
+                  type: string
+                name:
+                  type: string
+                report_date:
+                  type: string
+                  format: date
+                risk_summary:
+                  type: object
+                  properties:
+                    risk_score:
+                      type: number
+                    risk_category:
+                      type: string
+                    volatility_risk:
+                      type: string
+                    market_risk:
+                      type: string
+                equity_details:
+                  type: object
+                  properties:
+                    sector:
+                      type: string
+                    market_cap:
+                      type: number
+                    beta:
+                      type: number
+                    pe_ratio:
+                      type: number
+                    dividend_yield:
+                      type: number
+                performance:
+                  type: object
+                  properties:
+                    return_1y:
+                      type: number
+                    return_3y:
+                      type: number
+                    sharpe_ratio:
+                      type: number
+                    max_drawdown:
+                      type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Equity not found.
+    tags:
+    - Investment Analytics

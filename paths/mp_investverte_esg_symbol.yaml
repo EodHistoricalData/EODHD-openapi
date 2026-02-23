@@ -1,0 +1,75 @@
+/mp/investverte/esg/{symbol}:
+  get:
+    summary: Get ESG rating for a company
+    description: Returns detailed ESG ratings and scores for a specific company from Investverte.
+    operationId: GetESGRating
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Ticker symbol (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved ESG rating.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: Ticker symbol.
+                name:
+                  type: string
+                  description: Company name.
+                esg_score:
+                  type: number
+                  description: Overall ESG score.
+                esg_rating:
+                  type: string
+                  description: ESG rating grade (e.g., 'A', 'BBB', 'CCC').
+                environmental_score:
+                  type: number
+                  description: Environmental pillar score.
+                social_score:
+                  type: number
+                  description: Social pillar score.
+                governance_score:
+                  type: number
+                  description: Governance pillar score.
+                environmental_details:
+                  type: object
+                  description: Detailed environmental metrics.
+                social_details:
+                  type: object
+                  description: Detailed social metrics.
+                governance_details:
+                  type: object
+                  description: Detailed governance metrics.
+                last_updated:
+                  type: string
+                  format: date
+                  description: Date of last rating update.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Company not found or no ESG data available.
+    tags:
+    - ESG

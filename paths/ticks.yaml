@@ -1,0 +1,142 @@
+/ticks:
+  get:
+    summary: Retrieve historical tick data
+    description: Get historical stock tick data for US equities using UNIX time for
+      filtering. Limited to US exchanges.
+    operationId: GetTickData
+    parameters:
+    - name: s
+      in: query
+      required: true
+      description: Ticker symbol (e.g., 'AAPL' or 'AAPL.US' for US-listed stocks).
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API key for authentication
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start UNIX timestamp (UTC) for filtering data.
+      schema:
+        type: integer
+        format: int64
+    - name: to
+      in: query
+      required: false
+      description: End UNIX timestamp (UTC) for filtering data.
+      schema:
+        type: integer
+        format: int64
+    - name: limit
+      in: query
+      required: false
+      description: Maximum number of ticks to return.
+      schema:
+        type: integer
+    - name: fmt
+      in: query
+      required: false
+      description: Output format (only 'json' supported)
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successful response with tick data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ex:
+                  type: array
+                  items:
+                    type: string
+                  description: List of exchanges where transactions took place.
+                mkt:
+                  type: array
+                  items:
+                    type: string
+                  description: Market where trade took place.
+                price:
+                  type: array
+                  items:
+                    type: number
+                  description: Price of the transaction.
+                seq:
+                  type: array
+                  items:
+                    type: integer
+                  description: Trade sequence number.
+                shares:
+                  type: array
+                  items:
+                    type: integer
+                  description: Number of shares in the transaction.
+                sl:
+                  type: array
+                  items:
+                    type: string
+                  description: Sales condition codes for the trades.
+                sub_mkt:
+                  type: array
+                  items:
+                    type: string
+                  description: Sub-market where trade took place.
+                ts:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: Timestamp of each transaction in milliseconds since
+                    epoch.
+            examples:
+              default:
+                summary: Tick data response example
+                value:
+                  ex:
+                  - Q
+                  - Q
+                  - Q
+                  mkt:
+                  - K
+                  - K
+                  - K
+                  price:
+                  - 179.35
+                  - 179.35
+                  - 179.35
+                  seq:
+                  - 64234
+                  - 64238
+                  - 64329
+                  shares:
+                  - 50
+                  - 10
+                  - 100
+                  sl:
+                  - '@ TI'
+                  - '@ TI'
+                  - '@ T'
+                  sub_mkt:
+                  - ''
+                  - ''
+                  - ''
+                  ts:
+                  - 1694419200008
+                  - 1694419200008
+                  - 1694419200008
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Ticker data not found for the specified query.
+    tags:
+    - Intraday Data

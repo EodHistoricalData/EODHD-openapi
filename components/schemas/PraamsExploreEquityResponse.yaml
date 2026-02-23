@@ -1,0 +1,114 @@
+PraamsExploreEquityResponse:
+  type: object
+  description: Response from the PRAAMS equity screener endpoint.
+  properties:
+    success:
+      type: boolean
+      description: true if the request succeeded
+    message:
+      type: string
+      description: Status message (empty on success)
+    errors:
+      type: array
+      description: Error objects (empty on success)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Error code
+          description:
+            type: string
+            description: Detailed error description
+    item:
+      type: [object, "null"]
+      description: The main data payload
+      properties:
+        peers:
+          type: array
+          description: Array of matching equity records
+          items:
+            type: object
+            properties:
+              assetInfo:
+                type: object
+                description: Asset identification information
+                properties:
+                  assetId:
+                    type: integer
+                    description: Internal PRAAMS asset ID
+                  ratio:
+                    type: integer
+                    description: PRAAMS Ratio (1-10 scale)
+                  watchList:
+                    type: boolean
+                    description: Watchlist flag
+                  isBond:
+                    type: boolean
+                    description: Always false for equity screener
+                  isFinancial:
+                    type: boolean
+                    description: Whether the company is in the financial sector
+                  ticker:
+                    type: string
+                    description: Ticker symbol
+                  name:
+                    type: string
+                    description: Company name
+                  isin:
+                    type: string
+                    description: ISIN identifier
+                  companyDescription:
+                    type: string
+                    description: Company description
+                  isActivelyTrading:
+                    type: boolean
+                    description: Whether the stock is currently trading
+              riskWatch:
+                type: string
+                description: Overall risk characterization
+              returnWatch:
+                type: string
+                description: Overall return characterization
+              marketCap:
+                type: integer
+                description: "Market cap category: 1=Small, 2=Mid, 3=Large"
+              analystView:
+                type: integer
+                description: Analyst view score (0 equals no data)
+              dividends:
+                type: integer
+                description: Dividends score
+              valuation:
+                type: integer
+                description: Valuation score
+              performance:
+                type: integer
+                description: Performance score
+              profitability:
+                type: integer
+                description: Profitability score
+              growthMom:
+                type: integer
+                description: Growth momentum score
+              other:
+                type: integer
+                description: Other risks score
+              countryRisk:
+                type: integer
+                description: Country risk score
+              liquidity:
+                type: integer
+                description: Liquidity risk score
+              stressTest:
+                type: integer
+                description: Stress test score
+              volatility:
+                type: integer
+                description: Volatility score
+              solvency:
+                type: integer
+                description: Solvency or default risk score
+        totalCount:
+          type: integer
+          description: Total number of matching equities (for pagination)

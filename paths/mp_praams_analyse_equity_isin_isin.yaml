@@ -1,0 +1,61 @@
+/mp/praams/analyse/equity/isin/{isin}:
+  get:
+    summary: Analyse equity by ISIN
+    description: Returns PRAAMS risk scoring and analysis for a specific equity identified by ISIN.
+    operationId: AnalysePRAAMSEquityByISIN
+    parameters:
+    - name: isin
+      in: path
+      required: true
+      description: Equity ISIN code.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved equity analysis.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isin:
+                  type: string
+                name:
+                  type: string
+                risk_score:
+                  type: number
+                risk_category:
+                  type: string
+                volatility:
+                  type: number
+                beta:
+                  type: number
+                sharpe_ratio:
+                  type: number
+                max_drawdown:
+                  type: number
+                sector:
+                  type: string
+                market_cap:
+                  type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Equity not found.
+    tags:
+    - Investment Analytics

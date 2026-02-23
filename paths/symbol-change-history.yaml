@@ -1,0 +1,97 @@
+/symbol-change-history:
+  get:
+    summary: Retrieve symbol change history
+    description: Retrieve the symbol change history within a specified date range.
+      Only US exchanges are currently supported.
+    operationId: GetSymbolChangeHistory
+    parameters:
+    - name: from
+      in: query
+      required: true
+      description: Start date for symbol change history in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: true
+      description: End date for symbol change history in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format. Options are 'json' and 'csv'. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    responses:
+      '200':
+        description: Successful response with symbol change history.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  exchange:
+                    type: string
+                  old_symbol:
+                    type: string
+                  new_symbol:
+                    type: string
+                  company_name:
+                    type: string
+                  effective:
+                    type: string
+                    format: date
+            example:
+            - exchange: US
+              old_symbol: CBTX
+              new_symbol: STEL
+              company_name: Stellar Bancorp, Inc. Common Stock
+              effective: '2022-10-03'
+            - exchange: US
+              old_symbol: FFR
+              new_symbol: DTRE
+              company_name: First Trust Alerian Disruptive Technology Real Estate
+                ETF
+              effective: '2022-10-03'
+            - exchange: US
+              old_symbol: XPER
+              new_symbol: ADEA
+              company_name: Adeia Inc. Common Stock
+              effective: '2022-10-03'
+            - exchange: US
+              old_symbol: CNTQ
+              new_symbol: DFLI
+              company_name: Dragonfly Energy Holdings Corp. Common Stock (NV)
+              effective: '2022-10-10'
+            - exchange: US
+              old_symbol: CNTQW
+              new_symbol: DFLIW
+              company_name: Dragonfly Energy Holdings Corp. Warrant
+              effective: '2022-10-10'
+            - exchange: US
+              old_symbol: LLL
+              new_symbol: JXJT
+              company_name: JX Luxventure Limited Common Stock
+              effective: '2022-10-10'
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+      '404':
+        description: No symbol change history found for the specified date range.
+    tags:
+    - Corporate Actions

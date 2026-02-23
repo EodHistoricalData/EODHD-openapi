@@ -1,0 +1,6 @@
+securitySchemes:
+  EODHDQueryKey:
+    type: apiKey
+    in: query
+    name: api_token
+    description: EODHD API key (stored as a secret in ChatGPT).

@@ -1,0 +1,78 @@
+/us-quote-delayed:
+  get:
+    summary: Get US delayed stock quotes
+    description: Returns 15-minute delayed quote data for US equities. Supports multiple symbols in a single request.
+    operationId: GetUSQuoteDelayed
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication.
+      schema:
+        type: string
+    - name: s
+      in: query
+      required: true
+      description: Comma-separated ticker symbols (e.g., 'AAPL,MSFT,GOOGL').
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved delayed quote data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Ticker symbol.
+                  timestamp:
+                    type: integer
+                    format: int64
+                    description: UNIX timestamp of the quote.
+                  gmtoffset:
+                    type: integer
+                    description: GMT offset in seconds.
+                  open:
+                    type: number
+                    description: Opening price.
+                  high:
+                    type: number
+                    description: High price.
+                  low:
+                    type: number
+                    description: Low price.
+                  close:
+                    type: number
+                    description: Last traded price.
+                  volume:
+                    type: integer
+                    description: Trading volume.
+                  previousClose:
+                    type: number
+                    description: Previous day closing price.
+                  change:
+                    type: number
+                    description: Price change.
+                  change_p:
+                    type: number
+                    description: Percentage price change.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+    tags:
+    - Intraday Data

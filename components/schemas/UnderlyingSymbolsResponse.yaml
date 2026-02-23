@@ -1,0 +1,15 @@
+UnderlyingSymbolsResponse:
+  type: object
+  required:
+  - meta
+  - data
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: string
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

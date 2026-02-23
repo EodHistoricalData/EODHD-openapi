@@ -1,0 +1,116 @@
+/div/{ticker}:
+  get:
+    summary: Retrieve historical dividend data
+    description: Fetches historical dividend data for a specified stock symbol, including
+      key dividend dates and values.
+    operationId: GetHistoricalDividends
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol of the stock in the format {SYMBOL_NAME}.{EXCHANGE_ID}
+        (e.g., 'AAPL.US' for NASDAQ or 'AAPL.MX' for the Mexican Stock Exchange).
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API key for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for data retrieval in 'YYYY-MM-DD' format. Defaults
+        to earliest available data if not provided.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for data retrieval in 'YYYY-MM-DD' format. Defaults to
+        latest available data if not provided.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format, either 'json' or 'csv'. Defaults to 'json'.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved historical dividend data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Ex-dividend date.
+                  declarationDate:
+                    type: string
+                    format: date
+                    description: Declaration date of the dividend.
+                  recordDate:
+                    type: string
+                    format: date
+                    description: Record date for dividend eligibility.
+                  paymentDate:
+                    type: string
+                    format: date
+                    description: Dividend payment date.
+                  period:
+                    type: string
+                    description: Dividend period (e.g., 'Quarterly').
+                  value:
+                    type: number
+                    format: float
+                    description: Dividend value per share in the specified currency.
+                  unadjustedValue:
+                    type: number
+                    format: float
+                    description: Unadjusted dividend value before stock splits and
+                      other adjustments.
+                  currency:
+                    type: string
+                    description: Currency in which the dividend is paid (e.g., 'USD').
+                required:
+                - date
+                - value
+                - currency
+            example:
+            - date: '2012-08-09'
+              declarationDate: '2012-07-24'
+              recordDate: '2012-08-13'
+              paymentDate: '2012-08-16'
+              period: Quarterly
+              value: 0.0946
+              unadjustedValue: 2.6488
+              currency: USD
+            - date: '2012-11-07'
+              declarationDate: '2012-10-25'
+              recordDate: '2012-11-12'
+              paymentDate: '2012-11-15'
+              period: Quarterly
+              value: 0.0946
+              unadjustedValue: 2.6488
+              currency: USD
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Dividend data not found for the specified ticker or date range.
+    tags:
+    - Dividends & Splits

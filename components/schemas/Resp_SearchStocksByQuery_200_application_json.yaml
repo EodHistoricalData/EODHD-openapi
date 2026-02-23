@@ -1,0 +1,24 @@
+Resp_SearchStocksByQuery_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      Code:
+        type: string
+      Exchange:
+        type: string
+      Name:
+        type: string
+      Type:
+        type: string
+      Country:
+        type: string
+      Currency:
+        type: string
+      ISIN:
+        type: [string, "null"]
+      previousClose:
+        type: number
+      previousCloseDate:
+        type: string
+        format: date

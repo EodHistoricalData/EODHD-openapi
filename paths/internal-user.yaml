@@ -1,0 +1,148 @@
+/internal-user:
+  get:
+    summary: Retrieve internal user account information
+    description: Fetch detailed internal account information for the authenticated
+      user, including subscription type, usage statistics, and available data feeds.
+      Requires a valid `api_token` as a query parameter.
+    operationId: GetInternalUserInfo
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication. You can find this in your account
+        dashboard on eodhd.com.
+      schema:
+        type: string
+        minLength: 10
+      example: 65fc5c8b354544.64071550
+    responses:
+      '200':
+        description: Successful response with user information.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Full name of the user.
+                email:
+                  type: string
+                  format: email
+                  description: Registered email address.
+                subscriptionType:
+                  type: string
+                  enum:
+                  - monthly
+                  - yearly
+                  description: Type of subscription plan.
+                paymentMethod:
+                  type: string
+                  description: Payment processor used for the subscription (e.g.,
+                    Stripe, PayPal).
+                apiRequests:
+                  type: integer
+                  description: Number of API requests made during the current counting
+                    period.
+                apiRequestsDate:
+                  type: string
+                  format: date
+                  description: Date for which the API request count applies.
+                dailyRateLimit:
+                  type: integer
+                  description: Daily request limit for standard API usage.
+                extraLimit:
+                  type: integer
+                  description: Extra daily request limit granted to the user.
+                inviteToken:
+                  type:
+                  - string
+                  - 'null'
+                  description: Referral invite token, if available.
+                inviteTokenClicked:
+                  type: integer
+                  description: Number of times the invite token link was clicked.
+                subscriptionMode:
+                  type: string
+                  enum:
+                  - paid
+                  - free
+                  - trial
+                  description: Current subscription mode.
+                availableDataFeeds:
+                  type: array
+                  description: List of data feeds included in the subscription.
+                  items:
+                    type: string
+                availableMarketplaceDataFeeds:
+                  type: object
+                  description: Marketplace API usage and subscription details. These
+                    have a separate request counter from the standard APIs.
+                  properties:
+                    dailyRateLimit:
+                      type: integer
+                      description: Daily request limit for marketplace subscriptions.
+                    requestsSpent:
+                      type: integer
+                      description: Number of marketplace API requests made during
+                        the current counting period.
+                    timeToReset:
+                      type: string
+                      description: Time remaining until the marketplace API request
+                        counter resets.
+                    subscriptions:
+                      type: array
+                      description: List of marketplace subscriptions available to
+                        the user.
+                      items:
+                        type: string
+            example:
+              name: Lukasz
+              email: lukasz.coco@gmail.com
+              subscriptionType: monthly
+              paymentMethod: Stripe
+              apiRequests: 53861
+              apiRequestsDate: '2025-08-13'
+              dailyRateLimit: 100000
+              extraLimit: 0
+              inviteToken: null
+              inviteTokenClicked: 0
+              subscriptionMode: paid
+              availableDataFeeds:
+              - Bulk Splits and Dividends API
+              - Fundamental Data
+              - Bond Fundamentals API
+              - Stock Options Data
+              - News API
+              - commodities
+              - sec_filings
+              - id_mapping
+              - Technical API Data
+              - Intraday Data API
+              - EOD Historical Data
+              - Search API
+              - dividends
+              - Dividends Data Feed
+              - Split Data Feed
+              - Calendar Data
+              - Live (delayed) Data API
+              - CBOE Data API
+              - Real-time Data via WebSockets
+              - Economic Events API
+              - Sentiment Data API
+              - Tick Data
+              - Exchanges List API
+              availableMarketplaceDataFeeds:
+                dailyRateLimit: 100000
+                requestsSpent: 30
+                timeToReset: 08:53 GMT+0000
+                subscriptions:
+                - US Stock Options Data API
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. The API token is missing, invalid, or expired.
+      '404':
+        description: User not found.
+    tags:
+    - User

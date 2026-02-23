@@ -1,0 +1,68 @@
+/mp/praams/analyse/bond/{isin}:
+  get:
+    summary: Analyse bond by ISIN
+    description: Returns PRAAMS risk scoring and analysis for a specific bond identified by ISIN.
+    operationId: AnalysePRAAMSBond
+    parameters:
+    - name: isin
+      in: path
+      required: true
+      description: Bond ISIN code.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bond analysis.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isin:
+                  type: string
+                name:
+                  type: string
+                  description: Bond name.
+                risk_score:
+                  type: number
+                  description: PRAAMS risk score.
+                risk_category:
+                  type: string
+                  description: Risk category (e.g., 'Low', 'Medium', 'High').
+                yield_to_maturity:
+                  type: number
+                duration:
+                  type: number
+                  description: Modified duration.
+                convexity:
+                  type: number
+                credit_rating:
+                  type: string
+                coupon_rate:
+                  type: number
+                maturity_date:
+                  type: string
+                  format: date
+                issuer:
+                  type: string
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Bond not found.
+    tags:
+    - Investment Analytics

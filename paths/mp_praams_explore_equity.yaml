@@ -1,0 +1,101 @@
+/mp/praams/explore/equity:
+  get:
+    summary: Explore equities
+    description: Search and filter equities using PRAAMS analytics. Returns a list of equities matching the specified criteria with risk scores.
+    operationId: ExplorePRAAMSEquities
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: risk_category
+      in: query
+      required: false
+      description: Filter by risk category (e.g., 'Low', 'Medium', 'High').
+      schema:
+        type: string
+    - name: sector
+      in: query
+      required: false
+      description: Filter by sector.
+      schema:
+        type: string
+    - name: country
+      in: query
+      required: false
+      description: Filter by country code.
+      schema:
+        type: string
+    - name: min_market_cap
+      in: query
+      required: false
+      description: Minimum market capitalization filter.
+      schema:
+        type: number
+    - name: offset
+      in: query
+      required: false
+      description: Pagination offset.
+      schema:
+        type: integer
+        default: 0
+    - name: limit
+      in: query
+      required: false
+      description: Maximum results to return.
+      schema:
+        type: integer
+        default: 50
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved equity list.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  description: Total matching equities.
+                offset:
+                  type: integer
+                limit:
+                  type: integer
+                equities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      ticker:
+                        type: string
+                      isin:
+                        type: string
+                      name:
+                        type: string
+                      risk_score:
+                        type: number
+                      risk_category:
+                        type: string
+                      sector:
+                        type: string
+                      country:
+                        type: string
+                      market_cap:
+                        type: number
+                      beta:
+                        type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+    tags:
+    - Investment Analytics

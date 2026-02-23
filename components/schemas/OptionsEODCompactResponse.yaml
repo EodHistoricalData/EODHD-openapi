@@ -1,0 +1,23 @@
+OptionsEODCompactResponse:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: array
+        items:
+          type:
+          - string
+          - number
+          - integer
+          - 'null'
+        description: Row aligned to columns listed in meta.fields.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

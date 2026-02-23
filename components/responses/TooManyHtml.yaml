@@ -1,0 +1,19 @@
+TooManyHtml:
+  description: Too Many Requests.
+  content:
+    text/html:
+      schema:
+        type: string
+  headers:
+    X-RateLimit-Limit:
+      description: Requests per minute limit.
+      schema:
+        type: integer
+    X-RateLimit-Remaining:
+      description: Requests remaining in the current window.
+      schema:
+        type: integer
+    Retry-After:
+      description: Seconds to wait before retrying.
+      schema:
+        type: integer

@@ -1,0 +1,164 @@
+/screener:
+  get:
+    summary: Get filtered stock data based on user-defined criteria.
+    description: Retrieves stock data filtered by criteria such as market capitalization,
+      exchange, sector, and more. Results can be sorted and paginated.
+    operationId: GetStockScreenerData
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication.
+      schema:
+        type: string
+    - name: filters
+      in: query
+      required: false
+      description: Filters to apply, structured as nested arrays (e.g., [["field",
+        "operation", value], ...]).
+      schema:
+        type: string
+        example: '[["market_capitalization",">",1000000000],["sector","=","Technology"]]'
+    - name: signals
+      in: query
+      required: false
+      description: Signals to filter tickers by pre-calculated fields (e.g., 200d_new_hi,
+        bookvalue_pos).
+      schema:
+        type: string
+        example: 200d_new_hi,bookvalue_pos
+    - name: sort
+      in: query
+      required: false
+      description: Sorts results by a specified field in ascending or descending order
+        (e.g., market_capitalization.desc).
+      schema:
+        type: string
+        example: market_capitalization.desc
+    - name: limit
+      in: query
+      required: false
+      description: Number of results per request. Minimum 1, maximum 100. Default
+        is 50.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 50
+    - name: offset
+      in: query
+      required: false
+      description: Data offset for paginating results. Minimum 0, maximum 999. Default
+        is 0.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 999
+        default: 0
+    responses:
+      '200':
+        description: Successful response with filtered stock data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        description: Ticker symbol.
+                      name:
+                        type: string
+                        description: Company name.
+                      last_day_data_date:
+                        type: string
+                        format: date
+                        description: Date of the latest data.
+                      adjusted_close:
+                        type: number
+                        description: Latest adjusted close price.
+                      refund_1d:
+                        type: number
+                        description: Refund value for the last day.
+                      refund_1d_p:
+                        type: number
+                        description: Refund percentage change for the last day.
+                      refund_5d:
+                        type: number
+                        description: Refund value for the last 5 days.
+                      refund_5d_p:
+                        type: number
+                        description: Refund percentage change for the last 5 days.
+                      exchange:
+                        type: string
+                        description: Exchange code.
+                      currency_symbol:
+                        type: string
+                        description: Currency symbol.
+                      market_capitalization:
+                        type: integer
+                        description: Market capitalization in USD.
+                      earnings_share:
+                        type: number
+                        description: Earnings per share (EPS).
+                      dividend_yield:
+                        type: number
+                        description: Dividend yield percentage.
+                      sector:
+                        type: string
+                        description: Company sector.
+                      industry:
+                        type: string
+                        description: Company industry.
+                      avgvol_1d:
+                        type: integer
+                        description: Average daily volume for the last day.
+                      avgvol_200d:
+                        type: number
+                        description: Average daily volume over the last 200 days.
+            example:
+              data:
+              - code: AAPL
+                name: Apple Inc
+                last_day_data_date: '2024-10-25'
+                adjusted_close: 231.41
+                refund_1d: 0.84
+                refund_1d_p: 0.36
+                refund_5d: -3.59
+                refund_5d_p: -1.53
+                exchange: US
+                currency_symbol: $
+                market_capitalization: 3518380900352
+                earnings_share: 6.6
+                dividend_yield: 0.0043
+                sector: Technology
+                industry: Consumer Electronics
+                avgvol_1d: 38776700
+                avgvol_200d: 59597856
+              - code: NVDA
+                name: NVIDIA Corporation
+                last_day_data_date: '2024-10-25'
+                adjusted_close: 141.54
+                refund_1d: 1.13
+                refund_1d_p: 0.8
+                refund_5d: 3.54
+                refund_5d_p: 2.57
+                exchange: US
+                currency_symbol: $
+                market_capitalization: 3471975907328
+                earnings_share: 2.15
+                dividend_yield: 0.0003
+                sector: Technology
+                industry: Semiconductors
+                avgvol_1d: 205122109
+                avgvol_200d: 411629851.58
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+    tags:
+    - Screening

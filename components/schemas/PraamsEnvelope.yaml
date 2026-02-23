@@ -1,0 +1,22 @@
+PraamsEnvelope:
+  type: object
+  description: Generic PRAAMS response envelope used for error responses.
+  properties:
+    success:
+      type: boolean
+      description: true if the request succeeded
+    message:
+      type: string
+      description: Status message (empty on success)
+    errors:
+      type: array
+      description: Error objects (empty on success)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Error code
+          description:
+            type: string
+            description: Detailed error description

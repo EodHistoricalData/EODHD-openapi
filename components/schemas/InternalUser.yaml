@@ -1,0 +1,79 @@
+InternalUser:
+  type: object
+  properties:
+    name:
+      type: string
+      description: Full name of the user.
+    email:
+      type: string
+      format: email
+      description: Registered email address.
+    subscriptionType:
+      type: string
+      enum:
+      - monthly
+      - yearly
+      description: Type of subscription plan.
+    paymentMethod:
+      type: string
+      description: Payment processor used for the subscription (e.g., Stripe, PayPal).
+    apiRequests:
+      type: integer
+      description: Number of API requests in the current day.
+    apiRequestsDate:
+      type: string
+      format: date
+      description: Date of the current counter period (UTC).
+    dailyRateLimit:
+      type: integer
+      description: Daily request limit for standard APIs.
+    extraLimit:
+      type: integer
+      description: Extra daily limit granted (if any).
+    inviteToken:
+      type:
+      - string
+      - 'null'
+      description: Referral invite token, if available.
+    inviteTokenClicked:
+      type: integer
+      description: Clicks on the invite token link.
+    subscriptionMode:
+      type: string
+      enum:
+      - paid
+      - free
+      - trial
+    availableDataFeeds:
+      type: array
+      items:
+        type: string
+      description: List of standard data feeds accessible.
+    availableMarketplaceDataFeeds:
+      type: object
+      description: Marketplace API usage (separate request counter) and subscriptions.
+      properties:
+        dailyRateLimit:
+          type: integer
+          description: Marketplace daily request limit.
+        requestsSpent:
+          type: integer
+          description: Marketplace requests used in the current day.
+        timeToReset:
+          type: string
+          description: Time remaining to reset the marketplace counter.
+        subscriptions:
+          type: array
+          items:
+            type: string
+          description: Enabled marketplace subscriptions.
+  required:
+  - name
+  - email
+  - subscriptionType
+  - paymentMethod
+  - apiRequests
+  - apiRequestsDate
+  - dailyRateLimit
+  - subscriptionMode
+  - availableDataFeeds

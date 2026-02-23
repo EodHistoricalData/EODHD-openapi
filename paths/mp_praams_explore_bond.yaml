@@ -1,0 +1,102 @@
+/mp/praams/explore/bond:
+  get:
+    summary: Explore bonds
+    description: Search and filter bonds using PRAAMS analytics. Returns a list of bonds matching the specified criteria with risk scores.
+    operationId: ExplorePRAAMSBonds
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: risk_category
+      in: query
+      required: false
+      description: Filter by risk category (e.g., 'Low', 'Medium', 'High').
+      schema:
+        type: string
+    - name: min_yield
+      in: query
+      required: false
+      description: Minimum yield to maturity filter.
+      schema:
+        type: number
+    - name: max_yield
+      in: query
+      required: false
+      description: Maximum yield to maturity filter.
+      schema:
+        type: number
+    - name: currency
+      in: query
+      required: false
+      description: Filter by currency (e.g., 'USD', 'EUR').
+      schema:
+        type: string
+    - name: offset
+      in: query
+      required: false
+      description: Pagination offset.
+      schema:
+        type: integer
+        default: 0
+    - name: limit
+      in: query
+      required: false
+      description: Maximum results to return.
+      schema:
+        type: integer
+        default: 50
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bond list.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  description: Total matching bonds.
+                offset:
+                  type: integer
+                limit:
+                  type: integer
+                bonds:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      isin:
+                        type: string
+                      name:
+                        type: string
+                      risk_score:
+                        type: number
+                      risk_category:
+                        type: string
+                      yield_to_maturity:
+                        type: number
+                      coupon_rate:
+                        type: number
+                      maturity_date:
+                        type: string
+                        format: date
+                      currency:
+                        type: string
+                      credit_rating:
+                        type: string
+      '401':
+        description: Unauthorized. Invalid API token.
+    tags:
+    - Investment Analytics

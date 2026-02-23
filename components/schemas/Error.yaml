@@ -1,0 +1,9 @@
+Error:
+  type: object
+  properties:
+    status:
+      type: integer
+    error:
+      type: string
+    message:
+      type: string

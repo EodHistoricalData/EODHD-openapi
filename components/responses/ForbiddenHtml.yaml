@@ -1,0 +1,6 @@
+ForbiddenHtml:
+  description: Forbidden.
+  content:
+    text/html:
+      schema:
+        type: string

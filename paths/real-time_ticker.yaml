@@ -1,0 +1,152 @@
+/real-time/{ticker}:
+  get:
+    summary: Retrieve delayed real-time stock prices
+    description: Retrieve live (delayed) stock prices for specified ticker(s).
+    operationId: GetLiveDelayedStockPrices
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol with exchange code (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: s
+      in: query
+      required: false
+      description: Comma-separated list of additional ticker symbols for multiple
+        requests in a single call (e.g., 'VTI,EUR.FOREX').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format. Options are 'json' and 'csv'. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    responses:
+      '200':
+        description: Successful response with live (delayed) stock prices.
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  timestamp:
+                    type: integer
+                  gmtoffset:
+                    type: integer
+                  open:
+                    type: number
+                  high:
+                    type: number
+                  low:
+                    type: number
+                  close:
+                    type: number
+                  volume:
+                    type: integer
+                  previousClose:
+                    type: number
+                  change:
+                    type: number
+                  change_p:
+                    type: number
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                    timestamp:
+                      type: integer
+                    gmtoffset:
+                      type: integer
+                    open:
+                      type: number
+                    high:
+                      type: number
+                    low:
+                      type: number
+                    close:
+                      type: number
+                    volume:
+                      type:
+                      - integer
+                      - 'null'
+                    previousClose:
+                      type: number
+                    change:
+                      type: number
+                    change_p:
+                      type: number
+            examples:
+              singleTicker:
+                summary: Single ticker response
+                value:
+                  code: AAPL.US
+                  timestamp: 1729888080
+                  gmtoffset: 0
+                  open: 229.74
+                  high: 233.22
+                  low: 229.57
+                  close: 231.41
+                  volume: 37931706
+                  previousClose: 230.57
+                  change: 0.84
+                  change_p: 0.3643
+              multipleTickers:
+                summary: Multiple tickers response
+                value:
+                - code: AAPL.US
+                  timestamp: 1729888080
+                  gmtoffset: 0
+                  open: 229.74
+                  high: 233.22
+                  low: 229.57
+                  close: 231.41
+                  volume: 37931706
+                  previousClose: 230.57
+                  change: 0.84
+                  change_p: 0.3643
+                - code: VTI.US
+                  timestamp: 1729887240
+                  gmtoffset: 0
+                  open: 287.03
+                  high: 288.25
+                  low: 285.05
+                  close: 285.54
+                  volume: 2811137
+                  previousClose: 285.81
+                  change: -0.27
+                  change_p: -0.0945
+                - code: EUR.FOREX
+                  timestamp: 1729891800
+                  gmtoffset: 0
+                  open: 0.9232
+                  high: 0.9263
+                  low: 0.9223
+                  close: 0.9257
+                  volume: 0
+                  previousClose: 0.9262
+                  change: -0.0005
+                  change_p: -0.054
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+      '404':
+        description: Ticker not found.
+    tags:
+    - Intraday Data

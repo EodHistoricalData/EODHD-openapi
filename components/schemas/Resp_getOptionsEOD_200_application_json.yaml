@@ -1,0 +1,4 @@
+Resp_getOptionsEOD_200_application_json:
+  oneOf:
+  - $ref: ./OptionsEODResponse.yaml#/OptionsEODResponse
+  - $ref: ./OptionsEODCompactResponse.yaml#/OptionsEODCompactResponse

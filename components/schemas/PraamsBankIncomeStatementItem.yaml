@@ -1,0 +1,66 @@
+PraamsBankIncomeStatementItem:
+  type: object
+  description: Bank income statement record for one reporting period.
+  properties:
+    date:
+      type: string
+      description: Period end date in ISO 8601 format
+    period:
+      type: string
+      description: "Period identifier: FY for full year, Q1-Q4 for quarters"
+    isQuarter:
+      type: boolean
+      description: true for quarterly data, false for annual
+    interestIncome:
+      type: number
+      description: Total interest income
+    interestExpense:
+      type: number
+      description: Total interest expense
+    netInterestIncome:
+      type: number
+      description: Net interest income (interestIncome minus interestExpense)
+    netFeeAndCommission:
+      type: [number, "null"]
+      description: Net fee and commission income
+    coreRevenue:
+      type: [number, "null"]
+      description: Core revenue (netInterestIncome plus netFeeAndCommission)
+    nonRecurringIncome:
+      type: [number, "null"]
+      description: Non-recurring or non-operating income
+    ribpt:
+      type: [number, "null"]
+      description: Recurring Income Before Provisioning and Taxes
+    ibpt:
+      type: number
+      description: Income Before Provisioning and Taxes
+    preTaxProfit:
+      type: number
+      description: Pre-tax profit (income before taxes)
+    incomeTaxExpense:
+      type: number
+      description: Income tax expense
+    netProfit:
+      type: number
+      description: Net profit (bottom line)
+    creditLossesProvision:
+      type: number
+      description: Credit loss provisions (negative equals provision charge, positive
+        equals provision release)
+    provisioning:
+      type: number
+      description: Provisioning amount (positive equals provision charge, negative
+        equals provision release)
+    nonInterestExpenses:
+      type: number
+      description: Total non-interest expenses (operating expenses)
+    operatingExpenses:
+      type: number
+      description: Operating expenses (same value as nonInterestExpenses)
+    specialIncomeCharges:
+      type: [number, "null"]
+      description: Special or one-time income or charges
+    dps:
+      type: number
+      description: Dividend per share for the period

@@ -1,0 +1,81 @@
+Resp_GetUpcomingEarnings_200_application_json:
+  type: object
+  properties:
+    type:
+      type: string
+      description: Type of data, e.g., 'Earnings'.
+    description:
+      type: string
+      description: Description of the data, e.g., 'Historical and upcoming Earnings'.
+    from:
+      type: string
+      format: date
+      description: Start date for the earnings data.
+    to:
+      type: string
+      format: date
+      description: End date for the earnings data.
+    earnings:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Ticker symbol of the company.
+          report_date:
+            type: string
+            format: date
+            description: Date the earnings report was released.
+          date:
+            type: string
+            format: date
+            description: End date of the fiscal period.
+          before_after_market:
+            type: string
+            description: Indicates whether the earnings report was released 'BeforeMarket'
+              or 'AfterMarket'.
+          currency:
+            type: string
+            description: Currency of the earnings values.
+          actual:
+            type: number
+            description: Actual reported earnings per share or other metric.
+          estimate:
+            type: number
+            description: Estimated earnings per share or other metric.
+          difference:
+            type: number
+            description: Difference between actual and estimated values.
+          percent:
+            type: number
+            description: Percentage difference between actual and estimated values.
+        required:
+        - code
+        - report_date
+        - date
+        - currency
+  example:
+    type: Earnings
+    description: Historical and upcoming Earnings
+    from: '2018-12-02'
+    to: '2018-12-05'
+    earnings:
+    - code: AAPL.US
+      report_date: '2023-02-02'
+      date: '2022-12-31'
+      before_after_market: AfterMarket
+      currency: USD
+      actual: 1.88
+      estimate: 1.94
+      difference: -0.06
+      percent: -3.0928
+    - code: MSFT.US
+      report_date: '2023-04-25'
+      date: '2023-03-31'
+      before_after_market: AfterMarket
+      currency: USD
+      actual: 2.45
+      estimate: 2.23
+      difference: 0.22
+      percent: 9.8655

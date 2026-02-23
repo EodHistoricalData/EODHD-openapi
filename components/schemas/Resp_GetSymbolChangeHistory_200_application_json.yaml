@@ -1,0 +1,16 @@
+Resp_GetSymbolChangeHistory_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      exchange:
+        type: string
+      old_symbol:
+        type: string
+      new_symbol:
+        type: string
+      company_name:
+        type: string
+      effective:
+        type: string
+        format: date

@@ -1,0 +1,106 @@
+/exchange-symbol-list/{exchangeCode}:
+  get:
+    summary: Retrieve the list of tickers for a specific exchange.
+    description: Returns a list of active or delisted symbols for the specified exchange,
+      with optional filters by ticker type.
+    operationId: GetExchangeSymbolList
+    parameters:
+    - name: exchangeCode
+      in: path
+      required: true
+      description: Exchange code, e.g., 'PSE' for the Philippines Stock Exchange or
+        'US' for combined US exchanges.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: 'Response format. Options: ''json'' (default) or ''csv''.'
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    - name: delisted
+      in: query
+      required: false
+      description: Include delisted (inactive) tickers. Set to '1' to include.
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 0
+    - name: type
+      in: query
+      required: false
+      description: 'Filter by ticker type. Options: ''common_stock'', ''preferred_stock'',
+        ''stock'', ''etf'', ''fund''.'
+      schema:
+        type: string
+        enum:
+        - common_stock
+        - preferred_stock
+        - stock
+        - etf
+        - fund
+    responses:
+      '200':
+        description: Successful response with a list of tickers.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  Code:
+                    type: string
+                    description: Ticker symbol code.
+                  Name:
+                    type: string
+                    description: Company name associated with the ticker.
+                  Country:
+                    type: string
+                    description: Country of the exchange.
+                  Exchange:
+                    type: string
+                    description: Exchange code.
+                  Currency:
+                    type: string
+                    description: Currency code in which the stock is traded.
+                  Type:
+                    type: string
+                    description: Type of ticker (e.g., Common Stock, ETF).
+                  Isin:
+                    type:
+                    - string
+                    - 'null'
+                    description: ISIN code if available.
+            example:
+            - Code: AB
+              Name: Atok Big Wedge Co Inc
+              Country: Philippines
+              Exchange: PSE
+              Currency: PHP
+              Type: Common Stock
+              Isin: PHY044931210
+            - Code: AC
+              Name: Ayala Corp
+              Country: Philippines
+              Exchange: PSE
+              Currency: PHP
+              Type: Common Stock
+              Isin: PHY0486V1154
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+    tags:
+    - Exchanges

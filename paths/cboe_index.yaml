@@ -1,0 +1,79 @@
+/cboe/index:
+  get:
+    summary: Get CBOE index historical data
+    description: Returns historical end-of-day data for a specific CBOE index, including daily open, high, low, close values.
+    operationId: GetCBOEIndexData
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: symbol
+      in: query
+      required: true
+      description: CBOE index symbol (e.g., 'VIX', 'SPX').
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved CBOE index data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Trading date.
+                  open:
+                    type: number
+                    description: Opening value.
+                  high:
+                    type: number
+                    description: High value.
+                  low:
+                    type: number
+                    description: Low value.
+                  close:
+                    type: number
+                    description: Closing value.
+                  volume:
+                    type: number
+                    description: Trading volume (if applicable).
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Index not found.
+    tags:
+    - CBOE

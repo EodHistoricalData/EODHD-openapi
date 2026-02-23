@@ -1,0 +1,71 @@
+/mp/praams/bank/income_statement/isin/{isin}:
+  get:
+    summary: Get bank income statement by ISIN
+    description: Returns bank-specific income statement analysis for the specified ISIN from PRAAMS.
+    operationId: GetPRAAMSBankIncomeByISIN
+    parameters:
+    - name: isin
+      in: path
+      required: true
+      description: ISIN code (e.g., 'US46625H1005').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bank income statement.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isin:
+                  type: string
+                name:
+                  type: string
+                net_interest_income:
+                  type: number
+                non_interest_income:
+                  type: number
+                provision_for_loan_losses:
+                  type: number
+                net_income:
+                  type: number
+                return_on_assets:
+                  type: number
+                return_on_equity:
+                  type: number
+                efficiency_ratio:
+                  type: number
+                periods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      net_interest_income:
+                        type: number
+                      net_income:
+                        type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Bank data not found.
+    tags:
+    - Investment Analytics

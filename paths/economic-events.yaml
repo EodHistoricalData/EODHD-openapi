@@ -1,0 +1,136 @@
+/economic-events:
+  get:
+    summary: Retrieve economic events data
+    description: Fetches economic events by date range, country, comparison type,
+      and other optional parameters.
+    operationId: GetEconomicEventsData
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API key for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: country
+      in: query
+      required: false
+      description: Country code in ISO 3166-1 alpha-2 format, e.g., 'US' for the United
+        States.
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+    - name: comparison
+      in: query
+      required: false
+      description: Comparison type, e.g., 'mom' for month-over-month, 'qoq' for quarter-over-quarter,
+        'yoy' for year-over-year.
+      schema:
+        type: string
+        enum:
+        - mom
+        - qoq
+        - yoy
+    - name: offset
+      in: query
+      required: false
+      description: Data offset, from 0 to 1000. Default is 0.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 0
+    - name: limit
+      in: query
+      required: false
+      description: Number of results to return, from 0 to 1000. Default is 50.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 50
+    responses:
+      '200':
+        description: Successfully retrieved economic events data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: Type of economic event, e.g., 'Nonfarm Payrolls'.
+                  comparison:
+                    type: [string, "null"]
+                    description: Comparison type (e.g., 'mom', 'qoq', 'yoy').
+                  period:
+                    type: [string, "null"]
+                    description: Period associated with the data, e.g., 'May'.
+                  country:
+                    type: string
+                    description: Country code in ISO 3166 format.
+                  date:
+                    type: string
+                    format: date-time
+                    description: Date and time of the event in 'YYYY-MM-DD HH:MM:SS'
+                      format.
+                  actual:
+                    type: [number, "null"]
+                    description: Actual reported value for the event.
+                  previous:
+                    type: [number, "null"]
+                    description: Previous value for the event.
+                  estimate:
+                    type: [number, "null"]
+                    description: Estimated value for the event.
+                  change:
+                    type: [number, "null"]
+                    description: Change in value from previous.
+                  change_percentage:
+                    type: [number, "null"]
+                    description: Percentage change in value from previous.
+            example:
+            - type: Participation Rate
+              comparison: null
+              period: May
+              country: US
+              date: '2022-06-03 16:30:00'
+              actual: 62.3
+              previous: 62.2
+              estimate: null
+              change: 0.1
+              change_percentage: 0.161
+            - type: Nonfarm Payrolls Private
+              comparison: null
+              period: May
+              country: US
+              date: '2022-06-03 16:30:00'
+              actual: 333
+              previous: 405
+              estimate: 325
+              change: -72
+              change_percentage: -17.778
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: No economic events data found for the specified parameters.
+    tags:
+    - Economic Data

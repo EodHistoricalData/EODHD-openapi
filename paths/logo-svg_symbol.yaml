@@ -1,0 +1,71 @@
+/logo-svg/{symbol}:
+  get:
+    summary: Get ticker logo (SVG)
+    description: Returns an SVG logo for the given ticker symbol, formatted as {ticker}.{exchange} (e.g., AAPL.US).
+    operationId: getTickerLogoSvg
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Ticker with exchange, e.g., AAPL.US
+      schema:
+        type: string
+      examples:
+        appleUS:
+          value: AAPL.US
+          summary: Apple Inc. on US exchange
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: SVG image for the requested ticker.
+        content:
+          image/svg+xml:
+            schema:
+              type: string
+            examples:
+              svgLogo:
+                summary: SVG logo
+                description: SVG XML bytes are returned; example omitted for brevity.
+      '401':
+        description: Unauthorized (invalid token or suspended account).
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden (resource not available for current user).
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found (no logo for symbol).
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests (rate limit exceeded).
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Logos

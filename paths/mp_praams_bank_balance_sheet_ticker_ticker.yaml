@@ -1,0 +1,77 @@
+/mp/praams/bank/balance_sheet/ticker/{ticker}:
+  get:
+    summary: Get bank balance sheet by ticker
+    description: Returns bank-specific balance sheet analysis for the specified ticker from PRAAMS.
+    operationId: GetPRAAMSBankBalanceSheetByTicker
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol (e.g., 'JPM.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bank balance sheet.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticker:
+                  type: string
+                name:
+                  type: string
+                  description: Bank name.
+                total_assets:
+                  type: number
+                total_liabilities:
+                  type: number
+                total_equity:
+                  type: number
+                loans_net:
+                  type: number
+                  description: Net loans.
+                deposits:
+                  type: number
+                  description: Total deposits.
+                tier1_capital_ratio:
+                  type: number
+                  description: Tier 1 capital ratio.
+                leverage_ratio:
+                  type: number
+                periods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      total_assets:
+                        type: number
+                      total_liabilities:
+                        type: number
+                      total_equity:
+                        type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Bank data not found.
+    tags:
+    - Investment Analytics

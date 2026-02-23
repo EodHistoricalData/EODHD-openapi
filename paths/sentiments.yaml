@@ -1,0 +1,99 @@
+/sentiments:
+  get:
+    summary: Retrieve market news sentiment data
+    description: Retrieve sentiment analysis for financial news related to specified
+      tickers.
+    operationId: GetSentimentData
+    parameters:
+    - name: s
+      in: query
+      required: true
+      description: Comma-separated list of ticker codes to retrieve sentiment data
+        for (e.g., 'btc-usd.cc,aapl.us').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for sentiment data (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for sentiment data (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Response format (only 'json' is supported).
+      schema:
+        type: string
+        enum:
+        - json
+    responses:
+      '200':
+        description: Successful response with sentiment data by ticker.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticker:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        count:
+                          type: integer
+                          description: Number of articles or mentions analyzed for
+                            the given date.
+                        normalized:
+                          type: number
+                          minimum: -1
+                          maximum: 1
+                          description: Normalized sentiment score, where -1 represents
+                            a very negative sentiment, 0 is neutral, and 1 is very
+                            positive.
+                      required:
+                      - date
+                      - count
+                      - normalized
+            example:
+              ticker:
+                BTC-USD.CC:
+                - date: '2022-02-22'
+                  count: 8
+                  normalized: -0.1811
+                - date: '2022-02-21'
+                  count: 5
+                  normalized: 0.2824
+                AAPL.US:
+                - date: '2022-02-22'
+                  count: 23
+                  normalized: 0.6152
+                - date: '2022-02-21'
+                  count: 23
+                  normalized: 0.3668
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid or missing API token.
+      '404':
+        description: No sentiment data found for specified tickers or date range.
+    tags:
+    - News

@@ -1,0 +1,28 @@
+Resp_GetExchangeSymbolList_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      Code:
+        type: string
+        description: Ticker symbol code.
+      Name:
+        type: string
+        description: Company name associated with the ticker.
+      Country:
+        type: string
+        description: Country of the exchange.
+      Exchange:
+        type: string
+        description: Exchange code.
+      Currency:
+        type: string
+        description: Currency code in which the stock is traded.
+      Type:
+        type: string
+        description: Type of ticker (e.g., Common Stock, ETF).
+      Isin:
+        type:
+        - string
+        - 'null'
+        description: ISIN code if available.

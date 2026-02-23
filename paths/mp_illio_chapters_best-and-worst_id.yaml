@@ -1,0 +1,76 @@
+/mp/illio/chapters/best-and-worst/{id}:
+  get:
+    summary: Get best and worst performing periods
+    description: Returns best and worst performing periods analysis for the specified instrument from illio market insights.
+    operationId: GetIllioBestAndWorst
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., ticker symbol like 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved best and worst analysis.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                best_periods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      period:
+                        type: string
+                        description: Time period label.
+                      start_date:
+                        type: string
+                        format: date
+                      end_date:
+                        type: string
+                        format: date
+                      return:
+                        type: number
+                        description: Return percentage.
+                worst_periods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      period:
+                        type: string
+                      start_date:
+                        type: string
+                        format: date
+                      end_date:
+                        type: string
+                        format: date
+                      return:
+                        type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

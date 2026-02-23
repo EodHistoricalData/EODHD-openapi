@@ -1,0 +1,140 @@
+/technical/{ticker}:
+  get:
+    summary: Retrieve technical indicator data for a specified symbol.
+    description: Fetches technical indicator data, such as moving averages and other
+      analytics, based on specified parameters.
+    operationId: GetTechnicalIndicatorData
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Symbol in the format {SYMBOL_NAME}.{EXCHANGE_ID}, e.g., AAPL.US
+        for Apple Inc.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication.
+      schema:
+        type: string
+    - name: function
+      in: query
+      required: true
+      description: The function to calculate the technical indicator (e.g., 'sma'
+        for Simple Moving Average).
+      schema:
+        type: string
+        enum:
+        - sma
+        - ema
+        - wma
+        - volatility
+        - stochastic
+        - rsi
+        - stddev
+        - stochrsi
+        - slope
+        - dmi
+        - adx
+        - macd
+        - atr
+        - cci
+        - sar
+        - beta
+        - bbands
+        - splitadjusted
+        - avgvol
+        - avgvolccy
+    - name: period
+      in: query
+      required: false
+      description: Number of data points used to calculate the indicator. Default
+        is 50.
+      schema:
+        type: integer
+        minimum: 2
+        maximum: 100000
+        default: 50
+    - name: from
+      in: query
+      required: false
+      description: Start date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: order
+      in: query
+      required: false
+      description: 'Sort order of dates: ''a'' for ascending, ''d'' for descending.
+        Default is ascending.'
+      schema:
+        type: string
+        enum:
+        - a
+        - d
+        default: a
+    - name: fmt
+      in: query
+      required: false
+      description: Output format, either 'json' or 'csv'. Default is 'json'.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    - name: splitadjusted_only
+      in: query
+      required: false
+      description: For select functions, adjust data only for splits by setting to
+        '1'. Default is '0'.
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 0
+    - name: filter
+      in: query
+      required: false
+      description: Retrieve only the last value by specifying 'last_ema' or 'last_volume'
+        as the filter.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successful response with technical indicator data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Date of the data point.
+                  sma:
+                    type: number
+                    description: Simple Moving Average value (specific to the chosen
+                      function).
+            example:
+            - date: '2020-12-31'
+              sma: 118.4358
+            - date: '2020-12-30'
+              sma: 118.1347
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+    tags:
+    - Technical

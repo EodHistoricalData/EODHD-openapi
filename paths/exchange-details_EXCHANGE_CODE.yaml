@@ -1,0 +1,161 @@
+/exchange-details/{EXCHANGE_CODE}:
+  get:
+    summary: Retrieve details for a specific exchange
+    description: Retrieve exchange details, trading hours, holidays, and active tickers
+      for a specified exchange.
+    operationId: GetExchangeDetails
+    parameters:
+    - name: EXCHANGE_CODE
+      in: path
+      required: true
+      description: Exchange code for which details are to be retrieved (e.g., 'US'
+        for the USA exchange).
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format. Options are 'json' and 'csv'. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    - name: from
+      in: query
+      required: false
+      description: Start date for holiday data (YYYY-MM-DD). Defaults to 6 months
+        before the current date.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for holiday data (YYYY-MM-DD). Defaults to 6 months after
+        the current date.
+      schema:
+        type: string
+        format: date
+    responses:
+      '200':
+        description: Successful response with exchange details and trading hours.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                Code:
+                  type: string
+                OperatingMIC:
+                  type: string
+                Country:
+                  type: string
+                Currency:
+                  type: string
+                Timezone:
+                  type: string
+                ExchangeHolidays:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Holiday:
+                        type: string
+                      Date:
+                        type: string
+                        format: date
+                      Type:
+                        type: string
+                ExchangeEarlyCloseDays:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Date:
+                        type: string
+                        format: date
+                      CloseTime:
+                        type: string
+                        format: time
+                isOpen:
+                  type: boolean
+                TradingHours:
+                  type: object
+                  properties:
+                    Open:
+                      type: string
+                      format: time
+                    Close:
+                      type: string
+                      format: time
+                    OpenUTC:
+                      type: string
+                      format: time
+                    CloseUTC:
+                      type: string
+                      format: time
+                    WorkingDays:
+                      type: string
+                ActiveTickers:
+                  type: integer
+                PreviousDayUpdatedTickers:
+                  type: integer
+                UpdatedTickers:
+                  type: integer
+            example:
+              Name: USA Stocks
+              Code: US
+              OperatingMIC: XNAS, XNYS, OTCM
+              Country: USA
+              Currency: USD
+              Timezone: America/New_York
+              ExchangeHolidays:
+              - Holiday: Memorial Day
+                Date: '2024-05-27'
+                Type: official
+              - Holiday: Juneteenth Holiday
+                Date: '2024-06-19'
+                Type: official
+              - Holiday: Independence Day
+                Date: '2024-07-04'
+                Type: official
+              - Holiday: Labour Day
+                Date: '2024-09-02'
+                Type: official
+              - Holiday: Thanksgiving Day
+                Date: '2024-11-28'
+                Type: official
+              - Holiday: Christmas Day
+                Date: '2024-12-25'
+                Type: official
+              - Holiday: New Years Day
+                Date: '2025-01-01'
+                Type: official
+              ExchangeEarlyCloseDays: []
+              isOpen: false
+              TradingHours:
+                Open: 09:30:00
+                Close: '16:00:00'
+                OpenUTC: '13:30:00'
+                CloseUTC: '20:00:00'
+                WorkingDays: Mon,Tue,Wed,Thu,Fri
+              ActiveTickers: 49242
+              PreviousDayUpdatedTickers: 47442
+              UpdatedTickers: 0
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+      '404':
+        description: Exchange not found.
+    tags:
+    - Exchanges

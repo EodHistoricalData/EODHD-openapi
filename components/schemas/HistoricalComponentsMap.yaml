@@ -1,0 +1,5 @@
+HistoricalComponentsMap:
+  type: object
+  additionalProperties:
+    $ref: ./HistoricalComponentItem.yaml#/HistoricalComponentItem
+  properties: {}
