@@ -1,0 +1,107 @@
+/mp/unicornbay/spglobal/comp/{symbol}:
+  get:
+    summary: Index components (current + historical)
+    description: Returns the current components and historical changes for an index
+      symbol.
+    operationId: getIndexComponents
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Index symbol, e.g., GSPC.INDX
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format.
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successful response with index general info, components, and
+          historical membership.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/IndexComponentsResponse.yaml#/IndexComponentsResponse
+            examples:
+              sample:
+                summary: GSPC.INDX (truncated)
+                value:
+                  General:
+                    Code: GSPC
+                    Type: INDEX
+                    Name: S&P 500 Index
+                    Exchange: INDX
+                    MarketCap: 54158326748416.56
+                    CurrencyCode: USD
+                    CurrencyName: US Dollar
+                    CurrencySymbol: $
+                    CountryName: USA
+                    CountryISO: US
+                    OpenFigi: BBG000H4FSM0
+                  Components:
+                    '0':
+                      Code: AAPL
+                      Exchange: US
+                      Name: Apple Inc
+                      Sector: Technology
+                      Industry: Consumer Electronics
+                      Weight: 0.0628
+                  HistoricalTickerComponents:
+                    '0':
+                      Code: AAPL
+                      Name: Apple Inc
+                      StartDate: '1982-11-30'
+                      EndDate: null
+                      IsActiveNow: 1
+                      IsDelisted: 0
+      '401':
+        description: Unauthorized
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Indices

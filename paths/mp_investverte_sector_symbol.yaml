@@ -1,0 +1,80 @@
+/mp/investverte/sector/{symbol}:
+  get:
+    summary: Get ESG sector details
+    description: Returns detailed ESG scores and metrics for a specific sector from Investverte.
+    operationId: GetESGSectorDetails
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Sector identifier.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved sector ESG details.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sector:
+                  type: string
+                  description: Sector name.
+                esg_score:
+                  type: number
+                  description: Overall ESG score.
+                environmental_score:
+                  type: number
+                  description: Environmental pillar score.
+                social_score:
+                  type: number
+                  description: Social pillar score.
+                governance_score:
+                  type: number
+                  description: Governance pillar score.
+                top_companies:
+                  type: array
+                  description: Top ESG-rated companies in this sector.
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                      name:
+                        type: string
+                      esg_score:
+                        type: number
+                country_breakdown:
+                  type: array
+                  description: ESG scores by country within this sector.
+                  items:
+                    type: object
+                    properties:
+                      country:
+                        type: string
+                      avg_esg_score:
+                        type: number
+                      num_companies:
+                        type: integer
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Sector not found.
+    tags:
+    - ESG

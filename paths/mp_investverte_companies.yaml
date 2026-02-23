@@ -1,0 +1,52 @@
+/mp/investverte/companies:
+  get:
+    summary: List ESG-rated companies
+    description: Returns a list of all companies with ESG ratings available from Investverte.
+    operationId: GetESGCompanies
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved ESG companies list.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  symbol:
+                    type: string
+                    description: Ticker symbol.
+                  name:
+                    type: string
+                    description: Company name.
+                  country:
+                    type: string
+                    description: Country of domicile.
+                  sector:
+                    type: string
+                    description: Business sector.
+                  industry:
+                    type: string
+                    description: Industry classification.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '429':
+        description: Too Many Requests.
+    tags:
+    - ESG

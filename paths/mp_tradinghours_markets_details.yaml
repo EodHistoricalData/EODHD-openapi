@@ -1,0 +1,103 @@
+/mp/tradinghours/markets/details:
+  get:
+    summary: Get market trading hours details
+    description: Returns detailed trading hours information for a specific market including regular hours, pre-market, after-hours, and holiday schedules.
+    operationId: GetTradingHoursDetails
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fin_id
+      in: query
+      required: true
+      description: Financial identifier for the market (obtained from the markets list or lookup).
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved trading hours details.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fin_id:
+                  type: string
+                  description: Financial identifier.
+                exchange:
+                  type: string
+                  description: Exchange code.
+                market:
+                  type: string
+                  description: Market name.
+                timezone:
+                  type: string
+                  description: Market timezone (e.g., 'America/New_York').
+                regular_hours:
+                  type: array
+                  description: Regular trading hours by day of week.
+                  items:
+                    type: object
+                    properties:
+                      day:
+                        type: string
+                        description: Day of week.
+                      open:
+                        type: string
+                        description: Opening time (HH:MM).
+                      close:
+                        type: string
+                        description: Closing time (HH:MM).
+                pre_market:
+                  type: object
+                  description: Pre-market trading session.
+                  properties:
+                    open:
+                      type: string
+                    close:
+                      type: string
+                after_hours:
+                  type: object
+                  description: After-hours trading session.
+                  properties:
+                    open:
+                      type: string
+                    close:
+                      type: string
+                holidays:
+                  type: array
+                  description: Upcoming market holidays.
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      name:
+                        type: string
+                      status:
+                        type: string
+                        description: Market status (e.g., 'Closed', 'Early Close').
+                      early_close:
+                        type: string
+                        description: Early close time if applicable.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Market not found.
+    tags:
+    - Trading Hours

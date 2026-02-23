@@ -1,0 +1,129 @@
+/macro-indicator/{country}:
+  get:
+    summary: Retrieve macroeconomic indicators for a specific country
+    description: Fetches macroeconomic data for a selected indicator, such as GDP
+      or inflation, by country code.
+    operationId: GetMacroIndicatorData
+    parameters:
+    - name: country
+      in: path
+      required: true
+      description: Country code in ISO Alpha-3 format (e.g., 'USA' for United States,
+        'FRA' for France).
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication.
+      schema:
+        type: string
+    - name: indicator
+      in: query
+      required: false
+      description: The macroeconomic indicator to retrieve. Default is 'gdp_current_usd'.
+      schema:
+        type: string
+        enum:
+        - real_interest_rate
+        - population_total
+        - population_growth_annual
+        - inflation_consumer_prices_annual
+        - consumer_price_index
+        - gdp_current_usd
+        - gdp_per_capita_usd
+        - gdp_growth_annual
+        - debt_percent_gdp
+        - net_trades_goods_services
+        - inflation_gdp_deflator_annual
+        - agriculture_value_added_percent_gdp
+        - industry_value_added_percent_gdp
+        - services_value_added_percent_gdp
+        - exports_of_goods_services_percent_gdp
+        - imports_of_goods_services_percent_gdp
+        - gross_capital_formation_percent_gdp
+        - net_migration
+        - gni_usd
+        - gni_per_capita_usd
+        - gni_ppp_usd
+        - gni_per_capita_ppp_usd
+        - income_share_lowest_twenty
+        - life_expectancy
+        - fertility_rate
+        - prevalence_hiv_total
+        - co2_emissions_tons_per_capita
+        - surface_area_km
+        - poverty_poverty_lines_percent_population
+        - revenue_excluding_grants_percent_gdp
+        - cash_surplus_deficit_percent_gdp
+        - startup_procedures_register
+        - market_cap_domestic_companies_percent_gdp
+        - mobile_subscriptions_per_hundred
+        - internet_users_per_hundred
+        - high_technology_exports_percent_total
+        - merchandise_trade_percent_gdp
+        - total_debt_service_percent_gni
+        - unemployment_total_percent
+        default: gdp_current_usd
+    - name: fmt
+      in: query
+      required: false
+      description: 'Output format: ''json'' or ''csv''. Default is ''json''.'
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved macroeconomic data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  CountryCode:
+                    type: string
+                    description: ISO Alpha-3 country code, e.g., 'USA' for United
+                      States.
+                  CountryName:
+                    type: string
+                    description: Country name, e.g., 'United States'.
+                  Indicator:
+                    type: string
+                    description: Indicator name, e.g., 'Inflation, consumer prices
+                      (annual %)'.
+                  Date:
+                    type: string
+                    format: date
+                    description: Date of the recorded value.
+                  Period:
+                    type: string
+                    description: Period of the data, e.g., 'Annual'.
+                  Value:
+                    type: number
+                    description: Recorded value of the indicator.
+            example:
+            - CountryCode: USA
+              CountryName: United States
+              Indicator: Inflation, consumer prices (annual %)
+              Date: '2023-12-31'
+              Period: Annual
+              Value: 4.1163
+            - CountryCode: USA
+              CountryName: United States
+              Indicator: Inflation, consumer prices (annual %)
+              Date: '2022-12-31'
+              Period: Annual
+              Value: 8.0028
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Data not found for the specified country or indicator.
+    tags:
+    - Economic Data

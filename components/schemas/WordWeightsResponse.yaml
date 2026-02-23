@@ -1,0 +1,37 @@
+WordWeightsResponse:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: object
+      description: Map of keyword Ã¢ÂÂ weight
+      additionalProperties:
+        type: number
+    meta:
+      type: object
+      required:
+      - news_found
+      - news_processed
+      properties:
+        news_found:
+          type: integer
+          minimum: 0
+        news_processed:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    links:
+      type: object
+      required:
+      - next
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page, or null
+      additionalProperties: false
+  additionalProperties: false

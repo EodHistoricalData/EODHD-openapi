@@ -1,0 +1,23 @@
+Resp_GetEODDataByTicker_200_application_json:
+  oneOf:
+  - type: array
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        open:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        close:
+          type: number
+        adjusted_close:
+          type: number
+        volume:
+          type: integer
+  - type: number
+    description: Single value for the specified filter query (e.g., last close price)

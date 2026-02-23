@@ -1,0 +1,116 @@
+PraamsExploreEquityRequest:
+  type: object
+  description: Request body for the PRAAMS equity screener. All fields are optional
+    and nullable. At least one filter must be provided.
+  properties:
+    mainRatioMin:
+      type: [integer, "null"]
+      description: Minimum PRAAMS Ratio (1-7)
+    mainRatioMax:
+      type: [integer, "null"]
+      description: Maximum PRAAMS Ratio (1-7)
+    valuationMin:
+      type: [integer, "null"]
+      description: Minimum valuation score (1-7)
+    valuationMax:
+      type: [integer, "null"]
+      description: Maximum valuation score (1-7)
+    performanceMin:
+      type: [integer, "null"]
+      description: Minimum performance score (1-7)
+    performanceMax:
+      type: [integer, "null"]
+      description: Maximum performance score (1-7)
+    profitabilityMin:
+      type: [integer, "null"]
+      description: Minimum profitability score (1-7)
+    profitabilityMax:
+      type: [integer, "null"]
+      description: Maximum profitability score (1-7)
+    growthMomMin:
+      type: [integer, "null"]
+      description: Minimum growth momentum score (1-7)
+    growthMomMax:
+      type: [integer, "null"]
+      description: Maximum growth momentum score (1-7)
+    analystViewMin:
+      type: [integer, "null"]
+      description: Minimum analyst view score (1-7)
+    analystViewMax:
+      type: [integer, "null"]
+      description: Maximum analyst view score (1-7)
+    dividendsMin:
+      type: [integer, "null"]
+      description: Minimum dividends score (1-7)
+    dividendsMax:
+      type: [integer, "null"]
+      description: Maximum dividends score (1-7)
+    otherMin:
+      type: [integer, "null"]
+      description: Minimum other risks score (1-7)
+    otherMax:
+      type: [integer, "null"]
+      description: Maximum other risks score (1-7)
+    countryRiskMin:
+      type: [integer, "null"]
+      description: Minimum country risk score (1-7)
+    countryRiskMax:
+      type: [integer, "null"]
+      description: Maximum country risk score (1-7)
+    liquidityMin:
+      type: [integer, "null"]
+      description: Minimum liquidity risk score (1-7)
+    liquidityMax:
+      type: [integer, "null"]
+      description: Maximum liquidity risk score (1-7)
+    stressTestMin:
+      type: [integer, "null"]
+      description: Minimum stress test score (1-7)
+    stressTestMax:
+      type: [integer, "null"]
+      description: Maximum stress test score (1-7)
+    volatilityMin:
+      type: [integer, "null"]
+      description: Minimum volatility score (1-7)
+    volatilityMax:
+      type: [integer, "null"]
+      description: Maximum volatility score (1-7)
+    solvencyMin:
+      type: [integer, "null"]
+      description: Minimum solvency score (1-7)
+    solvencyMax:
+      type: [integer, "null"]
+      description: Maximum solvency score (1-7)
+    regions:
+      type: [array, "null"]
+      description: Region IDs to filter by
+      items:
+        type: integer
+    countries:
+      type: [array, "null"]
+      description: Country IDs to filter by
+      items:
+        type: integer
+    sectors:
+      type: [array, "null"]
+      description: Sector IDs to filter by
+      items:
+        type: integer
+    industries:
+      type: [array, "null"]
+      description: Industry IDs to filter by
+      items:
+        type: integer
+    capitalisation:
+      type: [array, "null"]
+      description: "Market cap categories: 1=Small, 2=Mid, 3=Large"
+      items:
+        type: integer
+    currency:
+      type: [array, "null"]
+      description: ISO Alpha-3 currency codes (e.g. USD, EUR, CNY)
+      items:
+        type: string
+    orderBy:
+      type: [string, "null"]
+      description: Field name to sort results by

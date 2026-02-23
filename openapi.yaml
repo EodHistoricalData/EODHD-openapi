@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: EODHD Financial Data API
+  description: Comprehensive API for retrieving financial data including stock prices,
+    fundamentals, calendar events, news, and more from EOD Historical Data (eodhd.com)
+  version: 2.0.0
+  contact:
+    name: EODHD Support
+    url: https://eodhd.com
+    email: supportlevel1@eodhistoricaldata.com
+  termsOfService: https://eodhd.com/financial-apis/terms-conditions
+  license:
+    name: Proprietary
+    url: https://eodhd.com/financial-apis/terms-conditions
+servers:
+- url: https://eodhd.com/api
+  description: Primary API path
+- url: https://eodhistoricaldata.com/api
+  description: Alternative API path
+security:
+- EODHDQueryKey: []
+tags:
+- name: Calendar
+  description: Calendar events including earnings, IPOs, splits, dividends, and trends
+- name: End-of-Day Data
+  description: Historical and current end-of-day price data
+- name: Intraday Data
+  description: Real-time and intraday price data
+- name: Fundamentals
+  description: Fundamental data for stocks and companies
+- name: Exchanges
+  description: Exchange information and symbols
+- name: Economic Data
+  description: Economic events and macro indicators
+- name: Options
+  description: Options contracts and pricing data
+- name: News
+  description: Financial news and sentiment analysis
+- name: Technical
+  description: Technical analysis indicators
+- name: Screening
+  description: Stock screening tools
+- name: Dividends & Splits
+  description: Dividend and split history
+- name: Corporate Actions
+  description: Symbol changes and insider transactions
+- name: Market Data
+  description: Market capitalization and other market data
+- name: Logos
+  description: Company and ticker logos
+- name: User
+  description: User account and subscription information
+- name: Indices
+  description: S&P/Dow Jones indices data and components
+- name: US Treasury
+  description: US Treasury interest rates (bills, yields, long-term, real yields)
+- name: Trading Hours
+  description: Market trading hours, status, and lookup
+- name: CBOE
+  description: CBOE index data and listings
+- name: ESG
+  description: Environmental, Social, and Governance ratings (Investverte)
+- name: Risk Analytics
+  description: Market insights — performance, risk, volatility analysis (illio)
+- name: Investment Analytics
+  description: Risk scoring, bond analysis, bank financials, reports (PRAAMS)
+paths:
+  /bulk-fundamentals/{EXCHANGE}:
+    $ref: ./paths/bulk-fundamentals_EXCHANGE.yaml#/~1bulk-fundamentals~1{EXCHANGE}
+  /calendar/dividends:
+    $ref: ./paths/calendar_dividends.yaml#/~1calendar~1dividends
+  /calendar/earnings:
+    $ref: ./paths/calendar_earnings.yaml#/~1calendar~1earnings
+  /calendar/ipos:
+    $ref: ./paths/calendar_ipos.yaml#/~1calendar~1ipos
+  /calendar/splits:
+    $ref: ./paths/calendar_splits.yaml#/~1calendar~1splits
+  /calendar/trends:
+    $ref: ./paths/calendar_trends.yaml#/~1calendar~1trends
+  /cboe/index:
+    $ref: ./paths/cboe_index.yaml#/~1cboe~1index
+  /cboe/indices:
+    $ref: ./paths/cboe_indices.yaml#/~1cboe~1indices
+  /div/{ticker}:
+    $ref: ./paths/div_ticker.yaml#/~1div~1{ticker}
+  /economic-events:
+    $ref: ./paths/economic-events.yaml#/~1economic-events
+  /eod/{ticker}:
+    $ref: ./paths/eod_ticker.yaml#/~1eod~1{ticker}
+  /eod-bulk-last-day/{exchange}:
+    $ref: ./paths/eod-bulk-last-day_exchange.yaml#/~1eod-bulk-last-day~1{exchange}
+  /exchange-details/{EXCHANGE_CODE}:
+    $ref: ./paths/exchange-details_EXCHANGE_CODE.yaml#/~1exchange-details~1{EXCHANGE_CODE}
+  /exchange-symbol-list/{exchangeCode}:
+    $ref: ./paths/exchange-symbol-list_exchangeCode.yaml#/~1exchange-symbol-list~1{exchangeCode}
+  /exchanges-list:
+    $ref: ./paths/exchanges-list.yaml#/~1exchanges-list
+  /fundamentals/{ticker}:
+    $ref: ./paths/fundamentals_ticker.yaml#/~1fundamentals~1{ticker}
+  /historical-market-cap/{ticker}:
+    $ref: ./paths/historical-market-cap_ticker.yaml#/~1historical-market-cap~1{ticker}
+  /insider-transactions:
+    $ref: ./paths/insider-transactions.yaml#/~1insider-transactions
+  /internal-user:
+    $ref: ./paths/internal-user.yaml#/~1internal-user
+  /intraday/{ticker}:
+    $ref: ./paths/intraday_ticker.yaml#/~1intraday~1{ticker}
+  /logo/{symbol}:
+    $ref: ./paths/logo_symbol.yaml#/~1logo~1{symbol}
+  /logo-svg/{symbol}:
+    $ref: ./paths/logo-svg_symbol.yaml#/~1logo-svg~1{symbol}
+  /macro-indicator/{country}:
+    $ref: ./paths/macro-indicator_country.yaml#/~1macro-indicator~1{country}
+  /mp/illio/categories/performance/{id}:
+    $ref: ./paths/mp_illio_categories_performance_id.yaml#/~1mp~1illio~1categories~1performance~1{id}
+  /mp/illio/categories/risk/{id}:
+    $ref: ./paths/mp_illio_categories_risk_id.yaml#/~1mp~1illio~1categories~1risk~1{id}
+  /mp/illio/chapters/best-and-worst/{id}:
+    $ref: ./paths/mp_illio_chapters_best-and-worst_id.yaml#/~1mp~1illio~1chapters~1best-and-worst~1{id}
+  /mp/illio/chapters/beta-bands/{id}:
+    $ref: ./paths/mp_illio_chapters_beta-bands_id.yaml#/~1mp~1illio~1chapters~1beta-bands~1{id}
+  /mp/illio/chapters/performance/{id}:
+    $ref: ./paths/mp_illio_chapters_performance_id.yaml#/~1mp~1illio~1chapters~1performance~1{id}
+  /mp/illio/chapters/risk/{id}:
+    $ref: ./paths/mp_illio_chapters_risk_id.yaml#/~1mp~1illio~1chapters~1risk~1{id}
+  /mp/illio/chapters/volatility/{id}:
+    $ref: ./paths/mp_illio_chapters_volatility_id.yaml#/~1mp~1illio~1chapters~1volatility~1{id}
+  /mp/illio/chapters/volume/{id}:
+    $ref: ./paths/mp_illio_chapters_volume_id.yaml#/~1mp~1illio~1chapters~1volume~1{id}
+  /mp/investverte/companies:
+    $ref: ./paths/mp_investverte_companies.yaml#/~1mp~1investverte~1companies
+  /mp/investverte/countries:
+    $ref: ./paths/mp_investverte_countries.yaml#/~1mp~1investverte~1countries
+  /mp/investverte/country/{symbol}:
+    $ref: ./paths/mp_investverte_country_symbol.yaml#/~1mp~1investverte~1country~1{symbol}
+  /mp/investverte/esg/{symbol}:
+    $ref: ./paths/mp_investverte_esg_symbol.yaml#/~1mp~1investverte~1esg~1{symbol}
+  /mp/investverte/sector/{symbol}:
+    $ref: ./paths/mp_investverte_sector_symbol.yaml#/~1mp~1investverte~1sector~1{symbol}
+  /mp/investverte/sectors:
+    $ref: ./paths/mp_investverte_sectors.yaml#/~1mp~1investverte~1sectors
+  /mp/praams/analyse/bond/{isin}:
+    $ref: ./paths/mp_praams_analyse_bond_isin.yaml#/~1mp~1praams~1analyse~1bond~1{isin}
+  /mp/praams/analyse/equity/isin/{isin}:
+    $ref: ./paths/mp_praams_analyse_equity_isin_isin.yaml#/~1mp~1praams~1analyse~1equity~1isin~1{isin}
+  /mp/praams/analyse/equity/ticker/{ticker}:
+    $ref: ./paths/mp_praams_analyse_equity_ticker_ticker.yaml#/~1mp~1praams~1analyse~1equity~1ticker~1{ticker}
+  /mp/praams/bank/balance_sheet/isin/{isin}:
+    $ref: ./paths/mp_praams_bank_balance_sheet_isin_isin.yaml#/~1mp~1praams~1bank~1balance_sheet~1isin~1{isin}
+  /mp/praams/bank/balance_sheet/ticker/{ticker}:
+    $ref: ./paths/mp_praams_bank_balance_sheet_ticker_ticker.yaml#/~1mp~1praams~1bank~1balance_sheet~1ticker~1{ticker}
+  /mp/praams/bank/income_statement/isin/{isin}:
+    $ref: ./paths/mp_praams_bank_income_statement_isin_isin.yaml#/~1mp~1praams~1bank~1income_statement~1isin~1{isin}
+  /mp/praams/bank/income_statement/ticker/{ticker}:
+    $ref: ./paths/mp_praams_bank_income_statement_ticker_ticker.yaml#/~1mp~1praams~1bank~1income_statement~1ticker~1{ticker}
+  /mp/praams/explore/bond:
+    $ref: ./paths/mp_praams_explore_bond.yaml#/~1mp~1praams~1explore~1bond
+  /mp/praams/explore/equity:
+    $ref: ./paths/mp_praams_explore_equity.yaml#/~1mp~1praams~1explore~1equity
+  /mp/praams/reports/bond/{isin}:
+    $ref: ./paths/mp_praams_reports_bond_isin.yaml#/~1mp~1praams~1reports~1bond~1{isin}
+  /mp/praams/reports/equity/isin/{isin}:
+    $ref: ./paths/mp_praams_reports_equity_isin_isin.yaml#/~1mp~1praams~1reports~1equity~1isin~1{isin}
+  /mp/praams/reports/equity/ticker/{ticker}:
+    $ref: ./paths/mp_praams_reports_equity_ticker_ticker.yaml#/~1mp~1praams~1reports~1equity~1ticker~1{ticker}
+  /mp/tradinghours/markets:
+    $ref: ./paths/mp_tradinghours_markets.yaml#/~1mp~1tradinghours~1markets
+  /mp/tradinghours/markets/details:
+    $ref: ./paths/mp_tradinghours_markets_details.yaml#/~1mp~1tradinghours~1markets~1details
+  /mp/tradinghours/markets/lookup:
+    $ref: ./paths/mp_tradinghours_markets_lookup.yaml#/~1mp~1tradinghours~1markets~1lookup
+  /mp/tradinghours/markets/status:
+    $ref: ./paths/mp_tradinghours_markets_status.yaml#/~1mp~1tradinghours~1markets~1status
+  /mp/unicornbay/options/contracts:
+    $ref: ./paths/mp_unicornbay_options_contracts.yaml#/~1mp~1unicornbay~1options~1contracts
+  /mp/unicornbay/options/eod:
+    $ref: ./paths/mp_unicornbay_options_eod.yaml#/~1mp~1unicornbay~1options~1eod
+  /mp/unicornbay/options/underlying-symbols:
+    $ref: ./paths/mp_unicornbay_options_underlying-symbols.yaml#/~1mp~1unicornbay~1options~1underlying-symbols
+  /mp/unicornbay/spglobal/comp/{symbol}:
+    $ref: ./paths/mp_unicornbay_spglobal_comp_symbol.yaml#/~1mp~1unicornbay~1spglobal~1comp~1{symbol}
+  /mp/unicornbay/spglobal/list:
+    $ref: ./paths/mp_unicornbay_spglobal_list.yaml#/~1mp~1unicornbay~1spglobal~1list
+  /mp/unicornbay/tickdata/ticks:
+    $ref: ./paths/mp_unicornbay_tickdata_ticks.yaml#/~1mp~1unicornbay~1tickdata~1ticks
+  /news:
+    $ref: ./paths/news.yaml#/~1news
+  /news-word-weights:
+    $ref: ./paths/news-word-weights.yaml#/~1news-word-weights
+  /real-time/{ticker}:
+    $ref: ./paths/real-time_ticker.yaml#/~1real-time~1{ticker}
+  /screener:
+    $ref: ./paths/screener.yaml#/~1screener
+  /search/{query}:
+    $ref: ./paths/search_query.yaml#/~1search~1{query}
+  /sentiments:
+    $ref: ./paths/sentiments.yaml#/~1sentiments
+  /splits/{ticker}:
+    $ref: ./paths/splits_ticker.yaml#/~1splits~1{ticker}
+  /symbol-change-history:
+    $ref: ./paths/symbol-change-history.yaml#/~1symbol-change-history
+  /technical/{ticker}:
+    $ref: ./paths/technical_ticker.yaml#/~1technical~1{ticker}
+  /ticks:
+    $ref: ./paths/ticks.yaml#/~1ticks
+  /us-quote-delayed:
+    $ref: ./paths/us-quote-delayed.yaml#/~1us-quote-delayed
+  /ust/bill-rates:
+    $ref: ./paths/ust_bill-rates.yaml#/~1ust~1bill-rates
+  /ust/long-term-rates:
+    $ref: ./paths/ust_long-term-rates.yaml#/~1ust~1long-term-rates
+  /ust/real-yield-rates:
+    $ref: ./paths/ust_real-yield-rates.yaml#/~1ust~1real-yield-rates
+  /ust/yield-rates:
+    $ref: ./paths/ust_yield-rates.yaml#/~1ust~1yield-rates
+components:
+  $ref: components/index.yaml

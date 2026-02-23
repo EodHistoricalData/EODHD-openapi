@@ -1,0 +1,11 @@
+FmtJsonXml:
+  name: fmt
+  in: query
+  required: false
+  description: Output format.
+  schema:
+    type: string
+    enum:
+    - json
+    - xml
+    default: json

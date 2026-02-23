@@ -1,0 +1,8 @@
+DateFrom:
+  name: from
+  in: query
+  required: false
+  description: Start date (YYYY-MM-DD).
+  schema:
+    type: string
+    format: date

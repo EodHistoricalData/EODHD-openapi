@@ -1,0 +1,39 @@
+Resp_GetHistoricalDividends_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: Ex-dividend date.
+      declarationDate:
+        type: string
+        format: date
+        description: Declaration date of the dividend.
+      recordDate:
+        type: string
+        format: date
+        description: Record date for dividend eligibility.
+      paymentDate:
+        type: string
+        format: date
+        description: Dividend payment date.
+      period:
+        type: string
+        description: Dividend period (e.g., 'Quarterly').
+      value:
+        type: number
+        format: float
+        description: Dividend value per share in the specified currency.
+      unadjustedValue:
+        type: number
+        format: float
+        description: Unadjusted dividend value before stock splits and other adjustments.
+      currency:
+        type: string
+        description: Currency in which the dividend is paid (e.g., 'USD').
+    required:
+    - date
+    - value
+    - currency

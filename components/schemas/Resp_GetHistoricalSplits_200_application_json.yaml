@@ -1,0 +1,16 @@
+Resp_GetHistoricalSplits_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: Date of the stock split.
+      split:
+        type: string
+        description: Split ratio represented as '{new shares}/{old shares}' (e.g.,
+          '2.000000/1.000000').
+    required:
+    - date
+    - split

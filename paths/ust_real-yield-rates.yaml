@@ -1,0 +1,71 @@
+/ust/real-yield-rates:
+  get:
+    summary: Get US Treasury real yield curve rates
+    description: Returns daily US Treasury real yield curve rates (TIPS-derived real yields for 5-year, 7-year, 10-year, 20-year, and 30-year maturities).
+    operationId: GetUSTRealYieldRates
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved real yield rates.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Date of the rate.
+                  5_years:
+                    type: number
+                    description: 5-year real yield rate.
+                  7_years:
+                    type: number
+                    description: 7-year real yield rate.
+                  10_years:
+                    type: number
+                    description: 10-year real yield rate.
+                  20_years:
+                    type: number
+                    description: 20-year real yield rate.
+                  30_years:
+                    type: number
+                    description: 30-year real yield rate.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Data not found for specified date range.
+    tags:
+    - US Treasury

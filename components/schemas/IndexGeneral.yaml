@@ -1,0 +1,45 @@
+IndexGeneral:
+  type: object
+  required:
+  - Code
+  - Type
+  - Name
+  - Exchange
+  properties:
+    Code:
+      type: string
+    Type:
+      type: string
+    Name:
+      type: string
+    Exchange:
+      type: string
+    MarketCap:
+      type:
+      - number
+      - 'null'
+    CurrencyCode:
+      type:
+      - string
+      - 'null'
+    CurrencyName:
+      type:
+      - string
+      - 'null'
+    CurrencySymbol:
+      type:
+      - string
+      - 'null'
+    CountryName:
+      type:
+      - string
+      - 'null'
+    CountryISO:
+      type:
+      - string
+      - 'null'
+    OpenFigi:
+      type:
+      - string
+      - 'null'
+  additionalProperties: false

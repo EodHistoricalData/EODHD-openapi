@@ -1,0 +1,68 @@
+/mp/illio/categories/performance/{id}:
+  get:
+    summary: Get category performance analysis
+    description: Returns performance analysis at the category level for the specified instrument, comparing against category peers and benchmarks.
+    operationId: GetIllioCategoryPerformance
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved category performance data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                category:
+                  type: string
+                  description: Category name.
+                rank:
+                  type: integer
+                  description: Rank within category.
+                total_in_category:
+                  type: integer
+                  description: Total instruments in category.
+                percentile:
+                  type: number
+                  description: Percentile rank within category.
+                performance:
+                  type: object
+                  properties:
+                    instrument_return:
+                      type: number
+                      description: Instrument return.
+                    category_avg_return:
+                      type: number
+                      description: Category average return.
+                    benchmark_return:
+                      type: number
+                      description: Benchmark return.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

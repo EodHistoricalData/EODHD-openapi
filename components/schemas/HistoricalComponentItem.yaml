@@ -1,0 +1,32 @@
+HistoricalComponentItem:
+  type: object
+  required:
+  - Code
+  - Name
+  - StartDate
+  - IsActiveNow
+  - IsDelisted
+  properties:
+    Code:
+      type: string
+    Name:
+      type: string
+    StartDate:
+      type: string
+      description: YYYY-MM-DD
+    EndDate:
+      type:
+      - string
+      - 'null'
+      description: YYYY-MM-DD or null
+    IsActiveNow:
+      type: integer
+      enum:
+      - 0
+      - 1
+    IsDelisted:
+      type: integer
+      enum:
+      - 0
+      - 1
+  additionalProperties: false

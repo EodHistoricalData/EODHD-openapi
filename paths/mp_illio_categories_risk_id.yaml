@@ -1,0 +1,74 @@
+/mp/illio/categories/risk/{id}:
+  get:
+    summary: Get category risk analysis
+    description: Returns risk analysis at the category level for the specified instrument, comparing risk metrics against category peers.
+    operationId: GetIllioCategoryRisk
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved category risk data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                category:
+                  type: string
+                  description: Category name.
+                risk_rank:
+                  type: integer
+                  description: Risk rank within category.
+                total_in_category:
+                  type: integer
+                  description: Total instruments in category.
+                risk_metrics:
+                  type: object
+                  properties:
+                    instrument_volatility:
+                      type: number
+                      description: Instrument volatility.
+                    category_avg_volatility:
+                      type: number
+                      description: Category average volatility.
+                    instrument_max_drawdown:
+                      type: number
+                      description: Instrument max drawdown.
+                    category_avg_max_drawdown:
+                      type: number
+                      description: Category average max drawdown.
+                    instrument_sharpe:
+                      type: number
+                      description: Instrument Sharpe ratio.
+                    category_avg_sharpe:
+                      type: number
+                      description: Category average Sharpe ratio.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

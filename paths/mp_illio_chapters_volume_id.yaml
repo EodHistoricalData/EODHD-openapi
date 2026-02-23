@@ -1,0 +1,61 @@
+/mp/illio/chapters/volume/{id}:
+  get:
+    summary: Get volume analysis
+    description: Returns volume analysis for the specified instrument, including historical volume trends and anomalies.
+    operationId: GetIllioVolume
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Instrument identifier (e.g., 'AAPL.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved volume data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  type: string
+                  description: Instrument identifier.
+                avg_volume:
+                  type: number
+                  description: Average daily volume.
+                volume_series:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      volume:
+                        type: number
+                        description: Daily volume.
+                      relative_volume:
+                        type: number
+                        description: Volume relative to average.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Instrument not found.
+    tags:
+    - Risk Analytics

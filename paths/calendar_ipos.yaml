@@ -1,0 +1,152 @@
+/calendar/ipos:
+  get:
+    summary: Retrieve upcoming IPO data
+    description: Fetches historical and upcoming IPOs for specified date ranges.
+    operationId: GetUpcomingIPOs
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API key for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for IPO data in 'YYYY-MM-DD' format. Defaults to today
+        if not provided.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for IPO data in 'YYYY-MM-DD' format. Defaults to 7 days
+        from today if not provided.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: 'Output format. Possible values: ''csv'' for CSV and ''json'' for
+        JSON. Defaults to ''csv''.'
+      schema:
+        type: string
+        enum:
+        - csv
+        - json
+        default: csv
+    responses:
+      '200':
+        description: Successfully retrieved IPO data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Response type, here 'IPOs'.
+                description:
+                  type: string
+                  description: Description of the response data.
+                from:
+                  type: string
+                  format: date
+                  description: The start date for the IPO data.
+                to:
+                  type: string
+                  format: date
+                  description: The end date for the IPO data.
+                ipos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        description: Ticker symbol of the IPO if available.
+                      name:
+                        type: string
+                        description: Name of the company going public.
+                      exchange:
+                        type: string
+                        description: Exchange where the IPO will be listed.
+                      currency:
+                        type: string
+                        description: Currency used for the IPO pricing.
+                      start_date:
+                        type: string
+                        format: date
+                        description: Expected start date for trading.
+                      filing_date:
+                        type: string
+                        format: date
+                        description: Date when the IPO was filed.
+                      amended_date:
+                        type: string
+                        format: date
+                        description: Date when the IPO filing was amended.
+                      price_from:
+                        type: number
+                        format: float
+                        description: Lower end of the price range.
+                      price_to:
+                        type: number
+                        format: float
+                        description: Upper end of the price range.
+                      offer_price:
+                        type: number
+                        format: float
+                        description: Final offer price.
+                      shares:
+                        type: integer
+                        description: Number of shares being offered.
+                      deal_type:
+                        type: string
+                        description: Status of the IPO, e.g., 'Filed', 'Priced', 'Expected',
+                          or 'Amended'.
+                    required:
+                    - name
+                    - exchange
+                    - currency
+                    - deal_type
+              example:
+                type: IPOs
+                description: Historical and upcoming IPOs
+                from: '2018-12-02'
+                to: '2018-12-06'
+                ipos:
+                - code: 603629.SHG
+                  name: Jiangsu Lettall Electn Co Ltd
+                  exchange: Shanghai
+                  currency: CNY
+                  start_date: '2018-12-11'
+                  filing_date: '2017-06-15'
+                  amended_date: '2018-12-03'
+                  price_from: 0
+                  price_to: 0
+                  offer_price: 0
+                  shares: 25000000
+                  deal_type: Expected
+                - code: N/A
+                  name: Gsp Resource Corp
+                  exchange: TSXV
+                  currency: CAD
+                  start_date: '2018-12-03'
+                  filing_date: '2018-08-13'
+                  amended_date: '2018-11-29'
+                  price_from: 0.1523
+                  price_to: 0.1523
+                  offer_price: 0.2
+                  shares: 2500000
+                  deal_type: Priced
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: No IPO data found for the specified date range.
+    tags:
+    - Calendar

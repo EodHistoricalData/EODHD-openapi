@@ -1,0 +1,94 @@
+/bulk-fundamentals/{EXCHANGE}:
+  get:
+    summary: Retrieve bulk fundamental data for an exchange
+    description: Fetches fundamental data in bulk for all symbols on a given exchange. Supports filtering by specific symbols and data sections (General, Highlights, Valuation, etc.).
+    operationId: GetBulkFundamentals
+    parameters:
+    - name: EXCHANGE
+      in: path
+      required: true
+      description: Exchange code (e.g., 'US', 'LSE', 'TO').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication.
+      schema:
+        type: string
+    - name: symbols
+      in: query
+      required: false
+      description: Comma-separated list of symbols to filter (e.g., 'AAPL,MSFT,GOOGL').
+      schema:
+        type: string
+    - name: offset
+      in: query
+      required: false
+      description: Offset for pagination (number of records to skip).
+      schema:
+        type: integer
+        default: 0
+    - name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (max 500).
+      schema:
+        type: integer
+        default: 500
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bulk fundamental data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  General:
+                    type: object
+                    properties:
+                      Code:
+                        type: string
+                      Name:
+                        type: string
+                      Exchange:
+                        type: string
+                      Sector:
+                        type: string
+                      Industry:
+                        type: string
+                  Highlights:
+                    type: object
+                    properties:
+                      MarketCapitalization:
+                        type: number
+                      EBITDA:
+                        type: number
+                      PERatio:
+                        type: number
+                  Valuation:
+                    type: object
+                    properties:
+                      TrailingPE:
+                        type: number
+                      ForwardPE:
+                        type: number
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Exchange not found.
+    tags:
+    - Fundamentals

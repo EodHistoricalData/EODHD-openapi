@@ -1,0 +1,81 @@
+/mp/unicornbay/tickdata/ticks:
+  get:
+    summary: Retrieve marketplace tick data
+    description: Get tick-level data via the UnicornBay marketplace data provider. Returns granular trade-by-trade data for supported symbols.
+    operationId: GetMarketplaceTickData
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: s
+      in: query
+      required: true
+      description: Ticker symbol (e.g., 'AAPL' or 'AAPL.US').
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start UNIX timestamp (UTC).
+      schema:
+        type: integer
+        format: int64
+    - name: to
+      in: query
+      required: false
+      description: End UNIX timestamp (UTC).
+      schema:
+        type: integer
+        format: int64
+    - name: limit
+      in: query
+      required: false
+      description: Maximum number of ticks to return.
+      schema:
+        type: integer
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved tick data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: integer
+                    format: int64
+                    description: Trade timestamp in milliseconds since epoch.
+                  price:
+                    type: number
+                    description: Trade price.
+                  volume:
+                    type: integer
+                    description: Number of shares traded.
+                  exchange:
+                    type: string
+                    description: Exchange code where trade occurred.
+                  conditions:
+                    type: string
+                    description: Trade condition codes.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Tick data not found.
+    tags:
+    - Intraday Data

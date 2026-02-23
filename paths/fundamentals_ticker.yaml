@@ -1,0 +1,246 @@
+/fundamentals/{ticker}:
+  get:
+    summary: Retrieve filtered fundamental data for a specific symbol
+    description: Fetches various sections of fundamental data for a given stock symbol.
+      Use filters to specify the data section and sub-sections, such as Financials::Balance_Sheet::quarterly::2024-06-30
+      for quarterly Balance Sheet data.
+    operationId: GetFundamentalData
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: The ticker symbol in the format SYMBOL.EXCHANGE, e.g., 'AAPL.US'
+        for Apple Inc. on NASDAQ.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for authentication. Use 'demo' for limited access
+        with specific symbols.
+      schema:
+        type: string
+        example: demo
+    - name: filter
+      in: query
+      required: true
+      description: Filter parameter to specify data section and optional sub-sections,
+        e.g., `Financials::Balance_Sheet::quarterly::2024-06-30`. Supported sections
+        include General, Highlights, Valuation, SharesStats, Technicals, SplitsDividends,
+        AnalystRatings, Holders, InsiderTransactions, ESGScores, outstandingShares,
+        Earnings, and Financials.
+      schema:
+        type: string
+        example: Financials::Income_Statement::annual::2023-12-31
+    responses:
+      '200':
+        description: Successfully retrieved filtered fundamental data for the specified
+          symbol and section.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                General:
+                  type: object
+                  description: General company information
+                  properties:
+                    Code:
+                      type: string
+                    Name:
+                      type: string
+                    Exchange:
+                      type: string
+                    Sector:
+                      type: string
+                Highlights:
+                  type: object
+                  description: Key financial highlights
+                  properties:
+                    MarketCapitalization:
+                      type: number
+                    EBITDA:
+                      type: number
+                    PERatio:
+                      type: number
+                Valuation:
+                  type: object
+                  description: Company valuation metrics
+                  properties:
+                    TrailingPE:
+                      type: number
+                    ForwardPE:
+                      type: number
+                    EnterpriseValue:
+                      type: number
+                SharesStats:
+                  type: object
+                  description: Shares statistics
+                  properties:
+                    SharesOutstanding:
+                      type: number
+                    SharesFloat:
+                      type: number
+                    PercentInstitutions:
+                      type: number
+                Technicals:
+                  type: object
+                  description: Technical indicators
+                  properties:
+                    Beta:
+                      type: number
+                    52WeekHigh:
+                      type: number
+                    52WeekLow:
+                      type: number
+                SplitsDividends:
+                  type: object
+                  description: Dividend and split information
+                  properties:
+                    DividendYield:
+                      type: number
+                    DividendDate:
+                      type: string
+                      format: date
+                    LastSplitFactor:
+                      type: string
+                AnalystRatings:
+                  type: object
+                  description: Analyst ratings
+                  properties:
+                    Rating:
+                      type: number
+                    StrongBuy:
+                      type: integer
+                    Sell:
+                      type: integer
+                Holders:
+                  type: object
+                  description: Institutional and fund holders
+                  properties:
+                    Institutions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          totalShares:
+                            type: number
+                    Funds:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          totalShares:
+                            type: number
+                InsiderTransactions:
+                  type: array
+                  description: Insider transactions
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      ownerName:
+                        type: string
+                      transactionCode:
+                        type: string
+                      transactionAmount:
+                        type: number
+                ESGScores:
+                  type: object
+                  description: Environmental, social, and governance scores
+                  properties:
+                    environmentScore:
+                      type: number
+                    socialScore:
+                      type: number
+                    governanceScore:
+                      type: number
+                outstandingShares:
+                  type: object
+                  description: Outstanding shares data
+                  properties:
+                    annual:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          date:
+                            type: string
+                            format: date
+                          shares:
+                            type: number
+                    quarterly:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          date:
+                            type: string
+                            format: date
+                          shares:
+                            type: number
+                Earnings:
+                  type: object
+                  description: Earnings data
+                  properties:
+                    History:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          date:
+                            type: string
+                            format: date
+                          epsActual:
+                            type: number
+                    Trend:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          period:
+                            type: string
+                          epsEstimateAvg:
+                            type: number
+                Financials:
+                  type: object
+                  description: Financial statements
+                  properties:
+                    Balance_Sheet:
+                      type: object
+                      description: Balance sheet data
+                      properties:
+                        annual:
+                          type: array
+                        quarterly:
+                          type: array
+                    Income_Statement:
+                      type: object
+                      description: Income statement data
+                      properties:
+                        annual:
+                          type: array
+                        quarterly:
+                          type: array
+                    Cash_Flow:
+                      type: object
+                      description: Cash flow data
+                      properties:
+                        annual:
+                          type: array
+                        quarterly:
+                          type: array
+      '400':
+        description: Invalid request parameters or missing required filter.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Data not found for the specified symbol or filter.
+    tags:
+    - Fundamentals

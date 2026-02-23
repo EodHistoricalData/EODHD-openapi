@@ -1,0 +1,75 @@
+/mp/tradinghours/markets/status:
+  get:
+    summary: Get market current status
+    description: Returns the current trading status of a specific market (open, closed, pre-market, after-hours, etc.).
+    operationId: GetTradingHoursMarketStatus
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fin_id
+      in: query
+      required: true
+      description: Financial identifier for the market.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved market status.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fin_id:
+                  type: string
+                  description: Financial identifier.
+                exchange:
+                  type: string
+                  description: Exchange code.
+                market:
+                  type: string
+                  description: Market name.
+                status:
+                  type: string
+                  description: Current status (e.g., 'Open', 'Closed', 'Pre-Market', 'After-Hours').
+                reason:
+                  type: string
+                  description: Reason for current status (e.g., holiday name if closed).
+                local_time:
+                  type: string
+                  description: Current local time at the exchange.
+                next_open:
+                  type: string
+                  format: date-time
+                  description: Next scheduled opening time (UTC).
+                next_close:
+                  type: string
+                  format: date-time
+                  description: Next scheduled closing time (UTC).
+                until_open:
+                  type: string
+                  description: Time until next open (human readable).
+                until_close:
+                  type: string
+                  description: Time until next close (human readable).
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Market not found.
+    tags:
+    - Trading Hours

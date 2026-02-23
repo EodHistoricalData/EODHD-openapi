@@ -1,0 +1,15 @@
+OptionsEODItem:
+  type: object
+  required:
+  - id
+  - type
+  - attributes
+  properties:
+    id:
+      type: string
+    type:
+      type: string
+      const: options-eod
+    attributes:
+      $ref: ./OptionsCommonAttributes.yaml#/OptionsCommonAttributes
+  additionalProperties: false

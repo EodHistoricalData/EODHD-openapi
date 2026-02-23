@@ -1,0 +1,142 @@
+/calendar/earnings:
+  get:
+    summary: Retrieve upcoming earnings data
+    description: Fetches upcoming earnings data, with optional parameters for date
+      ranges and specific symbols.
+    operationId: GetUpcomingEarnings
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: Your API token for accessing the API.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for earnings data, in 'YYYY-MM-DD' format. Defaults
+        to today if not provided.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for earnings data, in 'YYYY-MM-DD' format. Defaults to
+        7 days from today if not provided.
+      schema:
+        type: string
+        format: date
+    - name: symbols
+      in: query
+      required: false
+      description: Specific symbols to retrieve earnings data for, separated by commas
+        (e.g., 'AAPL.US,MSFT.US'). Overrides the 'from' and 'to' parameters if used.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format, either 'csv' or 'json'. Defaults to 'csv'.
+      schema:
+        type: string
+        enum:
+        - csv
+        - json
+        default: csv
+    responses:
+      '200':
+        description: Successfully retrieved earnings data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Type of data, e.g., 'Earnings'.
+                description:
+                  type: string
+                  description: Description of the data, e.g., 'Historical and upcoming
+                    Earnings'.
+                from:
+                  type: string
+                  format: date
+                  description: Start date for the earnings data.
+                to:
+                  type: string
+                  format: date
+                  description: End date for the earnings data.
+                earnings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        description: Ticker symbol of the company.
+                      report_date:
+                        type: string
+                        format: date
+                        description: Date the earnings report was released.
+                      date:
+                        type: string
+                        format: date
+                        description: End date of the fiscal period.
+                      before_after_market:
+                        type: string
+                        description: Indicates whether the earnings report was released
+                          'BeforeMarket' or 'AfterMarket'.
+                      currency:
+                        type: string
+                        description: Currency of the earnings values.
+                      actual:
+                        type: number
+                        description: Actual reported earnings per share or other metric.
+                      estimate:
+                        type: number
+                        description: Estimated earnings per share or other metric.
+                      difference:
+                        type: number
+                        description: Difference between actual and estimated values.
+                      percent:
+                        type: number
+                        description: Percentage difference between actual and estimated
+                          values.
+                    required:
+                    - code
+                    - report_date
+                    - date
+                    - currency
+              example:
+                type: Earnings
+                description: Historical and upcoming Earnings
+                from: '2018-12-02'
+                to: '2018-12-05'
+                earnings:
+                - code: AAPL.US
+                  report_date: '2023-02-02'
+                  date: '2022-12-31'
+                  before_after_market: AfterMarket
+                  currency: USD
+                  actual: 1.88
+                  estimate: 1.94
+                  difference: -0.06
+                  percent: -3.0928
+                - code: MSFT.US
+                  report_date: '2023-04-25'
+                  date: '2023-03-31'
+                  before_after_market: AfterMarket
+                  currency: USD
+                  actual: 2.45
+                  estimate: 2.23
+                  difference: 0.22
+                  percent: 9.8655
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Earnings data not found for the specified parameters.
+    tags:
+    - Calendar

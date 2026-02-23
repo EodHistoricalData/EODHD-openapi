@@ -1,0 +1,178 @@
+/calendar/trends:
+  get:
+    summary: Retrieve earnings trends data
+    description: Fetches historical and upcoming earnings trends, including EPS and
+      revenue estimates, trends, and revisions for specific stock symbols.
+    operationId: GetEarningsTrends
+    parameters:
+    - name: symbols
+      in: query
+      required: true
+      description: Comma-separated list of stock symbols to retrieve trends data for
+        (e.g., 'AAPL.US,MSFT.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API key for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format. Currently supports only 'json'.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved earnings trends data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Response type, here 'Trends'.
+                description:
+                  type: string
+                  description: Description of the response data.
+                symbols:
+                  type: string
+                  description: Symbols for which data is returned.
+                trends:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: Stock symbol for which trend data is returned.
+                        date:
+                          type: string
+                          format: date
+                          description: Period end date for the trend data.
+                        period:
+                          type: string
+                          description: Period for the earnings trend (e.g., '+1y',
+                            '0y', '+1q', '0q').
+                        growth:
+                          type: string
+                          description: Expected EPS growth as a decimal.
+                        earningsEstimateAvg:
+                          type: string
+                          description: Average EPS estimate from analysts.
+                        earningsEstimateLow:
+                          type: string
+                          description: Lowest EPS estimate from analysts.
+                        earningsEstimateHigh:
+                          type: string
+                          description: Highest EPS estimate from analysts.
+                        earningsEstimateYearAgoEps:
+                          type: string
+                          description: EPS estimate from the previous year.
+                        earningsEstimateNumberOfAnalysts:
+                          type: string
+                          description: Number of analysts contributing to the EPS
+                            estimate.
+                        earningsEstimateGrowth:
+                          type: string
+                          description: Expected EPS growth, same as 'growth'.
+                        revenueEstimateAvg:
+                          type: string
+                          description: Average revenue estimate from analysts.
+                        revenueEstimateLow:
+                          type: string
+                          description: Lowest revenue estimate from analysts.
+                        revenueEstimateHigh:
+                          type: string
+                          description: Highest revenue estimate from analysts.
+                        revenueEstimateYearAgoEps:
+                          type: string
+                          description: Revenue estimate from the previous year.
+                        revenueEstimateNumberOfAnalysts:
+                          type: string
+                          description: Number of analysts contributing to the revenue
+                            estimate.
+                        revenueEstimateGrowth:
+                          type: string
+                          description: Expected growth in revenue.
+                        epsTrendCurrent:
+                          type: string
+                          description: Current EPS estimate.
+                        epsTrend7daysAgo:
+                          type: string
+                          description: EPS estimate 7 days ago.
+                        epsTrend30daysAgo:
+                          type: string
+                          description: EPS estimate 30 days ago.
+                        epsTrend60daysAgo:
+                          type: string
+                          description: EPS estimate 60 days ago.
+                        epsTrend90daysAgo:
+                          type: string
+                          description: EPS estimate 90 days ago.
+                        epsRevisionsUpLast7days:
+                          type: string
+                          description: Number of upward EPS revisions in the last
+                            7 days.
+                        epsRevisionsUpLast30days:
+                          type: string
+                          description: Number of upward EPS revisions in the last
+                            30 days.
+                        epsRevisionsDownLast7days:
+                          type: string
+                          description: Number of downward EPS revisions in the last
+                            7 days.
+                        epsRevisionsDownLast30days:
+                          type: string
+                          description: Number of downward EPS revisions in the last
+                            30 days.
+                      required:
+                      - code
+                      - date
+                      - period
+                      - earningsEstimateAvg
+              example:
+                type: Trends
+                description: Historical and upcoming earning trends
+                symbols: AAPL.US
+                trends:
+                - - code: AAPL.US
+                    date: '2025-09-30'
+                    period: +1y
+                    growth: '0.1200'
+                    earningsEstimateAvg: '7.4700'
+                    earningsEstimateLow: '6.8800'
+                    earningsEstimateHigh: '7.9300'
+                    earningsEstimateYearAgoEps: '6.6700'
+                    earningsEstimateNumberOfAnalysts: '42'
+                    earningsEstimateGrowth: '0.1200'
+                    revenueEstimateAvg: '420689000000.00'
+                    revenueEstimateLow: '401691000000.00'
+                    revenueEstimateHigh: '441882000000.00'
+                    revenueEstimateYearAgoEps: null
+                    revenueEstimateNumberOfAnalysts: '40'
+                    revenueEstimateGrowth: '0.0780'
+                    epsTrendCurrent: '7.4700'
+                    epsTrend7daysAgo: '7.4800'
+                    epsTrend30daysAgo: '7.4800'
+                    epsTrend60daysAgo: '7.4800'
+                    epsTrend90daysAgo: '7.3400'
+                    epsRevisionsUpLast7days: '1'
+                    epsRevisionsUpLast30days: '4'
+                    epsRevisionsDownLast30days: '3'
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Earnings trends data not found for the specified symbols.
+    tags:
+    - Calendar

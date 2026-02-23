@@ -1,0 +1,12 @@
+Resp_GetTechnicalIndicatorData_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: Date of the data point.
+      sma:
+        type: number
+        description: Simple Moving Average value (specific to the chosen function).

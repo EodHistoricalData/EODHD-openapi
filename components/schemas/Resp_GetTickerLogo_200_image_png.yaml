@@ -1,0 +1,3 @@
+Resp_GetTickerLogo_200_image_png:
+  type: string
+  format: binary

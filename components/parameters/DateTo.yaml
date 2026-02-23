@@ -1,0 +1,8 @@
+DateTo:
+  name: to
+  in: query
+  required: false
+  description: End date (YYYY-MM-DD).
+  schema:
+    type: string
+    format: date

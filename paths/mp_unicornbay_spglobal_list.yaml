@@ -1,0 +1,78 @@
+/mp/unicornbay/spglobal/list:
+  get:
+    summary: List of indices with details
+    description: Returns essential EOD details for 100+ S&P & Dow Jones indices.
+    operationId: listIndicesWithDetails
+    parameters:
+    - name: fmt
+      in: query
+      required: false
+      description: Response format.
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successful response with an array of indices.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/IndexListResponse.yaml#/IndexListResponse
+            examples:
+              sample:
+                summary: Truncated list
+                value:
+                - ID: SP1000.INDX
+                  Code: SP1000
+                  Name: S&P 1000
+                  Constituents: 1003
+                  Value: 17205.7704
+                  MarketCap: 4276250432997.9194
+                  Divisor: 248535830.1502
+                  DailyReturn: 0.0007
+                  Dividend: null
+                  AdjustedMarketCap: 4276250432997.9194
+                  AdjustedDivisor: 248535830.1502
+                  AdjustedConstituents: 1003
+                  CurrencyCode: USD
+                  CurrencyName: US Dollar
+                  CurrencySymbol: $
+                  LastUpdate: '2025-08-08'
+      '401':
+        description: Unauthorized
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          text/html:
+            schema:
+              type: string
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Indices

@@ -1,0 +1,24 @@
+Resp_GetMacroIndicatorData_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      CountryCode:
+        type: string
+        description: ISO Alpha-3 country code, e.g., 'USA' for United States.
+      CountryName:
+        type: string
+        description: Country name, e.g., 'United States'.
+      Indicator:
+        type: string
+        description: Indicator name, e.g., 'Inflation, consumer prices (annual %)'.
+      Date:
+        type: string
+        format: date
+        description: Date of the recorded value.
+      Period:
+        type: string
+        description: Period of the data, e.g., 'Annual'.
+      Value:
+        type: number
+        description: Recorded value of the indicator.

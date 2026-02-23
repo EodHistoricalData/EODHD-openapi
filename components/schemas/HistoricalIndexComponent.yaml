@@ -1,0 +1,31 @@
+HistoricalIndexComponent:
+  type: object
+  properties:
+    Code:
+      type: string
+    Name:
+      type: string
+    StartDate:
+      type:
+      - string
+      - 'null'
+      format: date
+    EndDate:
+      type:
+      - string
+      - 'null'
+      format: date
+    IsActiveNow:
+      type:
+      - integer
+      - boolean
+    IsDelisted:
+      type:
+      - integer
+      - boolean
+  required:
+  - Code
+  - Name
+  - IsActiveNow
+  - IsDelisted
+

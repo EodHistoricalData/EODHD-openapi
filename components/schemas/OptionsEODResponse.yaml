@@ -1,0 +1,16 @@
+OptionsEODResponse:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        $ref: ./OptionsEODItem.yaml#/OptionsEODItem
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

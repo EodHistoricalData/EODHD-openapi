@@ -1,0 +1,26 @@
+IndexComponent:
+  type: object
+  properties:
+    Code:
+      type: string
+    Exchange:
+      type: string
+    Name:
+      type: string
+    Sector:
+      type:
+      - string
+      - 'null'
+    Industry:
+      type:
+      - string
+      - 'null'
+    Weight:
+      type:
+      - number
+      - 'null'
+  required:
+  - Code
+  - Exchange
+  - Name
+

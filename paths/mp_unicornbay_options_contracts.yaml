@@ -1,0 +1,256 @@
+/mp/unicornbay/options/contracts:
+  get:
+    summary: Get options contracts
+    description: Fetch options contracts filtered by underlying symbol, expiration,
+      strike, type, or contract name. Supports sorting, pagination, and field selection.
+    operationId: getOptionsContracts
+    parameters:
+    - name: filter[contract]
+      in: query
+      schema:
+        type: string
+      description: Exact contract name, e.g., AAPL270115P00450000
+    - name: filter[underlying_symbol]
+      in: query
+      schema:
+        type: string
+      description: Underlying symbol, e.g., AAPL
+    - name: filter[exp_date_eq]
+      in: query
+      schema:
+        type: string
+      description: Expiration equals (YYYY-MM-DD)
+    - name: filter[exp_date_from]
+      in: query
+      schema:
+        type: string
+      description: Expiration from (YYYY-MM-DD)
+    - name: filter[exp_date_to]
+      in: query
+      schema:
+        type: string
+      description: Expiration to (YYYY-MM-DD)
+    - name: filter[tradetime_eq]
+      in: query
+      schema:
+        type: string
+      description: Trade time equals (YYYY-MM-DD)
+    - name: filter[tradetime_from]
+      in: query
+      schema:
+        type: string
+      description: Trade time from (YYYY-MM-DD)
+    - name: filter[tradetime_to]
+      in: query
+      schema:
+        type: string
+      description: Trade time to (YYYY-MM-DD)
+    - name: filter[type]
+      in: query
+      schema:
+        type: string
+        enum:
+        - put
+        - call
+      description: Option type
+    - name: filter[strike_eq]
+      in: query
+      schema:
+        type: number
+      description: Strike equals
+    - name: filter[strike_from]
+      in: query
+      schema:
+        type: number
+      description: Strike from
+    - name: filter[strike_to]
+      in: query
+      schema:
+        type: number
+      description: Strike to
+    - name: sort
+      in: query
+      schema:
+        type: string
+        enum:
+        - exp_date
+        - strike
+        - -exp_date
+        - -strike
+      description: Sort by expiration date or strike (asc/desc).
+    - name: page[offset]
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 10000
+        default: 0
+      description: Pagination offset (records to skip). Max 10000.
+    - name: page[limit]
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+      description: Pagination limit. Default & max 1000.
+    - name: fields[options-contracts]
+      in: query
+      schema:
+        type: string
+      description: CSV of fields to include (e.g., contract,exp_date,strike).
+    - name: fmt
+      in: query
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+      description: Response format.
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Contracts list.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/OptionsContractsResponse.yaml#/OptionsContractsResponse
+            examples:
+              sample:
+                summary: AAPL, 5 newest expirations
+                value:
+                  meta:
+                    offset: 0
+                    limit: 5
+                    total: 14394
+                    fields:
+                    - contract
+                    - underlying_symbol
+                    - exp_date
+                    - expiration_type
+                    - type
+                    - strike
+                    - exchange
+                    - currency
+                    - open
+                    - high
+                    - low
+                    - last
+                    - last_size
+                    - change
+                    - pctchange
+                    - previous
+                    - previous_date
+                    - bid
+                    - bid_date
+                    - bid_size
+                    - ask
+                    - ask_date
+                    - ask_size
+                    - moneyness
+                    - volume
+                    - volume_change
+                    - volume_pctchange
+                    - open_interest
+                    - open_interest_change
+                    - open_interest_pctchange
+                    - volatility
+                    - volatility_change
+                    - volatility_pctchange
+                    - theoretical
+                    - delta
+                    - gamma
+                    - theta
+                    - vega
+                    - rho
+                    - tradetime
+                    - vol_oi_ratio
+                    - dte
+                    - midpoint
+                  data:
+                  - id: AAPL271217C00420000
+                    type: options-contracts
+                    attributes:
+                      contract: AAPL271217C00420000
+                      underlying_symbol: AAPL
+                      exp_date: '2027-12-17'
+                      expiration_type: monthly
+                      type: call
+                      strike: 420
+                      exchange: NASDAQ
+                      currency: USD
+                      open: 3.35
+                      high: 3.35
+                      low: 3.29
+                      last: 3.29
+                      last_size: 1
+                      change: 0.09
+                      pctchange: 2.81
+                      previous: 3.2
+                      previous_date: '2025-08-11'
+                      bid: 2.85
+                      bid_date: '2025-08-12 20:00:00'
+                      bid_size: 58
+                      ask: 4.4
+                      ask_date: '2025-08-12 20:00:00'
+                      ask_size: 173
+                      moneyness: -0.83
+                      volume: 4
+                      volume_change: -5
+                      volume_pctchange: -55.56
+                      open_interest: 299
+                      open_interest_change: 7
+                      open_interest_pctchange: 2.4
+                      volatility: 0.2337
+                      volatility_change: -0.0023
+                      volatility_pctchange: -0.99
+                      theoretical: 3.29
+                      delta: 0.097466
+                      gamma: 0.002088
+                      theta: -0.00993
+                      vega: 0.604392
+                      rho: 0.448547
+                      tradetime: '2025-08-12'
+                      vol_oi_ratio: 0.01
+                      dte: 857
+                      midpoint: 3.63
+                  links:
+                    next: https://eodhd.com/api/mp/unicornbay/options/contracts?sort=-exp_date&filter[underlying_symbol]=AAPL&page[offset]=5&page[limit]=5
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Options

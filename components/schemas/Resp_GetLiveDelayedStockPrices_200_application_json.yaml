@@ -1,0 +1,54 @@
+Resp_GetLiveDelayedStockPrices_200_application_json:
+  oneOf:
+  - type: object
+    properties:
+      code:
+        type: string
+      timestamp:
+        type: integer
+      gmtoffset:
+        type: integer
+      open:
+        type: number
+      high:
+        type: number
+      low:
+        type: number
+      close:
+        type: number
+      volume:
+        type: integer
+      previousClose:
+        type: number
+      change:
+        type: number
+      change_p:
+        type: number
+  - type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+        timestamp:
+          type: integer
+        gmtoffset:
+          type: integer
+        open:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        close:
+          type: number
+        volume:
+          type:
+          - integer
+          - 'null'
+        previousClose:
+          type: number
+        change:
+          type: number
+        change_p:
+          type: number

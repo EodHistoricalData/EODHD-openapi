@@ -1,0 +1,99 @@
+Resp_GetBulkEODData_200_application_json:
+  oneOf:
+  - type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Ticker code.
+        exchange_short_name:
+          type: string
+          description: Exchange symbol.
+        date:
+          type: string
+          format: date
+          description: Data date.
+        open:
+          type: number
+          description: Open price.
+        high:
+          type: number
+          description: High price.
+        low:
+          type: number
+          description: Low price.
+        close:
+          type: number
+          description: Close price.
+        adjusted_close:
+          type: number
+          description: Adjusted close price.
+        volume:
+          type: integer
+          description: Trading volume.
+  - type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Ticker code.
+        exchange:
+          type: string
+          description: Exchange symbol.
+        date:
+          type: string
+          format: date
+          description: Date of the split.
+        split:
+          type: string
+          description: Stock split ratio.
+    description: Bulk splits data.
+  - type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Ticker code.
+        exchange:
+          type: string
+          description: Exchange symbol.
+        date:
+          type: string
+          format: date
+          description: Date of dividend.
+        dividend:
+          type: number
+          description: Dividend amount.
+        currency:
+          type: string
+          description: Dividend currency.
+        declarationDate:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Declaration date (if available).
+        recordDate:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Record date (if available).
+        paymentDate:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Payment date (if available).
+        period:
+          type:
+          - string
+          - 'null'
+          description: Period type (if available).
+        unadjustedValue:
+          type: number
+          description: Unadjusted dividend value.
+    description: Bulk dividends data.

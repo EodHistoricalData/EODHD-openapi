@@ -1,0 +1,67 @@
+IndexListItem:
+  type: object
+  required:
+  - ID
+  - Code
+  - Name
+  - Constituents
+  - LastUpdate
+  properties:
+    ID:
+      type: string
+    Code:
+      type: string
+    Name:
+      type: string
+    Constituents:
+      type: integer
+    LastUpdate:
+      type: string
+      description: YYYY-MM-DD
+    Value:
+      type:
+      - number
+      - 'null'
+    MarketCap:
+      type:
+      - number
+      - 'null'
+    Divisor:
+      type:
+      - number
+      - 'null'
+    DailyReturn:
+      type:
+      - number
+      - string
+      - 'null'
+    Dividend:
+      type:
+      - number
+      - 'null'
+    AdjustedMarketCap:
+      type:
+      - number
+      - 'null'
+    AdjustedDivisor:
+      type:
+      - number
+      - 'null'
+    AdjustedConstituents:
+      type:
+      - integer
+      - 'null'
+    CurrencyCode:
+      type:
+      - string
+      - 'null'
+    CurrencyName:
+      type:
+      - string
+      - 'null'
+    CurrencySymbol:
+      type:
+      - string
+      - 'null'
+  additionalProperties: false
+

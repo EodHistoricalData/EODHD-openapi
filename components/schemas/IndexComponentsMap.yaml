@@ -1,0 +1,5 @@
+IndexComponentsMap:
+  type: object
+  additionalProperties:
+    $ref: ./IndexComponentItem.yaml#/IndexComponentItem
+  properties: {}

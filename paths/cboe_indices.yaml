@@ -1,0 +1,56 @@
+/cboe/indices:
+  get:
+    summary: List CBOE indices
+    description: Returns a list of all available CBOE indices with their latest values and metadata.
+    operationId: GetCBOEIndices
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved CBOE indices list.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Index symbol code.
+                  name:
+                    type: string
+                    description: Index name.
+                  last_value:
+                    type: number
+                    description: Latest index value.
+                  change:
+                    type: number
+                    description: Change from previous close.
+                  change_p:
+                    type: number
+                    description: Percentage change.
+                  last_update:
+                    type: string
+                    format: date
+                    description: Date of last update.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '429':
+        description: Too Many Requests.
+    tags:
+    - CBOE

@@ -1,0 +1,25 @@
+MetaPagination:
+  type: object
+  description: Pagination and field metadata.
+  required:
+  - total
+  - fields
+  properties:
+    offset:
+      type: integer
+      minimum: 0
+    limit:
+      type: integer
+      minimum: 1
+    total:
+      type: integer
+      minimum: 0
+    fields:
+      type: array
+      items:
+        type: string
+    compact:
+      type:
+      - boolean
+      - 'null'
+  additionalProperties: false

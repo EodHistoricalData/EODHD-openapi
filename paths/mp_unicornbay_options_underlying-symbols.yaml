@@ -1,0 +1,101 @@
+/mp/unicornbay/options/underlying-symbols:
+  get:
+    summary: List underlying symbols with options
+    description: Returns the list of all supported stock symbols for which option
+      contracts are available. May be paginated.
+    operationId: listUnderlyingSymbols
+    parameters:
+    - name: page[offset]
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 10000
+        default: 0
+      description: Pagination offset (records to skip).
+    - name: page[limit]
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+      description: Pagination limit. Default & max 1000.
+    - name: fmt
+      in: query
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+      description: Response format.
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Supported underlying symbols.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/UnderlyingSymbolsResponse.yaml#/UnderlyingSymbolsResponse
+            examples:
+              sample:
+                summary: First page (truncated)
+                value:
+                  meta:
+                    total: 5972
+                    fields:
+                    - underlying_symbol
+                    compact: true
+                  data:
+                  - A
+                  - AA
+                  - AAAU
+                  - AACT
+                  - AADI
+                  - AAL
+                  - AAMI
+                  - AAN
+                  - AAOI
+                  - AAON
+                  - AAP
+                  - AAPL
+                  links:
+                    next: null
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Options

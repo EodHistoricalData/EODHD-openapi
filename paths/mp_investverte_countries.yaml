@@ -1,0 +1,58 @@
+/mp/investverte/countries:
+  get:
+    summary: List ESG country scores
+    description: Returns a list of all countries with their aggregate ESG scores from Investverte.
+    operationId: GetESGCountries
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved ESG country scores.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  country:
+                    type: string
+                    description: Country name.
+                  country_code:
+                    type: string
+                    description: ISO country code.
+                  esg_score:
+                    type: number
+                    description: Overall ESG score.
+                  environmental_score:
+                    type: number
+                    description: Environmental pillar score.
+                  social_score:
+                    type: number
+                    description: Social pillar score.
+                  governance_score:
+                    type: number
+                    description: Governance pillar score.
+                  num_companies:
+                    type: integer
+                    description: Number of rated companies in country.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '429':
+        description: Too Many Requests.
+    tags:
+    - ESG

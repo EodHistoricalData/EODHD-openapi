@@ -1,0 +1,18 @@
+FinancialStatementRow:
+  type: object
+  description: Generic financial statement row. Contains a required 'date' plus arbitrary
+    key-value pairs for line items.
+  properties:
+    date:
+      type: string
+      format: date
+      description: Statement period end date.
+  additionalProperties:
+    oneOf:
+    - type: number
+    - type: integer
+    - type: string
+    - type: boolean
+    - type: 'null'
+  required:
+  - date

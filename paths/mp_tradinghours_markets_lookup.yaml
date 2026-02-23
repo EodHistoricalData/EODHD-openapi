@@ -1,0 +1,73 @@
+/mp/tradinghours/markets/lookup:
+  get:
+    summary: Lookup market by exchange code
+    description: Looks up a specific market by its exchange code or MIC and returns matching market details.
+    operationId: LookupTradingHoursMarket
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: exchange
+      in: query
+      required: false
+      description: Exchange code to look up (e.g., 'US', 'LSE').
+      schema:
+        type: string
+    - name: mic
+      in: query
+      required: false
+      description: Market Identifier Code (MIC) to look up.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully found matching market.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fin_id:
+                  type: string
+                  description: Unique financial identifier.
+                exchange:
+                  type: string
+                  description: Exchange code.
+                market:
+                  type: string
+                  description: Market name.
+                products:
+                  type: string
+                  description: Products traded.
+                mic:
+                  type: string
+                  description: Market Identifier Code.
+                country:
+                  type: string
+                  description: Country name.
+                country_code:
+                  type: string
+                  description: ISO country code.
+                timezone:
+                  type: string
+                  description: Market timezone.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Market not found.
+    tags:
+    - Trading Hours

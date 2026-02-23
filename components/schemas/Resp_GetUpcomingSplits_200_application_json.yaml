@@ -1,0 +1,68 @@
+Resp_GetUpcomingSplits_200_application_json:
+  type: object
+  properties:
+    type:
+      type: string
+      description: Response type, here 'Splits'.
+    description:
+      type: string
+      description: Description of the response data.
+    from:
+      type: string
+      format: date
+      description: The start date for the split data.
+    to:
+      type: string
+      format: date
+      description: The end date for the split data.
+    splits:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Ticker symbol of the stock undergoing the split.
+          split_date:
+            type: string
+            format: date
+            description: The date when the stock split takes effect.
+          optionable:
+            type: string
+            enum:
+            - Y
+            - N
+            description: Indicates if the stock is optionable ('Y' for yes, 'N' for
+              no).
+          old_shares:
+            type: integer
+            description: The number of shares before the split.
+          new_shares:
+            type: integer
+            description: The number of shares after the split.
+        required:
+        - code
+        - split_date
+        - old_shares
+        - new_shares
+  example:
+    type: Splits
+    description: Historical and upcoming splits
+    from: '2018-12-02'
+    to: '2018-12-06'
+    splits:
+    - code: AINV.US
+      split_date: '2018-12-03'
+      optionable: N
+      old_shares: 3
+      new_shares: 1
+    - code: SDV.AU
+      split_date: '2018-12-03'
+      optionable: N
+      old_shares: 10
+      new_shares: 1
+    - code: 1604.TW
+      split_date: '2018-12-04'
+      optionable: N
+      old_shares: 1000
+      new_shares: 800

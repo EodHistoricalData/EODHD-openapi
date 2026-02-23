@@ -1,0 +1,36 @@
+TradingHoursMarketItem:
+  type: object
+  properties:
+    fin_id:
+      type: string
+      description: Unique identifier for the trading schedule (e.g., US.NYSE,
+        JP.JPX).
+    exchange:
+      type: string
+      description: Exchange name (e.g., New York Stock Exchange).
+    market:
+      type: [string, "null"]
+      description: Market segment name (e.g., Cash Market, Equity Market).
+    products:
+      type: [string, "null"]
+      description: Products traded (e.g., Shares, ETPs, Hybrid Securities).
+    mic:
+      type: string
+      description: Market Identifier Code (ISO 10383).
+    asset_type:
+      type: string
+      description: Asset type (e.g., Securities, Equities).
+    group:
+      type: string
+      description: Access tier (Core, Extended, or All).
+    permanently_closed:
+      type: [string, "null"]
+      description: Date the market permanently closed, or null if active.
+    holidays_min_date:
+      type: string
+      format: date
+      description: Earliest holiday data available (YYYY-MM-DD).
+    holidays_max_date:
+      type: string
+      format: date
+      description: Latest holiday data available (YYYY-MM-DD).

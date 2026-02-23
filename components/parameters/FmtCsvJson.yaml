@@ -1,0 +1,11 @@
+FmtCsvJson:
+  name: fmt
+  in: query
+  required: false
+  description: Output format.
+  schema:
+    type: string
+    enum:
+    - json
+    - csv
+    default: json

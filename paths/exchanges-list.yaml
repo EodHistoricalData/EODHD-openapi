@@ -1,0 +1,75 @@
+/exchanges-list:
+  get:
+    summary: List supported exchanges
+    description: Retrieve the list of supported exchanges with their details.
+    operationId: GetListOfExchanges
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Response format. Options are 'json' and 'csv'. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    responses:
+      '200':
+        description: Successful response with a list of exchanges.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  Name:
+                    type: string
+                  Code:
+                    type: string
+                  OperatingMIC:
+                    type:
+                    - string
+                    - 'null'
+                  Country:
+                    type: string
+                  Currency:
+                    type: string
+                  CountryISO2:
+                    type: string
+                  CountryISO3:
+                    type: string
+            example:
+            - Name: USA Stocks
+              Code: US
+              OperatingMIC: XNAS, XNYS, OTCM
+              Country: USA
+              Currency: USD
+              CountryISO2: US
+              CountryISO3: USA
+            - Name: Toronto Exchange
+              Code: TO
+              OperatingMIC: XTSE
+              Country: Canada
+              Currency: CAD
+              CountryISO2: CA
+              CountryISO3: CAN
+            - Name: Berlin Exchange
+              Code: BE
+              OperatingMIC: XBER
+              Country: Germany
+              Currency: EUR
+              CountryISO2: DE
+              CountryISO3: DEU
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized.
+    tags:
+    - Exchanges

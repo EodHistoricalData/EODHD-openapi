@@ -1,0 +1,26 @@
+Resp_GetSentimentData_200_application_json:
+  type: object
+  properties:
+    ticker:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            count:
+              type: integer
+              description: Number of articles or mentions analyzed for the given date.
+            normalized:
+              type: number
+              minimum: -1
+              maximum: 1
+              description: Normalized sentiment score, where -1 represents a very
+                negative sentiment, 0 is neutral, and 1 is very positive.
+          required:
+          - date
+          - count
+          - normalized

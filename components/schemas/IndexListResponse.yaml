@@ -1,0 +1,4 @@
+IndexListResponse:
+  type: array
+  items:
+    $ref: ./IndexListItem.yaml#/IndexListItem

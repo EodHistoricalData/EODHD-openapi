@@ -1,0 +1,61 @@
+Resp_GetInsiderTransactions_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Ticker symbol of the company
+      exchange:
+        type: string
+        description: Exchange where the stock is listed
+      date:
+        type: string
+        format: date
+        description: Report date of the transaction
+      reportDate:
+        type: string
+        format: date
+        description: Date the transaction was reported to the SEC
+      ownerCik:
+        type: [string, "null"]
+        description: Unique identifier for the owner in SEC filings
+      ownerName:
+        type: string
+        description: Name of the insider who executed the transaction
+      ownerRelationship:
+        type: [string, "null"]
+        description: Relationship of the owner to the company (e.g., Director)
+      ownerTitle:
+        type: string
+        description: Title or role of the insider in the company
+      transactionDate:
+        type: string
+        format: date
+        description: Date when the transaction occurred
+      transactionCode:
+        type: string
+        enum:
+        - P
+        - S
+        description: 'Type of transaction: ''P'' for Purchase, ''S'' for Sale'
+      transactionAmount:
+        type: integer
+        description: Number of shares involved in the transaction
+      transactionPrice:
+        type: number
+        format: float
+        description: Price per share at the time of the transaction
+      transactionAcquiredDisposed:
+        type: string
+        enum:
+        - A
+        - D
+        description: Indicates whether securities were Acquired (A) or Disposed (D)
+      postTransactionAmount:
+        type: [integer, "null"]
+        description: Total number of shares held by the insider post-transaction
+      link:
+        type: string
+        format: uri
+        description: Link to the original SEC filing document

@@ -1,0 +1,82 @@
+PraamsBankBalanceSheetItem:
+  type: object
+  description: Bank balance sheet record for one reporting period.
+  properties:
+    date:
+      type: string
+      description: Period end date in ISO 8601 format
+    period:
+      type: string
+      description: "Period identifier: FY for full year, Q1-Q4 for quarters"
+    isQuarter:
+      type: boolean
+      description: true for quarterly data, false for annual
+    loansGross:
+      type: [number, "null"]
+      description: Gross loans before provisions
+    loanProvisions:
+      type: [number, "null"]
+      description: Loan loss provisions
+    netLoan:
+      type: [number, "null"]
+      description: Net loans after provisions
+    cashAndEquivalents:
+      type: [number, "null"]
+      description: Cash and cash equivalents
+    depositsWithBanksNet:
+      type: [number, "null"]
+      description: Net deposits with other banks
+    securitiesRepoAssets:
+      type: [number, "null"]
+      description: Securities purchased under agreements to resell
+    longTermInvestments:
+      type: number
+      description: Long-term investments
+    investmentPortfolio:
+      type: number
+      description: Investment portfolio
+    totalAssets:
+      type: number
+      description: Total assets
+    receivables:
+      type: number
+      description: Receivables
+    otherAssets:
+      type: number
+      description: Other assets (balancing item)
+    deposits:
+      type: [number, "null"]
+      description: Customer deposits
+    securitiesRepoEquity:
+      type: [number, "null"]
+      description: Securities sold under agreements to repurchase
+    tradingLiabilities:
+      type: [number, "null"]
+      description: Trading liabilities
+    securityLiabilities:
+      type: [number, "null"]
+      description: Security liabilities
+    payables:
+      type: [number, "null"]
+      description: Payables
+    shortTermDebt:
+      type: number
+      description: Short-term debt
+    longTermDebt:
+      type: number
+      description: Long-term debt
+    totalEquity:
+      type: number
+      description: Total shareholders equity
+    totalEquityAndLiabilities:
+      type: number
+      description: Total equity and liabilities
+    otherLiabilities:
+      type: number
+      description: Other liabilities (balancing item)
+    interestEarningAssets:
+      type: number
+      description: Total interest-earning assets
+    interestBearingLiabilities:
+      type: number
+      description: Total interest-bearing liabilities

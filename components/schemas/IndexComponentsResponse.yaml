@@ -1,0 +1,14 @@
+IndexComponentsResponse:
+  type: object
+  required:
+  - General
+  - Components
+  - HistoricalTickerComponents
+  properties:
+    General:
+      $ref: ./IndexGeneral.yaml#/IndexGeneral
+    Components:
+      $ref: ./IndexComponentsMap.yaml#/IndexComponentsMap
+    HistoricalTickerComponents:
+      $ref: ./HistoricalComponentsMap.yaml#/HistoricalComponentsMap
+  additionalProperties: false

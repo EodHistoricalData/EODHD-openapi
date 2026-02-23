@@ -1,0 +1,11 @@
+Links:
+  type: object
+  required:
+  - next
+  properties:
+    next:
+      type:
+      - string
+      - 'null'
+      description: URL to fetch the next page, or null if last page.
+  additionalProperties: false

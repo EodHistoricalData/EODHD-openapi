@@ -1,0 +1,268 @@
+/mp/unicornbay/options/eod:
+  get:
+    summary: Get end-of-day options data
+    description: Returns EOD trades/bid data for options, with the same filter set
+      as contracts. Supports compact mode (`compact=1`) to return arrays instead of
+      objects.
+    operationId: getOptionsEOD
+    parameters:
+    - name: filter[contract]
+      in: query
+      schema:
+        type: string
+      description: Exact contract name, e.g., AAPL270115P00450000
+    - name: filter[underlying_symbol]
+      in: query
+      schema:
+        type: string
+      description: Underlying symbol, e.g., AAPL
+    - name: filter[exp_date_eq]
+      in: query
+      schema:
+        type: string
+      description: Expiration equals (YYYY-MM-DD)
+    - name: filter[exp_date_from]
+      in: query
+      schema:
+        type: string
+      description: Expiration from (YYYY-MM-DD)
+    - name: filter[exp_date_to]
+      in: query
+      schema:
+        type: string
+      description: Expiration to (YYYY-MM-DD)
+    - name: filter[tradetime_eq]
+      in: query
+      schema:
+        type: string
+      description: Trade time equals (YYYY-MM-DD)
+    - name: filter[tradetime_from]
+      in: query
+      schema:
+        type: string
+      description: Trade time from (YYYY-MM-DD)
+    - name: filter[tradetime_to]
+      in: query
+      schema:
+        type: string
+      description: Trade time to (YYYY-MM-DD)
+    - name: filter[type]
+      in: query
+      schema:
+        type: string
+        enum:
+        - put
+        - call
+      description: Option type
+    - name: filter[strike_eq]
+      in: query
+      schema:
+        type: number
+      description: Strike equals
+    - name: filter[strike_from]
+      in: query
+      schema:
+        type: number
+      description: Strike from
+    - name: filter[strike_to]
+      in: query
+      schema:
+        type: number
+      description: Strike to
+    - name: sort
+      in: query
+      schema:
+        type: string
+        enum:
+        - exp_date
+        - strike
+        - -exp_date
+        - -strike
+      description: Sort by expiration date or strike (asc/desc).
+    - name: page[offset]
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 10000
+        default: 0
+      description: Pagination offset (records to skip). Max 10000.
+    - name: page[limit]
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+      description: Pagination limit. Default & max 1000.
+    - name: fields[options-eod]
+      in: query
+      schema:
+        type: string
+      description: CSV of fields to include (e.g., contract,exp_date,strike).
+    - name: compact
+      in: query
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 0
+      description: Set 1 for compact mode (rows as arrays in `data`, columns = `meta.fields`).
+    - name: fmt
+      in: query
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+      description: Response format.
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: EOD options data (standard or compact).
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: ../components/schemas/OptionsEODResponse.yaml#/OptionsEODResponse
+              - $ref: ../components/schemas/OptionsEODCompactResponse.yaml#/OptionsEODCompactResponse
+            examples:
+              standard:
+                summary: Standard JSON (objects)
+                value:
+                  meta:
+                    offset: 0
+                    limit: 5
+                    total: 227
+                    fields:
+                    - contract
+                    - underlying_symbol
+                    - exp_date
+                    - expiration_type
+                    - type
+                    - strike
+                    - exchange
+                    - currency
+                    - open
+                    - high
+                    - low
+                    - last
+                    - last_size
+                    - change
+                    - pctchange
+                    - previous
+                    - previous_date
+                    - bid
+                    - bid_date
+                    - bid_size
+                    - ask
+                    - ask_date
+                    - ask_size
+                    - moneyness
+                    - volume
+                    - volume_change
+                    - volume_pctchange
+                    - open_interest
+                    - open_interest_change
+                    - open_interest_pctchange
+                    - volatility
+                    - volatility_change
+                    - volatility_pctchange
+                    - theoretical
+                    - delta
+                    - gamma
+                    - theta
+                    - vega
+                    - rho
+                    - tradetime
+                    - vol_oi_ratio
+                    - dte
+                    - midpoint
+                  data:
+                  - id: AAPL270115P00450000-2025-08-12
+                    type: options-eod
+                    attributes:
+                      contract: AAPL270115P00450000
+                      underlying_symbol: AAPL
+                      exp_date: '2027-01-15'
+                      expiration_type: monthly
+                      type: put
+                      strike: 450
+                      exchange: NASDAQ
+                      currency: USD
+                      open: 0
+                      high: 0
+                      low: 0
+                      last: 245.9
+                      last_size: 0
+                      change: 0
+                      pctchange: 0
+                      previous: 0
+                      previous_date: null
+                      bid: 218.4
+                      bid_date: '2025-08-12 19:59:59'
+                      bid_size: 115
+                      ask: 222.2
+                      ask_date: '2025-08-12 19:59:59'
+                      ask_size: 17
+                      moneyness: 0.96
+                      volume: 0
+                      volume_change: 0
+                      volume_pctchange: 0
+                      open_interest: 0
+                      open_interest_change: 0
+                      open_interest_pctchange: 0
+                      volatility: 0.4863
+                      volatility_change: 0
+                      volatility_pctchange: 0
+                      theoretical: 222.2
+                      delta: -0.877218
+                      gamma: 0.001594
+                      theta: -0.012408
+                      vega: 0.482281
+                      rho: -1.0
+                      tradetime: '2025-06-08'
+                      vol_oi_ratio: 0
+                      dte: 521
+                      midpoint: 220.3
+                  links:
+                    next: https://eodhd.com/api/mp/unicornbay/options/eod?sort=-exp_date&filter[contract]=AAPL270115P00450000&page[offset]=5&page[limit]=5
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Options

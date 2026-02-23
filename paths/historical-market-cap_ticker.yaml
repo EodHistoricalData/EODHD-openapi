@@ -1,0 +1,85 @@
+/historical-market-cap/{ticker}:
+  get:
+    summary: Retrieve historical market capitalization data
+    description: Fetches historical market capitalization for a specified stock symbol
+      with weekly frequency.
+    operationId: GetHistoricalMarketCap
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: The ticker symbol of the stock, e.g., 'AAPL.US' or simply 'AAPL'.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: Your API key for authentication.
+      schema:
+        type: string
+    - name: from
+      in: query
+      required: false
+      description: Start date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for data retrieval in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format, either 'json' or 'csv'. Defaults to 'json'.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved historical market capitalization data.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                        description: The date of the market capitalization value.
+                      value:
+                        type: number
+                        description: Market capitalization value in USD.
+                    required:
+                    - date
+                    - value
+            example:
+              data:
+              - date: '2022-06-07'
+                value: 2406898266500
+              - date: '2022-06-14'
+                value: 2148744629600
+              - date: '2022-06-21'
+                value: 2199080542500
+              - date: '2022-06-28'
+                value: 2212148752300
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Market capitalization data not found for the specified ticker
+          or date range.
+    tags:
+    - Market Data

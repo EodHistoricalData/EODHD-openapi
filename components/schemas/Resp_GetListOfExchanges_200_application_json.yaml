@@ -1,0 +1,21 @@
+Resp_GetListOfExchanges_200_application_json:
+  type: array
+  items:
+    type: object
+    properties:
+      Name:
+        type: string
+      Code:
+        type: string
+      OperatingMIC:
+        type:
+        - string
+        - 'null'
+      Country:
+        type: string
+      Currency:
+        type: string
+      CountryISO2:
+        type: string
+      CountryISO3:
+        type: string

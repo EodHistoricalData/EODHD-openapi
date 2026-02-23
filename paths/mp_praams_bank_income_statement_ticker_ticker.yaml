@@ -1,0 +1,75 @@
+/mp/praams/bank/income_statement/ticker/{ticker}:
+  get:
+    summary: Get bank income statement by ticker
+    description: Returns bank-specific income statement analysis for the specified ticker from PRAAMS.
+    operationId: GetPRAAMSBankIncomeByTicker
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: Ticker symbol (e.g., 'JPM.US').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved bank income statement.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticker:
+                  type: string
+                name:
+                  type: string
+                net_interest_income:
+                  type: number
+                  description: Net interest income.
+                non_interest_income:
+                  type: number
+                  description: Non-interest income.
+                provision_for_loan_losses:
+                  type: number
+                net_income:
+                  type: number
+                return_on_assets:
+                  type: number
+                  description: Return on assets (ROA).
+                return_on_equity:
+                  type: number
+                  description: Return on equity (ROE).
+                efficiency_ratio:
+                  type: number
+                periods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      net_interest_income:
+                        type: number
+                      net_income:
+                        type: number
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Bank data not found.
+    tags:
+    - Investment Analytics

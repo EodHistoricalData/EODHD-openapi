@@ -1,0 +1,60 @@
+Resp_GetStockScreenerData_200_application_json:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Ticker symbol.
+          name:
+            type: string
+            description: Company name.
+          last_day_data_date:
+            type: string
+            format: date
+            description: Date of the latest data.
+          adjusted_close:
+            type: number
+            description: Latest adjusted close price.
+          refund_1d:
+            type: number
+            description: Refund value for the last day.
+          refund_1d_p:
+            type: number
+            description: Refund percentage change for the last day.
+          refund_5d:
+            type: number
+            description: Refund value for the last 5 days.
+          refund_5d_p:
+            type: number
+            description: Refund percentage change for the last 5 days.
+          exchange:
+            type: string
+            description: Exchange code.
+          currency_symbol:
+            type: string
+            description: Currency symbol.
+          market_capitalization:
+            type: integer
+            description: Market capitalization in USD.
+          earnings_share:
+            type: number
+            description: Earnings per share (EPS).
+          dividend_yield:
+            type: number
+            description: Dividend yield percentage.
+          sector:
+            type: string
+            description: Company sector.
+          industry:
+            type: string
+            description: Company industry.
+          avgvol_1d:
+            type: integer
+            description: Average daily volume for the last day.
+          avgvol_200d:
+            type: number
+            description: Average daily volume over the last 200 days.
