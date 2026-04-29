@@ -213,5 +213,9 @@ paths:
     $ref: ./paths/ust_real-yield-rates.yaml#/~1ust~1real-yield-rates
   /ust/yield-rates:
     $ref: ./paths/ust_yield-rates.yaml#/~1ust~1yield-rates
+  /v1.1/bulk-fundamentals/{EXCHANGE}:
+    $ref: ./paths/v1.1_bulk-fundamentals_EXCHANGE.yaml#/~1v1.1~1bulk-fundamentals~1{EXCHANGE}
+  /v1.1/fundamentals/{ticker}:
+    $ref: ./paths/v1.1_fundamentals_ticker.yaml#/~1v1.1~1fundamentals~1{ticker}
 components:
   $ref: components/index.yaml
