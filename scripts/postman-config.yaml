@@ -1,0 +1,1030 @@
+# Postman Collection Folder Config
+# Maps OpenAPI endpoints → Postman folders with request variants.
+# Grouping matches https://eodhd.com/financial-apis/ documentation structure.
+
+collection:
+  _postman_id: "963a320c-db6e-4629-96fe-adf9dac8e14d"
+  name: "EODHD Documentation"
+  description: >
+    Complete documentation for the EODHD Financial Data API — 150,000+ tickers across 70+ exchanges.
+
+    All endpoints use `{{api_url}}` as the base URL and `{{api_token}}` for authentication.
+    Get your free API key at https://eodhd.com/register
+
+    Full documentation: https://eodhd.com/financial-apis/
+    Pricing & plans: https://eodhd.com/pricing
+
+variables:
+  api_url: "https://eodhd.com/api"
+  api_token: "demo"
+
+# ============================================================
+# FOLDER ORDER FOLLOWS WP DOCUMENTATION STRUCTURE
+# ============================================================
+
+folders:
+
+  # ──────────────────────────────────────────────
+  # MARKET DATA APIs
+  # ──────────────────────────────────────────────
+
+  - name: "End-Of-Day Historical Data"
+    description: >
+      Historical daily OHLCV price data for stocks, ETFs, bonds, and indices across 70+ exchanges.
+      Covers 150,000+ tickers worldwide with US stocks dating back to 1972.
+      Supports daily, weekly, and monthly periods with split and dividend adjustments.
+
+      **Plans:** Free (1 year history), All-In-One, EOD Historical Data, EOD+Intraday.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/api-for-historical-data-and-volumes/
+    endpoints:
+      - path: "/eod/{ticker}"
+        variants:
+          - name: "EOD Data — AAPL.US (daily)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+              to: "2024-12-31"
+              period: "d"
+          - name: "EOD Data — MSFT.US (weekly)"
+            path_params:
+              ticker: "MSFT.US"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+              period: "w"
+
+  - name: "Live (Delayed) Stock Prices"
+    description: >
+      Delayed OHLCV stock price snapshots with 15–20 minute latency for global stocks
+      and ~1 minute delay for 1,100+ forex pairs.
+      Supports single and multi-ticker requests (up to 15–20 tickers per call).
+
+      **Plans:** Free (20 calls/day, demo tickers only), All-In-One, EOD Historical Data, EOD+Intraday.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/live-realtime-stocks-api/
+    endpoints:
+      - path: "/real-time/{ticker}"
+        variants:
+          - name: "Real-Time Price — AAPL.US"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+          - name: "Real-Time Price — Multiple Tickers"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+              s: "VTI,EUR.FOREX"
+      - path: "/us-quote-delayed"
+        variants:
+          - name: "US Delayed Quotes — AAPL, MSFT, GOOGL"
+            query_overrides:
+              s: "AAPL,MSFT,GOOGL"
+              fmt: "json"
+          - name: "US Delayed Quotes — Single Ticker"
+            query_overrides:
+              s: "TSLA"
+              fmt: "json"
+
+  - name: "Real-Time Data via WebSockets"
+    description: >
+      Streaming real-time market data over persistent WebSocket connections.
+      Four channels: US Trades, US Quotes, Forex, and Crypto.
+      Transport latency under 50ms. Does not consume REST API calls (separate billing).
+
+
+      **WebSocket URLs:**
+
+      - US Trades: `wss://ws.eodhistoricaldata.com/ws/us?api_token=YOUR_KEY`
+
+      - US Quotes: `wss://ws.eodhistoricaldata.com/ws/us-quote?api_token=YOUR_KEY`
+
+      - Forex: `wss://ws.eodhistoricaldata.com/ws/forex?api_token=YOUR_KEY`
+
+      - Crypto: `wss://ws.eodhistoricaldata.com/ws/crypto?api_token=YOUR_KEY`
+
+
+      **Subscribe:** `{"action": "subscribe", "symbols": "AAPL,TSLA"}`
+
+      **Unsubscribe:** `{"action": "unsubscribe", "symbols": "AAPL"}`
+
+      **Limit:** 50 concurrent subscriptions per connection (upgradeable via dashboard).
+
+      **Demo tickers (free):** AAPL, MSFT, TSLA, EURUSD, ETH-USD, BTC-USD.
+
+
+      **Plans:** All-In-One, EOD+Intraday — All World Extended.
+
+      **Cost:** Does NOT consume API calls.
+
+      **Docs:** https://eodhd.com/financial-apis/new-real-time-data-api-websockets
+    manual_items:
+      - name: "WebSocket — US Trades (example)"
+        method: "GET"
+        url: "wss://ws.eodhistoricaldata.com/ws/us?api_token={{api_token}}"
+        description: >
+          **This is a WebSocket endpoint — use Postman's WebSocket tab or a WS client to connect.**
+
+
+          Connect to `wss://ws.eodhistoricaldata.com/ws/us?api_token=YOUR_KEY`
+
+          Then send: `{"action": "subscribe", "symbols": "AAPL,TSLA"}`
+
+
+          **Response fields:** `s` (ticker), `p` (price), `v` (volume), `c` (condition), `dp` (dark pool), `ms` (market status), `t` (timestamp ms).
+        examples:
+          - name: "US Trade message"
+            body: '{"s":"AAPL","p":227.31,"v":100,"c":12,"dp":false,"ms":"open","t":1725198451165}'
+      - name: "WebSocket — US Quotes (example)"
+        method: "GET"
+        url: "wss://ws.eodhistoricaldata.com/ws/us-quote?api_token={{api_token}}"
+        description: >
+          **This is a WebSocket endpoint — use Postman's WebSocket tab or a WS client to connect.**
+
+
+          Connect to `wss://ws.eodhistoricaldata.com/ws/us-quote?api_token=YOUR_KEY`
+
+          Then send: `{"action": "subscribe", "symbols": "AAPL"}`
+
+
+          **Response fields:** `s` (ticker), `ap` (ask price), `as` (ask size), `bp` (bid price), `bs` (bid size), `t` (timestamp ms).
+        examples:
+          - name: "US Quote message"
+            body: '{"s":"AAPL","ap":227.33,"as":200,"bp":227.30,"bs":100,"t":1725198451165}'
+      - name: "WebSocket — Forex (example)"
+        method: "GET"
+        url: "wss://ws.eodhistoricaldata.com/ws/forex?api_token={{api_token}}"
+        description: >
+          **This is a WebSocket endpoint — use Postman's WebSocket tab or a WS client to connect.**
+
+
+          Connect to `wss://ws.eodhistoricaldata.com/ws/forex?api_token=YOUR_KEY`
+
+          Then send: `{"action": "subscribe", "symbols": "EURUSD"}`
+
+
+          **Response fields:** `s` (symbol), `a` (ask), `b` (bid), `dc` (daily change %), `dd` (daily diff), `ppms` (market status), `t` (timestamp ms).
+        examples:
+          - name: "Forex message"
+            body: '{"s":"EURUSD","a":1.08675,"b":1.08665,"dc":0.21,"dd":0.0023,"ppms":false,"t":1725198451165}'
+      - name: "WebSocket — Crypto (example)"
+        method: "GET"
+        url: "wss://ws.eodhistoricaldata.com/ws/crypto?api_token={{api_token}}"
+        description: >
+          **This is a WebSocket endpoint — use Postman's WebSocket tab or a WS client to connect.**
+
+
+          Connect to `wss://ws.eodhistoricaldata.com/ws/crypto?api_token=YOUR_KEY`
+
+          Then send: `{"action": "subscribe", "symbols": "BTC-USD,ETH-USD"}`
+
+
+          **Response fields:** `s` (symbol), `p` (price), `q` (quantity), `dc` (daily change %), `dd` (daily diff), `t` (timestamp ms).
+        examples:
+          - name: "Crypto message"
+            body: '{"s":"ETH-USD","p":2874.12,"q":0.145,"dc":-0.54,"dd":-15.61,"t":1725198451165}'
+
+  - name: "Intraday Historical Data"
+    description: >
+      Intraday stock price data at 1-minute, 5-minute, and hourly intervals for major exchanges.
+      Historical coverage back to 2004 for US stocks. Supports pre-market and after-hours data.
+
+      **Plans:** EOD+Intraday — All World Extended, All-In-One.
+      **Cost:** 5 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/intraday-historical-data-api/
+    endpoints:
+      - path: "/intraday/{ticker}"
+        variants:
+          - name: "Intraday — AAPL.US (5-min)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              interval: "5m"
+              fmt: "json"
+          - name: "Intraday — AAPL.US (1-hour)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              interval: "1h"
+              fmt: "json"
+
+  - name: "Tick Data: US Stock Market"
+    description: >
+      Granular tick-level transaction data for ~80,000 US equity tickers across all US exchanges.
+      Historical data spans back to January 2008, updated daily.
+
+      **Plans:** All-In-One (add-on packages available for other plans via support).
+      **Cost:** 10 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/us-stock-market-tick-data-api/
+    endpoints:
+      - path: "/ticks"
+        variants:
+          - name: "Tick Data — AAPL"
+            query_overrides:
+              s: "AAPL"
+              fmt: "json"
+
+  - name: "Bulk API for EOD, Splits and Dividends"
+    description: >
+      Bulk download end-of-day data, stock splits, and dividends for entire exchanges in a single request.
+      Eliminates the need for thousands of individual API calls. Supports date filtering and extended dataset
+      with company metadata.
+
+      **Plans:** All-In-One, EOD Historical Data, EOD+Intraday.
+      **Cost:** 100 API calls per full exchange request; 1 per ticker with symbol filtering.
+      **Docs:** https://eodhd.com/financial-apis/bulk-api-eod-splits-dividends/
+    endpoints:
+      - path: "/eod-bulk-last-day/{exchange}"
+        variants:
+          - name: "Bulk EOD — US Exchange (last day)"
+            path_params:
+              exchange: "US"
+            query_overrides:
+              fmt: "json"
+              type: "eod"
+          - name: "Bulk EOD — US Exchange (specific date)"
+            path_params:
+              exchange: "US"
+            query_overrides:
+              fmt: "json"
+              type: "eod"
+              date: "2024-01-15"
+          - name: "Bulk EOD — Filtered Symbols (extended)"
+            path_params:
+              exchange: "US"
+            query_overrides:
+              fmt: "json"
+              type: "eod"
+              symbols: "AAPL,MSFT,GOOGL"
+              filter: "extended"
+          - name: "Bulk Splits — US Exchange"
+            path_params:
+              exchange: "US"
+            query_overrides:
+              fmt: "json"
+              type: "splits"
+          - name: "Bulk Dividends — US Exchange"
+            path_params:
+              exchange: "US"
+            query_overrides:
+              fmt: "json"
+              type: "dividends"
+
+  - name: "Corporate Actions: Splits and Dividends"
+    description: >
+      Historical dividend and stock split data with 30+ years of records for paid subscribers.
+      Covers all supported exchanges worldwide.
+
+      **Plans:** Free (1 year history), All-In-One, EOD Historical Data, EOD+Intraday.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/api-splits-dividends/
+    endpoints:
+      - path: "/div/{ticker}"
+        variants:
+          - name: "Dividends — AAPL.US"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+              from: "2020-01-01"
+          - name: "Dividends — MSFT.US"
+            path_params:
+              ticker: "MSFT.US"
+            query_overrides:
+              fmt: "json"
+      - path: "/splits/{ticker}"
+        variants:
+          - name: "Splits — AAPL.US"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+
+  - name: "Technical Indicators"
+    description: >
+      100+ technical analysis indicators for stocks, crypto, and forex — moving averages (SMA, EMA, WMA),
+      oscillators (RSI, MACD, Stochastic), volatility (Bollinger Bands, ATR), and more.
+
+      **Plans:** All-In-One, EOD+Intraday — All World Extended.
+      **Cost:** 5 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/technical-indicators-api/
+    endpoints:
+      - path: "/technical/{ticker}"
+        variants:
+          - name: "SMA — AAPL.US (50-day)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              function: "sma"
+              period: "50"
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "RSI — AAPL.US (14-day)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              function: "rsi"
+              period: "14"
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "MACD — AAPL.US"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              function: "macd"
+              from: "2024-01-01"
+              fmt: "json"
+
+  - name: "Stock Market Screener"
+    description: >
+      Filter stocks based on market capitalization, sector, dividend yield, technical signals,
+      and other criteria. Supports complex financial screening with integrated real-time data.
+
+      **Plans:** All-In-One, EOD+Intraday (limited free access).
+      **Cost:** 5 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/stock-market-screener-api/
+    endpoints:
+      - path: "/screener"
+        variants:
+          - name: "Screener — Large Cap Technology"
+            query_overrides:
+              sort: "market_capitalization.desc"
+              limit: "10"
+              filters: '[["market_capitalization",">",1000000000],["sector","=","Technology"]]'
+              signals: "200d_new_hi"
+          - name: "Screener — High Dividend Yield"
+            query_overrides:
+              sort: "market_capitalization.desc"
+              limit: "10"
+
+  - name: "Delisted Stock Companies"
+    description: >
+      Access data for delisted companies via existing APIs (Fundamental, Dividends, EOD, Intraday).
+      Companies delisted after 2018 have the most comprehensive data.
+      Uses the Exchange Symbol List endpoint with `delisted=1` parameter.
+
+      **Plans:** Uses existing plan entitlements — no separate subscription required.
+      **Docs:** https://eodhd.com/financial-apis/delisted-stock-companies-data/
+    endpoints:
+      - path: "/exchange-symbol-list/{exchangeCode}"
+        variants:
+          - name: "Delisted Tickers — US"
+            path_params:
+              exchangeCode: "US"
+            query_overrides:
+              delisted: "1"
+              fmt: "json"
+          - name: "Delisted Tickers — LSE"
+            path_params:
+              exchangeCode: "LSE"
+            query_overrides:
+              delisted: "1"
+              fmt: "json"
+
+  # ──────────────────────────────────────────────
+  # FUNDAMENTAL & ECONOMIC DATA
+  # ──────────────────────────────────────────────
+
+  - name: "Fundamental Data: Stocks, ETFs, Mutual Funds, Indices"
+    description: >
+      Comprehensive fundamental data covering 70+ exchanges: financial statements (Income Statement,
+      Balance Sheet, Cash Flow), earnings, valuation metrics, ESG scores, and more.
+      Historical data spans 30+ years. Supports Stocks, ETFs, Mutual Funds, Indices, and Crypto.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Demo tickers (free):** AAPL.US, TSLA.US, VTI.US, AMZN.US, BTC-USD.CC, EURUSD.FOREX.
+      **Docs:** https://eodhd.com/financial-apis/stock-etfs-fundamental-data-feeds/
+    endpoints:
+      - path: "/fundamentals/{ticker}"
+        variants:
+          - name: "Fundamentals — AAPL.US (Income Statement, Annual)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              filter: "Financials::Income_Statement::annual"
+          - name: "Fundamentals — AAPL.US (Balance Sheet, Quarterly)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              filter: "Financials::Balance_Sheet::quarterly"
+      - path: "/v1.1/fundamentals/{ticker}"
+        variants:
+          - name: "Fundamentals v1.1 — AAPL.US (Earnings Trend)"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              filter: "Earnings::Trend"
+
+  - name: "Bulk Fundamentals"
+    description: >
+      Retrieve fundamental data for hundreds of companies in a single request across 70+ exchanges.
+      Supports pagination (offset/limit) and symbol filtering. Stocks only — ETFs and mutual funds excluded.
+
+      **Plans:** Fundamentals Data Feed Extended only (not self-service — requires contacting support@eodhistoricaldata.com).
+      **Cost:** 100 API calls per bulk request. Max 500 symbols per request.
+      **Docs:** https://eodhd.com/financial-apis/bulk-fundamentals-api/
+    endpoints:
+      - path: "/bulk-fundamentals/{EXCHANGE}"
+        variants:
+          - name: "Bulk Fundamentals — US Exchange"
+            path_params:
+              EXCHANGE: "US"
+            query_overrides:
+              symbols: "AAPL,MSFT,GOOGL"
+              limit: "10"
+              fmt: "json"
+      - path: "/v1.1/bulk-fundamentals/{EXCHANGE}"
+        variants:
+          - name: "Bulk Fundamentals v1.1 — US Exchange"
+            path_params:
+              EXCHANGE: "US"
+            query_overrides:
+              symbols: "AAPL,MSFT"
+              limit: "10"
+              fmt: "json"
+
+  - name: "Calendar: Earnings, IPOs, Dividends, Splits, Trends"
+    description: >
+      Financial calendar data — upcoming and historical earnings dates, IPOs, stock splits,
+      dividends, and analyst earnings trends. Key resource for event-driven trading strategies.
+
+      **Plans:** All-In-One, Fundamentals Data Feed, Financial Events (Calendar) & News Feed.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/calendar-upcoming-earnings-ipos-and-splits/
+    endpoints:
+      - path: "/calendar/earnings"
+        variants:
+          - name: "Earnings Calendar"
+            query_overrides:
+              fmt: "json"
+      - path: "/calendar/ipos"
+        variants:
+          - name: "IPO Calendar"
+            query_overrides:
+              fmt: "json"
+      - path: "/calendar/dividends"
+        variants:
+          - name: "Dividends Calendar"
+            query_overrides:
+              fmt: "json"
+      - path: "/calendar/splits"
+        variants:
+          - name: "Splits Calendar"
+            query_overrides:
+              fmt: "json"
+      - path: "/calendar/trends"
+        variants:
+          - name: "Earnings Trends — AAPL.US, MSFT.US"
+            query_overrides:
+              symbols: "AAPL.US,MSFT.US"
+              fmt: "json"
+
+  - name: "Insider Transactions (SEC Form 4)"
+    description: >
+      SEC Form 4 filing data for all US companies — insider buys and sells by company officers,
+      directors, and major shareholders. Supports filtering by ticker, date range, and result limit.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/insider-transactions-api/
+    endpoints:
+      - path: "/insider-transactions"
+        variants:
+          - name: "Insider Transactions — All"
+            query_overrides:
+              limit: "10"
+              fmt: "json"
+          - name: "Insider Transactions — AAPL.US"
+            query_overrides:
+              code: "AAPL.US"
+              limit: "10"
+              fmt: "json"
+
+  - name: "Historical Market Capitalization"
+    description: >
+      Historical market cap data at weekly granularity for all US stocks (NYSE, NASDAQ)
+      from 2020 onwards. Supports date range filtering.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Demo ticker (free):** AAPL.US only.
+      **Docs:** https://eodhd.com/financial-apis/historical-market-capitalization-api/
+    endpoints:
+      - path: "/historical-market-cap/{ticker}"
+        variants:
+          - name: "Market Cap — AAPL.US"
+            path_params:
+              ticker: "AAPL.US"
+            query_overrides:
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "Market Cap — MSFT.US"
+            path_params:
+              ticker: "MSFT.US"
+            query_overrides:
+              fmt: "json"
+
+  - name: "ASX (Australia) Corporate Actions (beta)"
+    description: >
+      Dividends, splits, bonus issues, rights issues, buybacks, capital returns, and share purchase
+      plans (SPP) for all ASX-listed tickers (.AU). Includes Australian-specific fields: franking
+      details, DRP info, withholding tax rates.
+
+      **Plans:** Fundamentals Data Feed, All-In-One.
+      **Cost:** 1 API call per request. Pagination: offset/limit (default 100, max 1000).
+      **Docs:** https://eodhd.com/financial-apis/asx-australia-corporate-actions-beta/
+    endpoints:
+      - path: "/asx-corporate-actions"
+        variants:
+          - name: "ASX Corporate Actions — All Types"
+            query_overrides:
+              fmt: "json"
+          - name: "ASX Dividends"
+            query_overrides:
+              type: "dividends"
+              fmt: "json"
+          - name: "ASX Dividends — PMV.AU"
+            query_overrides:
+              type: "dividends"
+              symbol: "PMV.AU"
+              fmt: "json"
+          - name: "ASX Splits"
+            query_overrides:
+              type: "splits"
+              fmt: "json"
+          - name: "ASX Bonus Issues"
+            query_overrides:
+              type: "bonus-issues"
+              fmt: "json"
+          - name: "ASX Rights Issues"
+            query_overrides:
+              type: "rights-issues"
+              fmt: "json"
+          - name: "ASX Buybacks"
+            query_overrides:
+              type: "buybacks"
+              fmt: "json"
+          - name: "ASX Capital Returns"
+            query_overrides:
+              type: "capital-returns"
+              fmt: "json"
+          - name: "ASX Share Purchase Plans (SPP)"
+            query_overrides:
+              type: "spp"
+              fmt: "json"
+          - name: "ASX Other Actions"
+            query_overrides:
+              type: "other"
+              fmt: "json"
+          - name: "ASX Corporate Actions — Date Range"
+            query_overrides:
+              date_from: "2024-01-01"
+              date_to: "2024-06-30"
+              fmt: "json"
+
+  # ──────────────────────────────────────────────
+  # EXCHANGE & INSTRUMENTS INFO
+  # ──────────────────────────────────────────────
+
+  - name: "Exchanges: List of Tickers"
+    description: >
+      List of all supported exchanges and their full symbol lists — stocks, ETFs, mutual funds,
+      bonds, indices, and crypto. Covers all 70+ exchanges worldwide.
+
+      **Plans:** Free, All-In-One, EOD Historical Data, EOD+Intraday, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/exchanges-api-list-of-tickers-and-trading-hours/
+    endpoints:
+      - path: "/exchanges-list"
+        variants:
+          - name: "All Exchanges"
+            query_overrides:
+              fmt: "json"
+      - path: "/exchange-symbol-list/{exchangeCode}"
+        variants:
+          - name: "Symbol List — US Exchange"
+            path_params:
+              exchangeCode: "US"
+            query_overrides:
+              fmt: "json"
+          - name: "Symbol List — LSE Exchange"
+            path_params:
+              exchangeCode: "LSE"
+            query_overrides:
+              fmt: "json"
+
+  - name: "Exchanges: Trading Hours, Holidays, Symbol Changes"
+    description: >
+      Exchange details including trading hours, market holidays (6 months historical + 6 months forward),
+      timezone info, and exchange status. Also covers symbol change history for US exchanges (since 2022).
+
+      **Plans:** All-In-One, EOD+Intraday — All World Extended.
+      **Cost:** 5 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/exchanges-api-trading-hours-and-holidays/
+    endpoints:
+      - path: "/exchange-details/{EXCHANGE_CODE}"
+        variants:
+          - name: "Exchange Details — US"
+            path_params:
+              EXCHANGE_CODE: "US"
+            query_overrides:
+              fmt: "json"
+          - name: "Exchange Details — LSE"
+            path_params:
+              EXCHANGE_CODE: "LSE"
+            query_overrides:
+              fmt: "json"
+      - path: "/symbol-change-history"
+        variants:
+          - name: "Symbol Changes (last 30 days)"
+            query_overrides:
+              from: "2024-01-01"
+              to: "2024-01-31"
+              fmt: "json"
+          - name: "Symbol Changes (last year)"
+            query_overrides:
+              from: "2023-01-01"
+              to: "2024-01-01"
+              fmt: "json"
+
+  - name: "Search: Stocks, ETFs, Mutual Funds, Indices"
+    description: >
+      Quick asset discovery by ticker code, company name, or ISIN across stocks, ETFs, mutual funds,
+      bonds, and indices. Smart ranking returns the most relevant results first.
+
+      **Plans:** Free, All-In-One, EOD Historical Data, EOD+Intraday, Fundamentals Data Feed.
+      **Cost:** 1 API call per request. Max 500 results.
+      **Docs:** https://eodhd.com/financial-apis/search-api-for-stocks-etfs-mutual-funds/
+    endpoints:
+      - path: "/search/{query}"
+        variants:
+          - name: "Search — Apple"
+            path_params:
+              query: "apple"
+            query_overrides:
+              fmt: "json"
+          - name: "Search — ISIN"
+            path_params:
+              query: "US0378331005"
+            query_overrides:
+              fmt: "json"
+          - name: "Search — AAPL (limited)"
+            path_params:
+              query: "AAPL"
+            query_overrides:
+              fmt: "json"
+              limit: "5"
+
+  # ──────────────────────────────────────────────
+  # ALTERNATIVE & DERIVED DATA
+  # ──────────────────────────────────────────────
+
+  - name: "Financial News & Sentiment Data"
+    description: >
+      Financial news aggregated from major portals with in-house sentiment analysis.
+      Three endpoints: news articles feed, daily sentiment scores per ticker, and weighted keyword analysis.
+      Covers stocks, ETFs, forex, and cryptocurrencies.
+
+      **Plans:** Free (20 calls/day), standalone News API, All-In-One, EOD Historical Data, EOD+Intraday, Fundamentals Data Feed.
+      **Cost:** 5 API calls per request + 5 per ticker queried.
+      **Docs:** https://eodhd.com/financial-apis/financial-news-api/
+    endpoints:
+      - path: "/news"
+        variants:
+          - name: "News — AAPL.US"
+            query_overrides:
+              s: "AAPL.US"
+              limit: "10"
+              fmt: "json"
+          - name: "News — By Topic"
+            query_overrides:
+              t: "earnings"
+              limit: "10"
+              fmt: "json"
+      - path: "/sentiments"
+        variants:
+          - name: "News Sentiment — AAPL.US, BTC-USD.CC"
+            query_overrides:
+              s: "AAPL.US,BTC-USD.CC"
+              from: "2024-01-01"
+              fmt: "json"
+      - path: "/news-word-weights"
+        variants:
+          - name: "News Word Weights — AAPL"
+            query_overrides:
+              s: "AAPL"
+              fmt: "json"
+
+  - name: "Economic Events Data"
+    description: >
+      Historical and forecasted economic events — retail sales, bond auctions, PMI releases,
+      and more from countries worldwide. Data available from 2020 onward.
+      Supports filtering by date, country (ISO 3166-1 alpha-2), and event type.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/economic-events-data-api/
+    endpoints:
+      - path: "/economic-events"
+        variants:
+          - name: "Economic Events — US"
+            query_overrides:
+              country: "US"
+              limit: "10"
+          - name: "Economic Events — All Countries"
+            query_overrides:
+              limit: "10"
+
+  - name: "Macro Indicators"
+    description: >
+      30+ macroeconomic indicators — GDP, unemployment, inflation, international trade, and more
+      for national and global economies. Historical coverage extends back to 1960.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/macroeconomics-data-and-macro-indicators-api/
+    endpoints:
+      - path: "/macro-indicator/{country}"
+        variants:
+          - name: "Macro Indicator — USA (GDP)"
+            path_params:
+              country: "USA"
+            query_overrides:
+              indicator: "gdp_current_usd"
+              fmt: "json"
+          - name: "Macro Indicator — USA (Inflation)"
+            path_params:
+              country: "USA"
+            query_overrides:
+              indicator: "inflation_consumer_prices_annual"
+              fmt: "json"
+
+  - name: "Macroeconomic Data: Bonds, LIBOR, EURIBOR, ECB Rates"
+    description: >
+      Government bond yields for 15+ countries, LIBOR/EURIBOR rates, and central bank exchange rates
+      (ECB, Norges Bank). Uses the standard EOD endpoint with special exchange suffixes (.GBOND, .MONEY).
+      5+ years of daily historical data.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/macroeconomic-data-api/
+    endpoints:
+      - path: "/eod/{ticker}"
+        variants:
+          - name: "10Y US Treasury Bond"
+            path_params:
+              ticker: "US10Y.GBOND"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+          - name: "EURIBOR 3-Month"
+            path_params:
+              ticker: "EURIBOR3M.MONEY"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+          - name: "LIBOR USD 3-Month"
+            path_params:
+              ticker: "LIBOR3M.MONEY"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+          - name: "ECB Deposit Rate"
+            path_params:
+              ticker: "ECBDFR.MONEY"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+          - name: "Norway 10Y Government Bond"
+            path_params:
+              ticker: "GVNB10YR.BOND"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+
+  - name: "Bonds Fundamentals"
+    description: >
+      Static fundamental data for US corporate and government bonds — coupon, maturity date,
+      credit ratings (Moody's, S&P), issuer details, and classification.
+      Supports lookup by CUSIP or ISIN. For historical bond prices, use the EOD endpoint with .BOND suffix.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+    endpoints:
+      - path: "/bond-fundamentals/{symbol}"
+        variants:
+          - name: "Bond Fundamentals — US Treasury (CUSIP)"
+            path_params:
+              symbol: "910047AG4"
+          - name: "Bond Fundamentals — Corporate Bond (ISIN)"
+            path_params:
+              symbol: "US037833AK68"
+
+  - name: "US Treasury Interest Rates (beta)"
+    description: >
+      Official US Treasury interest rate datasets: T-bill rates, par yield curve rates,
+      long-term rates, and real yield curve rates.
+      Used for macro research, fixed-income analytics, and risk-free rate baselines.
+
+      **Plans:** Free, All-In-One, EOD Historical Data, EOD+Intraday.
+      **Cost:** 1 API call per request.
+      **Docs:** https://eodhd.com/financial-apis/us-treasury-ust-interest-rates-api-beta/
+    endpoints:
+      - path: "/ust/bill-rates"
+        variants:
+          - name: "US Treasury Bill Rates (date range)"
+            query_overrides:
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "US Treasury Bill Rates (by year)"
+            query_overrides:
+              "filter[year]": "2024"
+              fmt: "json"
+      - path: "/ust/yield-rates"
+        variants:
+          - name: "US Treasury Yield Curve Rates (date range)"
+            query_overrides:
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "US Treasury Yield Curve Rates (by year)"
+            query_overrides:
+              "filter[year]": "2024"
+              fmt: "json"
+      - path: "/ust/long-term-rates"
+        variants:
+          - name: "US Treasury Long-Term Rates (date range)"
+            query_overrides:
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "US Treasury Long-Term Rates (by year)"
+            query_overrides:
+              "filter[year]": "2024"
+              fmt: "json"
+      - path: "/ust/real-yield-rates"
+        variants:
+          - name: "US Treasury Real Yield Rates (date range)"
+            query_overrides:
+              from: "2024-01-01"
+              fmt: "json"
+          - name: "US Treasury Real Yield Rates (by year)"
+            query_overrides:
+              "filter[year]": "2024"
+              fmt: "json"
+
+  - name: "Commodities Historical Data"
+    description: >
+      Historical price data for 23 commodities including energy (WTI, Brent, Natural Gas),
+      precious metals (Gold, Silver, Platinum), agriculture (Wheat, Corn, Soybeans), and more.
+      Supports daily, weekly, and monthly intervals.
+
+      **Plans:** All-In-One, EOD Historical Data.
+      **Cost:** 1 API call per request.
+    endpoints:
+      - path: "/commodities/historical/{code}"
+        variants:
+          - name: "Commodity — WTI Crude Oil (daily)"
+            path_params:
+              code: "WTI"
+            query_overrides:
+              fmt: "json"
+          - name: "Commodity — Brent Crude Oil (monthly)"
+            path_params:
+              code: "BRENT"
+            query_overrides:
+              interval: "monthly"
+              fmt: "json"
+          - name: "Commodity — Natural Gas (weekly)"
+            path_params:
+              code: "NATURAL_GAS"
+            query_overrides:
+              interval: "weekly"
+              fmt: "json"
+          - name: "Commodity — Gold (daily, date range)"
+            path_params:
+              code: "GOLD"
+            query_overrides:
+              from: "2024-01-01"
+              to: "2024-12-31"
+              fmt: "json"
+
+  - name: "ID Mapping"
+    description: >
+      Map between financial identifiers — look up securities by symbol, exchange, ISIN, FIGI, LEI, CUSIP, or CIK.
+      Useful for cross-referencing data across different systems and vendors.
+
+      **Plans:** All-In-One, EOD Historical Data, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+    endpoints:
+      - path: "/id-mapping"
+        variants:
+          - name: "ID Mapping — by ISIN (Apple)"
+            query_overrides:
+              "filter[isin]": "US0378331005"
+              fmt: "json"
+          - name: "ID Mapping — by Symbol"
+            query_overrides:
+              "filter[symbol]": "AAPL"
+              "filter[ex]": "US"
+              fmt: "json"
+          - name: "ID Mapping — by CIK"
+            query_overrides:
+              "filter[cik]": "320193"
+              fmt: "json"
+
+  - name: "User Account Info"
+    description: >
+      Retrieve details about the authenticated user including subscription type, API usage, and rate limits.
+
+      **Plans:** All plans.
+      **Cost:** Free (does not consume API calls).
+    endpoints:
+      - path: "/user"
+        variants:
+          - name: "User Details"
+            query_overrides:
+              fmt: "json"
+
+  - name: "CBOE Europe Indices (beta)"
+    description: >
+      Daily CBOE index data for European stocks — complete metadata, constituent information,
+      and regional index families across Austria, Belgium, Germany, Nordics, UK, and more.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/cboe-europe-indices-api/
+    endpoints:
+      - path: "/cboe/indices"
+        variants:
+          - name: "CBOE Indices List"
+            query_overrides:
+              fmt: "json"
+      - path: "/cboe/index"
+        variants:
+          - name: "CBOE Index — VIX"
+            query_overrides:
+              "filter[index_code]": "VIX"
+              "filter[feed_type]": "eod"
+              "filter[date]": "2024-01-15"
+              fmt: "json"
+          - name: "CBOE Index — SPX (with review)"
+            query_overrides:
+              "filter[index_code]": "SPX"
+              "filter[feed_type]": "eod"
+              "filter[date]": "2024-06-01"
+              "filter[include_review]": "true"
+              fmt: "json"
+
+  # ──────────────────────────────────────────────
+  # MARKETPLACE PRODUCTS (separate subscriptions)
+  # ──────────────────────────────────────────────
+
+  - name: "US Stock Options Data (Marketplace)"
+    description: >
+      End-of-day and historical options chains for 6,000+ top-traded US stock symbols.
+      Includes bid/ask prices, Greeks (Delta, Gamma, Theta, Vega, Rho), implied volatility,
+      and contract details with 2+ years of historical depth. 43 data fields per contract.
+
+      **This is a Marketplace product — requires a separate subscription.**
+      **Pricing:** Standard from €29.99/month (promotional).
+      **Not included in standard EODHD plans (All-In-One, EOD, Fundamentals).**
+      **Docs:** https://eodhd.com/financial-apis/options-data-api-us-stocks/
+    endpoints:
+      - path: "/options/{symbol}"
+        variants:
+          - name: "Options Chain — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+          - name: "Options Chain — AAPL.US (date filtered)"
+            path_params:
+              symbol: "AAPL.US"
+            query_overrides:
+              fmt: "json"
+              from: "2024-01-01"
+              to: "2024-06-01"
+
+  - name: "Stock Market Logos (Marketplace)"
+    description: >
+      40,000 company logos across 60+ exchanges as 200x200px PNG files with transparency.
+      Available in PNG and SVG formats via dedicated endpoints.
+
+      **This is a Marketplace product — requires a separate annual subscription.**
+      **Pricing:** €299/year. Not included in standard EODHD plans.
+      **Docs:** https://eodhd.com/financial-apis/40-000-stock-market-logos-api/
+    endpoints:
+      - path: "/logo/{symbol}"
+        variants:
+          - name: "Logo PNG — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+      - path: "/logo-svg/{symbol}"
+        variants:
+          - name: "Logo SVG — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"

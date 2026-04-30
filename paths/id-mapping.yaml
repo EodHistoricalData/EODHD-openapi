@@ -1,0 +1,116 @@
+/id-mapping:
+  get:
+    summary: Map between financial identifiers
+    description: Look up securities by various identifiers including symbol, exchange code, ISIN, FIGI, LEI, CUSIP, and CIK.
+    operationId: GetIdMapping
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: filter[symbol]
+      in: query
+      required: false
+      description: Filter by ticker symbol (e.g., 'AAPL').
+      schema:
+        type: string
+    - name: filter[ex]
+      in: query
+      required: false
+      description: Filter by exchange code (e.g., 'US').
+      schema:
+        type: string
+    - name: filter[isin]
+      in: query
+      required: false
+      description: Filter by ISIN code (e.g., 'US0378331005').
+      schema:
+        type: string
+    - name: filter[figi]
+      in: query
+      required: false
+      description: Filter by FIGI identifier.
+      schema:
+        type: string
+    - name: filter[lei]
+      in: query
+      required: false
+      description: Filter by LEI code.
+      schema:
+        type: string
+    - name: filter[cusip]
+      in: query
+      required: false
+      description: Filter by CUSIP identifier.
+      schema:
+        type: string
+    - name: filter[cik]
+      in: query
+      required: false
+      description: Filter by CIK number.
+      schema:
+        type: string
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset.
+      schema:
+        type: integer
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved identifier mappings.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  Code:
+                    type: string
+                    description: Ticker symbol.
+                  Exchange:
+                    type: string
+                    description: Exchange code.
+                  Name:
+                    type: string
+                    description: Company name.
+                  ISIN:
+                    type: string
+                    description: ISIN code.
+                  FIGI:
+                    type: string
+                    description: FIGI identifier.
+                  LEI:
+                    type: string
+                    description: LEI code.
+                  CUSIP:
+                    type: string
+                    description: CUSIP identifier.
+                  CIK:
+                    type: string
+                    description: CIK number.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+    tags:
+    - Exchanges

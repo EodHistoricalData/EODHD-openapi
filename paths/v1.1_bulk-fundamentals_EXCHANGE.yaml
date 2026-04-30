@@ -38,6 +38,12 @@
       schema:
         type: integer
         default: 500
+    - name: version
+      in: query
+      required: false
+      description: API version for response format.
+      schema:
+        type: integer
     - name: fmt
       in: query
       required: false

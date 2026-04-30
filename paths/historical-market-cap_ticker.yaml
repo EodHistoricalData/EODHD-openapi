@@ -31,6 +31,15 @@
       schema:
         type: string
         format: date
+    - name: reverse
+      in: query
+      required: false
+      description: Set to 'true' to reverse sort order (newest first).
+      schema:
+        type: string
+        enum:
+        - 'true'
+        - 'false'
     - name: fmt
       in: query
       required: false

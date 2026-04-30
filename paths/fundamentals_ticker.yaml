@@ -23,15 +23,53 @@
         example: demo
     - name: filter
       in: query
-      required: true
+      required: false
       description: Filter parameter to specify data section and optional sub-sections,
         e.g., `Financials::Balance_Sheet::quarterly::2024-06-30`. Supported sections
         include General, Highlights, Valuation, SharesStats, Technicals, SplitsDividends,
         AnalystRatings, Holders, InsiderTransactions, ESGScores, outstandingShares,
-        Earnings, and Financials.
+        Earnings, and Financials. When omitted, returns all sections.
       schema:
         type: string
         example: Financials::Income_Statement::annual::2023-12-31
+    - name: historical
+      in: query
+      required: false
+      description: Set to 1 to return historical data for certain sections (e.g., outstandingShares).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+    - name: from
+      in: query
+      required: false
+      description: Start date for historical data in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date for historical data in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: version
+      in: query
+      required: false
+      description: API version for response format.
+      schema:
+        type: integer
+    - name: no_cache
+      in: query
+      required: false
+      description: Set to 1 to bypass cache and get fresh data.
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
     responses:
       '200':
         description: Successfully retrieved filtered fundamental data for the specified
