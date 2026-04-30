@@ -43,6 +43,12 @@
       schema:
         type: string
         format: date
+    - name: format_version
+      in: query
+      required: false
+      description: Response format version.
+      schema:
+        type: integer
     responses:
       '200':
         description: Successful response with exchange details and trading hours.

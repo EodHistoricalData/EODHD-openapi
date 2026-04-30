@@ -1,0 +1,54 @@
+/user:
+  get:
+    summary: Get current user details
+    description: Returns details about the authenticated user, including subscription info and API usage.
+    operationId: GetUserDetails
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved user details.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: User name.
+                email:
+                  type: string
+                  description: User email.
+                subscriptionType:
+                  type: string
+                  description: Subscription plan type.
+                paymentMethod:
+                  type: string
+                  description: Payment method.
+                apiRequests:
+                  type: integer
+                  description: API requests used in current period.
+                apiRequestsDate:
+                  type: string
+                  description: Date of last API request count reset.
+                dailyRateLimit:
+                  type: integer
+                  description: Daily API request limit.
+      '401':
+        description: Unauthorized. Invalid API token.
+    tags:
+    - User

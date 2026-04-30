@@ -10,26 +10,31 @@
       description: API token for authentication.
       schema:
         type: string
-    - name: symbol
+    - name: filter[index_code]
       in: query
       required: true
-      description: CBOE index symbol (e.g., 'VIX', 'SPX').
+      description: CBOE index code (e.g., 'VIX', 'SPX').
       schema:
         type: string
-    - name: from
+    - name: filter[feed_type]
       in: query
-      required: false
-      description: Start date in 'YYYY-MM-DD' format.
+      required: true
+      description: Feed type filter.
+      schema:
+        type: string
+    - name: filter[date]
+      in: query
+      required: true
+      description: Date filter in 'YYYY-MM-DD' format.
       schema:
         type: string
         format: date
-    - name: to
+    - name: filter[include_review]
       in: query
       required: false
-      description: End date in 'YYYY-MM-DD' format.
+      description: Include review data.
       schema:
         type: string
-        format: date
     - name: fmt
       in: query
       required: false

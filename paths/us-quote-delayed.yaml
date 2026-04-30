@@ -16,6 +16,12 @@
       description: Comma-separated ticker symbols (e.g., 'AAPL,MSFT,GOOGL').
       schema:
         type: string
+    - name: fields
+      in: query
+      required: false
+      description: Comma-separated list of fields to return (e.g., 'close,volume,change_p').
+      schema:
+        type: string
     - name: fmt
       in: query
       required: false

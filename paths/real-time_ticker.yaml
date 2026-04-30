@@ -23,6 +23,12 @@
       description: API token for authentication.
       schema:
         type: string
+    - name: ex
+      in: query
+      required: false
+      description: Exchange code filter (e.g., 'US').
+      schema:
+        type: string
     - name: fmt
       in: query
       required: false

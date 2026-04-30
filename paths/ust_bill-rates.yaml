@@ -24,6 +24,25 @@
       schema:
         type: string
         format: date
+    - name: filter[year]
+      in: query
+      required: false
+      description: Filter by year (e.g., 2024).
+      schema:
+        type: integer
+        example: 2024
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset.
+      schema:
+        type: integer
     - name: fmt
       in: query
       required: false

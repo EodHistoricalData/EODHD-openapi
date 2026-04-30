@@ -33,6 +33,35 @@
       schema:
         type: integer
         example: 1
+    - name: type
+      in: query
+      required: false
+      description: Filter by security type.
+      schema:
+        type: string
+        enum:
+        - all
+        - stock
+        - etf
+        - fund
+        - bond
+        - index
+        - crypto
+    - name: exchange
+      in: query
+      required: false
+      description: Filter by exchange code (e.g., 'US', 'LSE').
+      schema:
+        type: string
+    - name: bonds_only
+      in: query
+      required: false
+      description: Set to 1 to return bonds only.
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
     responses:
       '200':
         description: Successful response with search results

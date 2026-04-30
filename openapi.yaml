@@ -54,14 +54,10 @@ tags:
   description: S&P/Dow Jones indices data and components
 - name: US Treasury
   description: US Treasury interest rates (bills, yields, long-term, real yields)
-- name: Trading Hours
-  description: Market trading hours, status, and lookup
 - name: CBOE
   description: CBOE index data and listings
 - name: ESG
   description: Environmental, Social, and Governance ratings (Investverte)
-- name: Risk Analytics
-  description: Market insights — performance, risk, volatility analysis (illio)
 - name: Investment Analytics
   description: Risk scoring, bond analysis, bank financials, reports (PRAAMS)
 paths:
@@ -77,6 +73,8 @@ paths:
     $ref: ./paths/calendar_splits.yaml#/~1calendar~1splits
   /calendar/trends:
     $ref: ./paths/calendar_trends.yaml#/~1calendar~1trends
+  /commodities/historical/{code}:
+    $ref: ./paths/commodities_historical_code.yaml#/~1commodities~1historical~1{code}
   /cboe/index:
     $ref: ./paths/cboe_index.yaml#/~1cboe~1index
   /cboe/indices:
@@ -97,6 +95,8 @@ paths:
     $ref: ./paths/exchanges-list.yaml#/~1exchanges-list
   /fundamentals/{ticker}:
     $ref: ./paths/fundamentals_ticker.yaml#/~1fundamentals~1{ticker}
+  /id-mapping:
+    $ref: ./paths/id-mapping.yaml#/~1id-mapping
   /historical-market-cap/{ticker}:
     $ref: ./paths/historical-market-cap_ticker.yaml#/~1historical-market-cap~1{ticker}
   /insider-transactions:
@@ -111,22 +111,6 @@ paths:
     $ref: ./paths/logo-svg_symbol.yaml#/~1logo-svg~1{symbol}
   /macro-indicator/{country}:
     $ref: ./paths/macro-indicator_country.yaml#/~1macro-indicator~1{country}
-  /mp/illio/categories/performance/{id}:
-    $ref: ./paths/mp_illio_categories_performance_id.yaml#/~1mp~1illio~1categories~1performance~1{id}
-  /mp/illio/categories/risk/{id}:
-    $ref: ./paths/mp_illio_categories_risk_id.yaml#/~1mp~1illio~1categories~1risk~1{id}
-  /mp/illio/chapters/best-and-worst/{id}:
-    $ref: ./paths/mp_illio_chapters_best-and-worst_id.yaml#/~1mp~1illio~1chapters~1best-and-worst~1{id}
-  /mp/illio/chapters/beta-bands/{id}:
-    $ref: ./paths/mp_illio_chapters_beta-bands_id.yaml#/~1mp~1illio~1chapters~1beta-bands~1{id}
-  /mp/illio/chapters/performance/{id}:
-    $ref: ./paths/mp_illio_chapters_performance_id.yaml#/~1mp~1illio~1chapters~1performance~1{id}
-  /mp/illio/chapters/risk/{id}:
-    $ref: ./paths/mp_illio_chapters_risk_id.yaml#/~1mp~1illio~1chapters~1risk~1{id}
-  /mp/illio/chapters/volatility/{id}:
-    $ref: ./paths/mp_illio_chapters_volatility_id.yaml#/~1mp~1illio~1chapters~1volatility~1{id}
-  /mp/illio/chapters/volume/{id}:
-    $ref: ./paths/mp_illio_chapters_volume_id.yaml#/~1mp~1illio~1chapters~1volume~1{id}
   /mp/investverte/companies:
     $ref: ./paths/mp_investverte_companies.yaml#/~1mp~1investverte~1companies
   /mp/investverte/countries:
@@ -163,14 +147,6 @@ paths:
     $ref: ./paths/mp_praams_reports_equity_isin_isin.yaml#/~1mp~1praams~1reports~1equity~1isin~1{isin}
   /mp/praams/reports/equity/ticker/{ticker}:
     $ref: ./paths/mp_praams_reports_equity_ticker_ticker.yaml#/~1mp~1praams~1reports~1equity~1ticker~1{ticker}
-  /mp/tradinghours/markets:
-    $ref: ./paths/mp_tradinghours_markets.yaml#/~1mp~1tradinghours~1markets
-  /mp/tradinghours/markets/details:
-    $ref: ./paths/mp_tradinghours_markets_details.yaml#/~1mp~1tradinghours~1markets~1details
-  /mp/tradinghours/markets/lookup:
-    $ref: ./paths/mp_tradinghours_markets_lookup.yaml#/~1mp~1tradinghours~1markets~1lookup
-  /mp/tradinghours/markets/status:
-    $ref: ./paths/mp_tradinghours_markets_status.yaml#/~1mp~1tradinghours~1markets~1status
   /mp/unicornbay/options/contracts:
     $ref: ./paths/mp_unicornbay_options_contracts.yaml#/~1mp~1unicornbay~1options~1contracts
   /mp/unicornbay/options/eod:
@@ -203,6 +179,8 @@ paths:
     $ref: ./paths/technical_ticker.yaml#/~1technical~1{ticker}
   /ticks:
     $ref: ./paths/ticks.yaml#/~1ticks
+  /user:
+    $ref: ./paths/user.yaml#/~1user
   /us-quote-delayed:
     $ref: ./paths/us-quote-delayed.yaml#/~1us-quote-delayed
   /ust/bill-rates:

@@ -1,0 +1,93 @@
+/commodities/historical/{code}:
+  get:
+    summary: Get historical commodity prices
+    description: Returns historical price data for a specific commodity by its code (e.g., WTI, BRENT, NATURAL_GAS).
+    operationId: GetCommodityHistoricalData
+    parameters:
+    - name: code
+      in: path
+      required: true
+      description: Commodity code (e.g., 'WTI', 'BRENT', 'NATURAL_GAS', 'GOLD', 'SILVER', 'COPPER', 'PLATINUM', 'PALLADIUM', 'WHEAT', 'CORN', 'SOYBEANS', 'RICE', 'SUGAR', 'COFFEE', 'COTTON', 'COCOA', 'OATS', 'LUMBER', 'RUBBER', 'ETHANOL', 'PROPANE', 'URANIUM', 'COAL').
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: interval
+      in: query
+      required: false
+      description: Data interval — 'daily' (default), 'weekly', or 'monthly'.
+      schema:
+        type: string
+        enum:
+        - daily
+        - weekly
+        - monthly
+        default: daily
+    - name: from
+      in: query
+      required: false
+      description: Start date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: to
+      in: query
+      required: false
+      description: End date in 'YYYY-MM-DD' format.
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved commodity historical data.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Data date.
+                  open:
+                    type: number
+                    description: Opening price.
+                  high:
+                    type: number
+                    description: High price.
+                  low:
+                    type: number
+                    description: Low price.
+                  close:
+                    type: number
+                    description: Closing price.
+                  adjusted_close:
+                    type: number
+                    description: Adjusted closing price.
+                  volume:
+                    type: number
+                    description: Trading volume.
+      '400':
+        description: Invalid request parameters.
+      '401':
+        description: Unauthorized. Invalid API token.
+      '404':
+        description: Commodity not found.
+    tags:
+    - Economic Data
