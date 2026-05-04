@@ -1,0 +1,160 @@
+/v2/exchange-details/{code}:
+  get:
+    summary: Get exchange details and trading hours (v2)
+    description: Returns trading hours, extended sessions (pre-market, after-hours),
+      lunch breaks, and the full holiday calendar for the requested exchange. Covers
+      73 exchanges with verified data. The code parameter is case-insensitive.
+    operationId: GetExchangeDetailsV2
+    parameters:
+    - name: code
+      in: path
+      required: true
+      description: Exchange code (case-insensitive). Use /v2/exchange-details to get
+        the list of supported codes.
+      schema:
+        type: string
+      examples:
+        us:
+          summary: US exchanges (NYSE / NASDAQ)
+          value: US
+        hk:
+          summary: Hong Kong Stock Exchange
+          value: XHKG
+        tokyo:
+          summary: Tokyo Stock Exchange
+          value: XTKS
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successful response with exchange details, trading hours, and
+          holiday calendar.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                      description: Full exchange name.
+                    Code:
+                      type: string
+                      description: Exchange code used in this endpoint.
+                    Timezone:
+                      type: string
+                      description: IANA timezone (e.g. America/New_York).
+                    TradingHours:
+                      type: object
+                      properties:
+                        Open:
+                          type: string
+                          description: Regular session open time (HH:MM:SS).
+                        Close:
+                          type: string
+                          description: Regular session close time (HH:MM:SS).
+                        WorkingDays:
+                          type: string
+                          description: Trading days (e.g. Mon, Tue, Wed, Thu, Fri).
+                        PreMarketOpen:
+                          type: string
+                          description: Pre-market session open (if available).
+                        PreMarketClose:
+                          type: string
+                          description: Pre-market session close (if available).
+                        AfterHoursOpen:
+                          type: string
+                          description: After-hours session open (if available).
+                        AfterHoursClose:
+                          type: string
+                          description: After-hours session close (if available).
+                        LunchBreakStart:
+                          type: string
+                          description: Lunch break start (if applicable).
+                        LunchBreakEnd:
+                          type: string
+                          description: Lunch break end (if applicable).
+                      required:
+                      - Open
+                      - Close
+                      - WorkingDays
+                    ExchangeHolidays:
+                      type: object
+                      description: Holiday calendar keyed by date (YYYY-MM-DD).
+                      additionalProperties:
+                        type: object
+                        properties:
+                          Holiday:
+                            type: string
+                            description: Holiday name.
+                          Type:
+                            type: string
+                            enum:
+                            - Official
+                            - Bank
+                            - EarlyClose
+                            description: Holiday type.
+                          EarlyClose:
+                            type: string
+                            description: Early close time (HH:MM:SS). Only present
+                              when Type is EarlyClose.
+                        required:
+                        - Holiday
+                        - Type
+                  required:
+                  - Name
+                  - Code
+                  - Timezone
+                  - TradingHours
+                  - ExchangeHolidays
+                meta:
+                  type: array
+                  description: Reserved for future use.
+                links:
+                  type: array
+                  description: Reserved for future use.
+            example:
+              data:
+                Name: NYSE / NASDAQ
+                Code: US
+                Timezone: America/New_York
+                TradingHours:
+                  Open: '09:30:00'
+                  Close: '16:00:00'
+                  WorkingDays: Mon, Tue, Wed, Thu, Fri
+                  PreMarketOpen: '04:00:00'
+                  PreMarketClose: '09:30:00'
+                  AfterHoursOpen: '16:00:00'
+                  AfterHoursClose: '20:00:00'
+                ExchangeHolidays:
+                  '2026-01-01':
+                    Holiday: New Year's Day
+                    Type: Official
+                  '2026-01-19':
+                    Holiday: Martin Luther King Jr. Day
+                    Type: Official
+                  '2026-11-27':
+                    Holiday: Day after Thanksgiving
+                    Type: EarlyClose
+                    EarlyClose: '13:00:00'
+                  '2026-12-24':
+                    Holiday: Christmas Eve
+                    Type: EarlyClose
+                    EarlyClose: '13:00:00'
+                  '2026-12-25':
+                    Holiday: Christmas Day
+                    Type: Official
+              meta: []
+              links: []
+      '401':
+        description: Unauthorized — missing or invalid API token.
+      '404':
+        description: Exchange not found.
+    tags:
+    - Exchanges

@@ -1,0 +1,46 @@
+/v2/exchange-details:
+  get:
+    summary: List available exchanges (v2)
+    description: Returns an array of all exchange codes supported by the v2 endpoint.
+      Use these codes to request details for a specific exchange via
+      /v2/exchange-details/{code}.
+    operationId: ListExchangeDetailsV2
+    parameters:
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successful response with list of exchange codes.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of supported exchange codes.
+            example:
+              data:
+              - ASEX
+              - BMEX
+              - BVMF
+              - LSE
+              - NEO
+              - US
+              - XAMS
+              - XASX
+              - XHKG
+              - XKRX
+              - XNSE
+              - XPAR
+              - XTKS
+      '401':
+        description: Unauthorized — missing or invalid API token.
+    tags:
+    - Exchanges
