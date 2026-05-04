@@ -157,7 +157,7 @@
                     revenueEstimateAvg: '420689000000.00'
                     revenueEstimateLow: '401691000000.00'
                     revenueEstimateHigh: '441882000000.00'
-                    revenueEstimateYearAgoEps: null
+                    revenueEstimateYearAgoEps: ""
                     revenueEstimateNumberOfAnalysts: '40'
                     revenueEstimateGrowth: '0.0780'
                     epsTrendCurrent: '7.4700'

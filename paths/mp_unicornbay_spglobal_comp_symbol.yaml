@@ -64,7 +64,7 @@
                       Code: AAPL
                       Name: Apple Inc
                       StartDate: '1982-11-30'
-                      EndDate: null
+                      EndDate: ""
                       IsActiveNow: 1
                       IsDelisted: 0
       '401':

@@ -105,7 +105,7 @@
               apiRequestsDate: '2025-08-13'
               dailyRateLimit: 100000
               extraLimit: 0
-              inviteToken: null
+              inviteToken: ""
               inviteTokenClicked: 0
               subscriptionMode: paid
               availableDataFeeds:

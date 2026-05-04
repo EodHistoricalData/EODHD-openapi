@@ -107,17 +107,17 @@
                     description: Percentage change in value from previous.
             example:
             - type: Participation Rate
-              comparison: null
+              comparison: ""
               period: May
               country: US
               date: '2022-06-03 16:30:00'
               actual: 62.3
               previous: 62.2
-              estimate: null
+              estimate: ""
               change: 0.1
               change_percentage: 0.161
             - type: Nonfarm Payrolls Private
-              comparison: null
+              comparison: ""
               period: May
               country: US
               date: '2022-06-03 16:30:00'

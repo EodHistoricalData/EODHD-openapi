@@ -39,7 +39,7 @@
                   MarketCap: 4276250432997.9194
                   Divisor: 248535830.1502
                   DailyReturn: 0.0007
-                  Dividend: null
+                  Dividend: ""
                   AdjustedMarketCap: 4276250432997.9194
                   AdjustedDivisor: 248535830.1502
                   AdjustedConstituents: 1003

@@ -85,7 +85,7 @@
                     news_processed: 300
                     news_found: 5748
                   links:
-                    next: null
+                    next: ""
       '400':
         description: Invalid request parameters
         content:

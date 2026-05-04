@@ -205,7 +205,7 @@
                       change: 0
                       pctchange: 0
                       previous: 0
-                      previous_date: null
+                      previous_date: ""
                       bid: 218.4
                       bid_date: '2025-08-12 19:59:59'
                       bid_size: 115
