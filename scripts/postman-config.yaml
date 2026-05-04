@@ -639,6 +639,17 @@ folders:
               EXCHANGE_CODE: "LSE"
             query_overrides:
               fmt: "json"
+      - path: "/v2/exchange-details"
+        variants:
+          - name: "Exchange Details v2 — List Exchanges"
+      - path: "/v2/exchange-details/{code}"
+        variants:
+          - name: "Exchange Details v2 — US"
+            path_params:
+              code: "US"
+          - name: "Exchange Details v2 — Hong Kong (XHKG)"
+            path_params:
+              code: "XHKG"
       - path: "/symbol-change-history"
         variants:
           - name: "Symbol Changes (last 30 days)"
