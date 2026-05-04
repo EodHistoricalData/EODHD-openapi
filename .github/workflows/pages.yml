@@ -30,6 +30,9 @@ jobs:
           npm run validate
           npm run build
 
+      - name: Build Redoc static HTML
+        run: npx @redocly/cli build-docs openapi.yaml -o docs/redoc.html
+
       - name: Prepare Pages artifact
         run: |
           mkdir -p _site
