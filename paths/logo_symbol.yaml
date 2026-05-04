@@ -29,10 +29,7 @@
             schema:
               type: string
               format: binary
-            examples:
-              binaryPng:
-                summary: Binary PNG (200x200, transparent)
-                description: Binary PNG bytes are returned; example omitted for brevity.
+            example: "(binary PNG data)"
       '401':
         description: Unauthorized (invalid token or suspended account).
         content:

@@ -27,10 +27,7 @@
           image/svg+xml:
             schema:
               type: string
-            examples:
-              svgLogo:
-                summary: SVG logo
-                description: SVG XML bytes are returned; example omitted for brevity.
+            example: "<svg>...</svg>"
       '401':
         description: Unauthorized (invalid token or suspended account).
         content:
