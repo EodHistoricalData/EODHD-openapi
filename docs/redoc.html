@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EODHD API Reference — Redoc</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    .nav-links { text-align: center; padding: 12px; background: #f0f0f0; border-bottom: 1px solid #ddd; }
+    .nav-links a { margin: 0 12px; color: #1b1b3a; text-decoration: none; font-family: sans-serif; font-size: 14px; }
+    .nav-links a.active { font-weight: bold; border-bottom: 2px solid #1b1b3a; }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">Swagger UI</a>
+    <a href="redoc.html" class="active">Redoc</a>
+  </div>
+  <redoc spec-url="openapi.yaml"
+    hide-download-button="false"
+    expand-responses="200"
+    path-in-middle-panel="true"
+    theme='{
+      "colors": { "primary": { "main": "#1b1b3a" } },
+      "typography": { "fontFamily": "Inter, sans-serif" },
+      "sidebar": { "width": "280px" }
+    }'
+  ></redoc>
+  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+</body>
+</html>
