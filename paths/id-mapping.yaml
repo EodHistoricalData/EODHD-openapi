@@ -1,7 +1,12 @@
 /id-mapping:
   get:
     summary: Map between financial identifiers
-    description: Look up securities by various identifiers including symbol, exchange code, ISIN, FIGI, LEI, CUSIP, and CIK.
+    description: |
+      Look up securities by various identifiers including symbol, exchange code, ISIN, FIGI, LEI, CUSIP, and CIK.
+
+      **At least one of the following filter parameters is required**:
+      `filter[symbol]`, `filter[isin]`, `filter[figi]`, `filter[lei]`, `filter[cusip]`, `filter[cik]`, or `filter[ex]`.
+      A request without any of these will return HTTP 422.
     operationId: GetIdMapping
     parameters:
     - name: api_token

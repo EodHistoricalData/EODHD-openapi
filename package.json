@@ -36,6 +36,6 @@
   "homepage": "https://github.com/EodHistoricalData/EODHD-openapi#readme",
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.9.0",
-    "@redocly/cli": "^2.30.3"
+    "@redocly/cli": "^2.18.2"
   }
 }
