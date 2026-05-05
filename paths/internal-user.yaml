@@ -14,7 +14,7 @@
       schema:
         type: string
         minLength: 10
-      example: 65fc5c8b354544.64071550
+      example: YOUR_API_TOKEN_HERE
     responses:
       '200':
         description: Successful response with user information.
@@ -97,12 +97,12 @@
                       items:
                         type: string
             example:
-              name: Lukasz
-              email: lukasz.coco@gmail.com
+              name: John Doe
+              email: user@example.com
               subscriptionType: monthly
               paymentMethod: Stripe
-              apiRequests: 53861
-              apiRequestsDate: '2025-08-13'
+              apiRequests: 1234
+              apiRequestsDate: '2025-01-15'
               dailyRateLimit: 100000
               extraLimit: 0
               inviteToken: ""

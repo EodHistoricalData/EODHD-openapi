@@ -1,7 +1,10 @@
 /calendar/dividends:
   get:
     summary: Retrieve upcoming dividends calendar
-    description: Fetches upcoming and historical dividend events, with optional date ranges and symbol filters.
+    description: |
+      Look up upcoming and historical dividend events.
+
+      Uses the JSON:API filter/page convention. **At least one of `filter[date_eq]` or `filter[symbol]` is required** — a request without either will return HTTP 422.
     operationId: GetUpcomingDividends
     parameters:
     - name: api_token
@@ -10,36 +13,61 @@
       description: Your API token for accessing the API.
       schema:
         type: string
-    - name: from
+    - name: filter[date_eq]
       in: query
       required: false
-      description: Start date in 'YYYY-MM-DD' format. Defaults to today.
+      description: |
+        Exact date in 'YYYY-MM-DD' format. Required if `filter[symbol]` is not present.
       schema:
         type: string
         format: date
-    - name: to
+    - name: filter[date_from]
       in: query
       required: false
-      description: End date in 'YYYY-MM-DD' format. Defaults to 7 days from today.
+      description: Start date in 'YYYY-MM-DD' format.
       schema:
         type: string
         format: date
-    - name: symbols
+    - name: filter[date_to]
       in: query
       required: false
-      description: Comma-separated ticker symbols (e.g., 'AAPL.US,MSFT.US').
+      description: End date in 'YYYY-MM-DD' format.
       schema:
         type: string
+        format: date
+    - name: filter[symbol]
+      in: query
+      required: false
+      description: |
+        Ticker symbol (e.g., 'AAPL.US'). When provided, `filter[date_eq]` may be omitted.
+      schema:
+        type: string
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page (1-10000).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (0-1000000).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000000
     - name: fmt
       in: query
       required: false
-      description: Output format. Defaults to 'csv'.
+      description: Output format. Defaults to 'json'.
       schema:
         type: string
         enum:
         - csv
         - json
-        default: csv
+        default: json
     responses:
       '200':
         description: Successfully retrieved dividends calendar data.
@@ -48,63 +76,60 @@
             schema:
               type: object
               properties:
-                type:
-                  type: string
-                  description: Type of data, e.g., 'Dividends'.
-                description:
-                  type: string
-                  description: Description of the data.
-                from:
-                  type: string
-                  format: date
-                to:
-                  type: string
-                  format: date
-                dividends:
+                meta:
+                  type: object
+                  description: Pagination and request metadata.
+                data:
                   type: array
                   items:
                     type: object
                     properties:
-                      code:
+                      date:
+                        type: string
+                        format: date
+                        description: Dividend ex-date.
+                      symbol:
                         type: string
                         description: Ticker symbol.
-                      ex_date:
-                        type: string
-                        format: date
-                        description: Ex-dividend date.
-                      payment_date:
-                        type: string
-                        format: date
-                        description: Payment date.
-                      record_date:
-                        type: string
-                        format: date
-                        description: Record date.
-                      declaration_date:
-                        type: string
-                        format: date
-                        description: Declaration date.
-                      currency:
-                        type: string
-                        description: Currency of the dividend.
-                      value:
-                        type: number
-                        description: Dividend amount per share.
-                      unadjusted_value:
-                        type: number
-                        description: Unadjusted dividend value.
-                      period:
-                        type: string
-                        description: Dividend period (e.g., 'Quarterly').
                     required:
-                    - code
-                    - ex_date
-                    - currency
-      '400':
-        description: Invalid request parameters.
+                    - date
+                    - symbol
+                links:
+                  type: object
+                  description: JSON:API pagination links.
+              required:
+              - data
+            example:
+              meta:
+                total: 91
+              data:
+              - date: '2026-05-11'
+                symbol: AAPL.US
+              - date: '2026-05-12'
+                symbol: MSFT.US
+              links:
+                self: https://eodhd.com/api/calendar/dividends?filter[symbol]=AAPL.US
       '401':
         description: Unauthorized. Invalid API token.
-      '404':
-        description: Dividend data not found for specified parameters.
+      '422':
+        description: |
+          Validation error. Returned when required filter is missing or parameters are malformed.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+            example:
+              errors:
+                filter:
+                - The filter field is required.
+                filter.date_eq:
+                - The filter.date eq field is required when filter.symbol is not present.
     tags:
     - Calendar
