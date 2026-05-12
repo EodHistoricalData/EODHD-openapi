@@ -52,36 +52,39 @@
         default: json
     responses:
       '200':
-        description: Successfully retrieved historical market capitalization data.
+        description: |
+          Successfully retrieved historical market capitalization data.
+
+          The response is a JSON object whose keys are sequential integer indices (as strings: "0", "1", "2", ...) and whose values are objects containing `date` and `value`. Iterate over the values, not the keys.
         content:
           application/json:
             schema:
               type: object
-              properties:
-                data:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      date:
-                        type: string
-                        format: date
-                        description: The date of the market capitalization value.
-                      value:
-                        type: number
-                        description: Market capitalization value in USD.
-                    required:
-                    - date
-                    - value
+              additionalProperties:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: The date of the market capitalization value.
+                  value:
+                    type: number
+                    description: Market capitalization value in USD.
+                required:
+                - date
+                - value
             example:
-              data:
-              - date: '2022-06-07'
+              '0':
+                date: '2022-06-07'
                 value: 2406898266500
-              - date: '2022-06-14'
+              '1':
+                date: '2022-06-14'
                 value: 2148744629600
-              - date: '2022-06-21'
+              '2':
+                date: '2022-06-21'
                 value: 2199080542500
-              - date: '2022-06-28'
+              '3':
+                date: '2022-06-28'
                 value: 2212148752300
       '400':
         description: Invalid request parameters.
