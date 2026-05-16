@@ -195,5 +195,9 @@ paths:
     $ref: ./paths/v1.1_bulk-fundamentals_EXCHANGE.yaml#/~1v1.1~1bulk-fundamentals~1{EXCHANGE}
   /v1.1/fundamentals/{ticker}:
     $ref: ./paths/v1.1_fundamentals_ticker.yaml#/~1v1.1~1fundamentals~1{ticker}
+  /v2/exchange-details:
+    $ref: ./paths/v2_exchange-details.yaml#/~1v2~1exchange-details
+  /v2/exchange-details/{code}:
+    $ref: ./paths/v2_exchange-details_code.yaml#/~1v2~1exchange-details~1{code}
 components:
   $ref: components/index.yaml
