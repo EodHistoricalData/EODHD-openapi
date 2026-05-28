@@ -167,6 +167,8 @@ paths:
     $ref: ./paths/real-time_ticker.yaml#/~1real-time~1{ticker}
   /screener:
     $ref: ./paths/screener.yaml#/~1screener
+  /sec-filings/{symbol}/form4:
+    $ref: ./paths/sec-filings_symbol_form4.yaml#/~1sec-filings~1{symbol}~1form4
   /search/{query}:
     $ref: ./paths/search_query.yaml#/~1search~1{query}
   /sentiments:

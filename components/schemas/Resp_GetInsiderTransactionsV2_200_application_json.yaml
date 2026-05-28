@@ -1,0 +1,17 @@
+Resp_GetInsiderTransactionsV2_200_application_json:
+  type: object
+  description: Paginated list of SEC Form 4 filings for a US-listed symbol.
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: array
+      description: Form 4 filings sorted by filed_at descending.
+      items:
+        $ref: ./Form4Filing.yaml#/Form4Filing
+    meta:
+      $ref: ./Form4Meta.yaml#/Form4Meta
+    links:
+      $ref: ./Links.yaml#/Links

@@ -1,9 +1,17 @@
 /insider-transactions:
   get:
-    summary: Retrieve insider transaction data
-    description: Fetch insider transaction data for US-listed companies. Covers insider
+    summary: Insider Transactions (Obsolete — use Insider Transactions v2)
+    description: |
+      **Obsolete.** This flat-schema endpoint is kept for backward compatibility.
+      For new integrations use **Insider Transactions v2** at
+      `GET /api/sec-filings/{symbol}/form4`, which exposes SEC Form 4 data parsed
+      directly from EDGAR with full filing history, derivative transactions, and
+      footnotes.
+
+      Fetch insider transaction data for US-listed companies. Covers insider
       buys and sells, providing transaction details such as date, shares, and price.
     operationId: GetInsiderTransactions
+    deprecated: true
     parameters:
     - name: api_token
       in: query

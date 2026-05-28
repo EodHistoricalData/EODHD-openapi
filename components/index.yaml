@@ -97,6 +97,18 @@ schemas:
     $ref: ./schemas/Resp_GetHistoricalMarketCap_200_application_json.yaml#/Resp_GetHistoricalMarketCap_200_application_json
   Resp_GetInsiderTransactions_200_application_json:
     $ref: ./schemas/Resp_GetInsiderTransactions_200_application_json.yaml#/Resp_GetInsiderTransactions_200_application_json
+  Resp_GetInsiderTransactionsV2_200_application_json:
+    $ref: ./schemas/Resp_GetInsiderTransactionsV2_200_application_json.yaml#/Resp_GetInsiderTransactionsV2_200_application_json
+  Form4Filing:
+    $ref: ./schemas/Form4Filing.yaml#/Form4Filing
+  Form4NonDerivative:
+    $ref: ./schemas/Form4NonDerivative.yaml#/Form4NonDerivative
+  Form4Derivative:
+    $ref: ./schemas/Form4Derivative.yaml#/Form4Derivative
+  Form4Footnote:
+    $ref: ./schemas/Form4Footnote.yaml#/Form4Footnote
+  Form4Meta:
+    $ref: ./schemas/Form4Meta.yaml#/Form4Meta
   Resp_GetIntradayHistoricalData_200_application_json:
     $ref: ./schemas/Resp_GetIntradayHistoricalData_200_application_json.yaml#/Resp_GetIntradayHistoricalData_200_application_json
   Resp_GetMacroIndicatorData_200_application_json:

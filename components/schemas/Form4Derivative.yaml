@@ -1,0 +1,73 @@
+Form4Derivative:
+  type: object
+  description: Derivative Form 4 transaction — options, RSUs, warrants, or other derivative securities.
+  required:
+  - reporting_owner_cik
+  - reporting_owner_name
+  - security_title
+  - transaction_date
+  - transaction_code
+  - acquired_or_disposed
+  - shares_amount
+  - shares_owned_after
+  properties:
+    reporting_owner_cik:
+      type: string
+      description: SEC Central Index Key of the reporting insider.
+    reporting_owner_name:
+      type: string
+      description: Full name of the reporting insider.
+    security_title:
+      type: string
+      description: Derivative security name (e.g., "Non-Qualified Stock Option").
+    conversion_or_exercise_price:
+      type:
+      - number
+      - 'null'
+      description: Exercise or conversion price per underlying share, in USD.
+    transaction_date:
+      type: string
+      format: date-time
+      description: ISO-8601 timestamp of the transaction.
+    transaction_code:
+      type: string
+      description: SEC Section 16 transaction code.
+    acquired_or_disposed:
+      type: string
+      enum:
+      - A
+      - D
+      description: A = acquired, D = disposed.
+    shares_amount:
+      type: number
+      description: Number of derivative units transacted.
+    price_per_share:
+      type:
+      - number
+      - 'null'
+      description: Price per derivative unit in USD, if applicable.
+    shares_owned_after:
+      type: number
+      description: Total derivative units held after the transaction.
+    underlying_security_title:
+      type:
+      - string
+      - 'null'
+      description: Underlying security name (e.g., "Common Stock").
+    underlying_shares:
+      type:
+      - number
+      - 'null'
+      description: Number of underlying shares represented by the derivative.
+    exercise_date:
+      type:
+      - string
+      - 'null'
+      format: date-time
+      description: Date the derivative becomes exercisable.
+    expiration_date:
+      type:
+      - string
+      - 'null'
+      format: date-time
+      description: Expiration date of the derivative.

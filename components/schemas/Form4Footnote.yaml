@@ -1,0 +1,13 @@
+Form4Footnote:
+  type: object
+  description: Footnote text referenced from transactions in a Form 4 filing.
+  required:
+  - footnote_id
+  - text
+  properties:
+    footnote_id:
+      type: string
+      description: Footnote reference identifier (e.g., "F1", "F2").
+    text:
+      type: string
+      description: Full footnote text.
