@@ -1,0 +1,63 @@
+/sec-filings/{symbol}/form4:
+  get:
+    summary: Insider Transactions v2 (SEC Form 4)
+    description: |
+      Retrieve SEC Form 4 insider transactions for a US-listed symbol, parsed directly
+      from SEC EDGAR. Returns a paginated list of filings, each containing both
+      non-derivative (direct stock) and derivative (options, RSUs, warrants)
+      transactions plus referenced footnotes.
+
+      History depth: full SEC EDGAR archive (e.g., AAPL since 2015-04). Refreshed daily.
+
+      Cost: 10 API calls per request.
+
+      Plans: Fundamentals and All-In-One.
+    operationId: GetInsiderTransactionsV2
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: US ticker symbol (e.g., "AAPL" or "AAPL.US"). Case-insensitive; the ".US" suffix is optional.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (zero-based).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Page size, between 1 and 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    responses:
+      '200':
+        description: Successful response with paginated Form 4 filings.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetInsiderTransactionsV2_200_application_json.yaml#/Resp_GetInsiderTransactionsV2_200_application_json
+      '401':
+        description: Unauthorized — invalid or missing API token.
+      '403':
+        description: Forbidden — subscription plan does not include SEC Form 4 access.
+      '404':
+        description: No filings found for the specified symbol.
+    tags:
+    - Corporate Actions
+    externalDocs:
+      description: Insider Transactions API documentation
+      url: https://eodhd.com/financial-apis/insider-transactions-api

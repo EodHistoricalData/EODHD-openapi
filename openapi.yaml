@@ -220,6 +220,8 @@ paths:
     $ref: ./paths/spreads_funding-stress.yaml#/~1spreads~1funding-stress
   /screener:
     $ref: ./paths/screener.yaml#/~1screener
+  /sec-filings/{symbol}/form4:
+    $ref: ./paths/sec-filings_symbol_form4.yaml#/~1sec-filings~1{symbol}~1form4
   /search/{query}:
     $ref: ./paths/search_query.yaml#/~1search~1{query}
   /sentiments:

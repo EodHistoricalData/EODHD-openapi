@@ -1,0 +1,77 @@
+Form4NonDerivative:
+  type: object
+  description: Direct (non-derivative) Form 4 transaction — common stock buys or sells by an insider.
+  required:
+  - reporting_owner_cik
+  - reporting_owner_name
+  - is_director
+  - is_officer
+  - is_ten_percent_owner
+  - is_other
+  - security_title
+  - transaction_date
+  - transaction_code
+  - acquired_or_disposed
+  - shares_amount
+  - shares_owned_after
+  properties:
+    reporting_owner_cik:
+      type: string
+      description: SEC Central Index Key of the reporting insider.
+    reporting_owner_name:
+      type: string
+      description: Full name of the reporting insider.
+    is_director:
+      type: boolean
+      description: True if the insider is a director of the issuer.
+    is_officer:
+      type: boolean
+      description: True if the insider is an officer of the issuer.
+    is_ten_percent_owner:
+      type: boolean
+      description: True if the insider is a 10%+ beneficial owner.
+    is_other:
+      type: boolean
+      description: True if the insider has another relationship to the issuer.
+    officer_title:
+      type:
+      - string
+      - 'null'
+      description: Officer title, or null when the insider is not an officer.
+    other_text:
+      type:
+      - string
+      - 'null'
+      description: Free-text description of the "other" relationship, if applicable.
+    security_title:
+      type: string
+      description: Security name (e.g., "Common Stock").
+    transaction_date:
+      type: string
+      format: date-time
+      description: ISO-8601 timestamp of the transaction.
+    transaction_code:
+      type: string
+      description: SEC Section 16 transaction code (P, S, A, D, F, M, G, V, J, L, C, E, H, O, X).
+    acquired_or_disposed:
+      type: string
+      enum:
+      - A
+      - D
+      description: A = acquired, D = disposed.
+    shares_amount:
+      type: number
+      description: Number of shares transacted.
+    price_per_share:
+      type:
+      - number
+      - 'null'
+      description: Price per share in USD; null when not applicable (gifts, awards).
+    shares_owned_after:
+      type: number
+      description: Total shares held by the insider after the transaction.
+    total_value:
+      type:
+      - number
+      - 'null'
+      description: Computed transaction value (shares_amount * price_per_share); null when price is unavailable.
