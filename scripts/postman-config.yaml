@@ -484,10 +484,37 @@ folders:
               symbols: "AAPL.US,MSFT.US"
               fmt: "json"
 
-  - name: "Insider Transactions (SEC Form 4)"
+  - name: "Insider Transactions v2 (SEC Form 4)"
     description: >
-      SEC Form 4 filing data for all US companies — insider buys and sells by company officers,
-      directors, and major shareholders. Supports filtering by ticker, date range, and result limit.
+      SEC Form 4 filings for US companies — insider transactions parsed directly from SEC EDGAR.
+      Returns paginated filings with both non-derivative (direct stock) and derivative
+      (options, RSUs, warrants) transactions plus referenced footnotes. Full EDGAR history.
+
+      **Plans:** Fundamentals, All-In-One.
+      **Cost:** 10 API calls per request.
+      **Pagination:** `page[offset]` (default 0), `page[limit]` (1-100, default 20).
+      **Docs:** https://eodhd.com/financial-apis/insider-transactions-api/
+    endpoints:
+      - path: "/sec-filings/{symbol}/form4"
+        variants:
+          - name: "Insider Transactions v2 — AAPL"
+            path_params:
+              symbol: "AAPL"
+            query_overrides:
+              "page[limit]": "5"
+          - name: "Insider Transactions v2 — TSLA"
+            path_params:
+              symbol: "TSLA"
+            query_overrides:
+              "page[limit]": "5"
+
+  - name: "Insider Transactions (Obsolete)"
+    description: >
+      **Obsolete.** Legacy flat-schema endpoint kept for backward compatibility. For new integrations
+      use **Insider Transactions v2 (SEC Form 4)** at `/sec-filings/{symbol}/form4`.
+
+      Insider buys and sells by company officers, directors, and major shareholders. Supports
+      filtering by ticker, date range, and result limit.
 
       **Plans:** All-In-One, Fundamentals Data Feed.
       **Cost:** 10 API calls per request.
@@ -495,11 +522,11 @@ folders:
     endpoints:
       - path: "/insider-transactions"
         variants:
-          - name: "Insider Transactions — All"
+          - name: "Insider Transactions (Obsolete) — All"
             query_overrides:
               limit: "10"
               fmt: "json"
-          - name: "Insider Transactions — AAPL.US"
+          - name: "Insider Transactions (Obsolete) — AAPL.US"
             query_overrides:
               code: "AAPL.US"
               limit: "10"
