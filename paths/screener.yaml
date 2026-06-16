@@ -5,12 +5,6 @@
       exchange, sector, and more. Results can be sorted and paginated.
     operationId: GetStockScreenerData
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for authentication.
-      schema:
-        type: string
     - name: filters
       in: query
       required: false

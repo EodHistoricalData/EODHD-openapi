@@ -4,12 +4,6 @@
     description: Fetches information on stock splits for specified date ranges.
     operationId: GetUpcomingSplits
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API key for authentication.
-      schema:
-        type: string
     - name: from
       in: query
       required: false

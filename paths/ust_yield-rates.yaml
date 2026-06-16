@@ -4,12 +4,6 @@
     description: Returns daily US Treasury yield curve rates (constant maturity rates for 1-month through 30-year maturities).
     operationId: GetUSTYieldRates
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: from
       in: query
       required: false

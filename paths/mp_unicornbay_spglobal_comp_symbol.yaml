@@ -21,12 +21,6 @@
         - json
         - xml
         default: json
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     responses:
       '200':
         description: Successful response with index general info, components, and

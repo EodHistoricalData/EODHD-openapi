@@ -12,12 +12,6 @@
         for Apple Inc.
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for authentication.
-      schema:
-        type: string
     - name: function
       in: query
       required: true

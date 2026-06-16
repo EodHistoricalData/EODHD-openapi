@@ -11,12 +11,6 @@
       description: Exchange symbol (e.g., 'VI' for Vienna or 'US' for the U.S.).
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: fmt
       in: query
       required: false
@@ -227,9 +221,9 @@
                   date: '2024-11-05'
                   dividend: 0.07
                   currency: USD
-                  declarationDate: ""
-                  recordDate: ""
-                  paymentDate: ""
+                  declarationDate: null
+                  recordDate: null
+                  paymentDate: null
                   period: ""
                   unadjustedValue: 0.07
       '400':

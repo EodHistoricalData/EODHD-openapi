@@ -4,12 +4,6 @@
     description: Returns details about the authenticated user, including subscription info and API usage.
     operationId: GetUserDetails
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: fmt
       in: query
       required: false

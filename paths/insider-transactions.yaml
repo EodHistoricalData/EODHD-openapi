@@ -5,12 +5,6 @@
       buys and sells, providing transaction details such as date, shares, and price.
     operationId: GetInsiderTransactions
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication
-      schema:
-        type: string
     - name: limit
       in: query
       required: false

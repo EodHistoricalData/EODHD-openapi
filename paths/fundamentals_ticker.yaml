@@ -13,14 +13,6 @@
         for Apple Inc. on NASDAQ.
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for authentication. Use 'demo' for limited access
-        with specific symbols.
-      schema:
-        type: string
-        example: demo
     - name: filter
       in: query
       required: false

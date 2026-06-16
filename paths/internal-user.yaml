@@ -5,16 +5,6 @@
       user, including subscription type, usage statistics, and available data feeds.
       Requires a valid `api_token` as a query parameter.
     operationId: GetInternalUserInfo
-    parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication. You can find this in your account
-        dashboard on eodhd.com.
-      schema:
-        type: string
-        minLength: 10
-      example: YOUR_API_TOKEN_HERE
     responses:
       '200':
         description: Successful response with user information.

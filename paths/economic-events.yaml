@@ -5,12 +5,6 @@
       and other optional parameters.
     operationId: GetEconomicEventsData
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API key for authentication.
-      schema:
-        type: string
     - name: from
       in: query
       required: false
@@ -87,7 +81,6 @@
                     description: Country code in ISO 3166 format.
                   date:
                     type: string
-                    format: date-time
                     description: Date and time of the event in 'YYYY-MM-DD HH:MM:SS'
                       format.
                   actual:
@@ -113,7 +106,7 @@
               date: '2022-06-03 16:30:00'
               actual: 62.3
               previous: 62.2
-              estimate: ""
+              estimate: null
               change: 0.1
               change_percentage: 0.161
             - type: Nonfarm Payrolls Private

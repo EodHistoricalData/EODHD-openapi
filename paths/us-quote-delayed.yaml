@@ -4,12 +4,6 @@
     description: Returns 15-minute delayed quote data for US equities. Supports multiple symbols in a single request.
     operationId: GetUSQuoteDelayed
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for authentication.
-      schema:
-        type: string
     - name: s
       in: query
       required: true

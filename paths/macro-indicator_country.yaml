@@ -12,12 +12,6 @@
         'FRA' for France).
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for authentication.
-      schema:
-        type: string
     - name: indicator
       in: query
       required: false
