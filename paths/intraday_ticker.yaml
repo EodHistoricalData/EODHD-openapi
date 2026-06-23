@@ -10,12 +10,6 @@
       description: Ticker symbol with exchange code (e.g., 'AAPL.US').
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: interval
       in: query
       required: true
@@ -69,7 +63,6 @@
                     type: integer
                   datetime:
                     type: string
-                    format: date-time
                   open:
                     type: number
                   high:

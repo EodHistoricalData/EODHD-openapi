@@ -5,12 +5,6 @@
       ranges and specific symbols.
     operationId: GetUpcomingEarnings
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for accessing the API.
-      schema:
-        type: string
     - name: from
       in: query
       required: false

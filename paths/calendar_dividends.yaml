@@ -7,12 +7,6 @@
       Uses the JSON:API filter/page convention. **At least one of `filter[date_eq]` or `filter[symbol]` is required** — a request without either will return HTTP 422.
     operationId: GetUpcomingDividends
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: Your API token for accessing the API.
-      schema:
-        type: string
     - name: filter[date_eq]
       in: query
       required: false

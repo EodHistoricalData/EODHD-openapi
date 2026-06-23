@@ -5,8 +5,6 @@ securitySchemes:
     name: api_token
     description: EODHD API key (stored as a secret in ChatGPT).
 parameters:
-  ApiToken:
-    $ref: ./parameters/ApiToken.yaml#/ApiToken
   FmtCsvJson:
     $ref: ./parameters/FmtCsvJson.yaml#/FmtCsvJson
   FmtJsonXml:

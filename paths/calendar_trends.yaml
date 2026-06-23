@@ -12,12 +12,6 @@
         (e.g., 'AAPL.US,MSFT.US').
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: Your API key for authentication.
-      schema:
-        type: string
     - name: fmt
       in: query
       required: false

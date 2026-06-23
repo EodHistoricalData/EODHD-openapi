@@ -4,12 +4,6 @@
     description: Get tick-level data via the UnicornBay marketplace data provider. Returns granular trade-by-trade data for supported symbols.
     operationId: GetMarketplaceTickData
     parameters:
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: s
       in: query
       required: true

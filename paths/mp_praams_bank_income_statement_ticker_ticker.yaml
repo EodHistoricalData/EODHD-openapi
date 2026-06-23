@@ -10,12 +10,6 @@
       description: Ticker symbol (e.g., 'JPM.US').
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     - name: fmt
       in: query
       required: false

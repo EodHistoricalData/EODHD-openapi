@@ -14,12 +14,6 @@
         - json
         - xml
         default: json
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication.
-      schema:
-        type: string
     responses:
       '200':
         description: Successful response with an array of indices.
@@ -39,7 +33,7 @@
                   MarketCap: 4276250432997.9194
                   Divisor: 248535830.1502
                   DailyReturn: 0.0007
-                  Dividend: ""
+                  Dividend: 0.1364
                   AdjustedMarketCap: 4276250432997.9194
                   AdjustedDivisor: 248535830.1502
                   AdjustedConstituents: 1003

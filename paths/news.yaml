@@ -18,12 +18,6 @@
       description: Tag to get news on a given topic. Required if 's' is not provided.
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication
-      schema:
-        type: string
     - name: from
       in: query
       required: false

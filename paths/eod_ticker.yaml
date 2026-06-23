@@ -11,12 +11,6 @@
       description: Ticker symbol of the company
       schema:
         type: string
-    - name: api_token
-      in: query
-      required: true
-      description: API token for authentication
-      schema:
-        type: string
     - name: fmt
       in: query
       required: false
