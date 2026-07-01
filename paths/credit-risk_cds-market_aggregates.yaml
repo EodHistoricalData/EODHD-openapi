@@ -1,0 +1,96 @@
+/credit-risk/cds-market/aggregates:
+  get:
+    summary: Get CDS market aggregate statistics
+    description: Returns aggregated CDS market statistics (e.g., gross notional) broken
+      down by dimensions such as grade or cleared status.
+    operationId: GetCdsMarketAggregates
+    parameters:
+    - name: filter[metric]
+      in: query
+      required: false
+      description: Aggregate metric to return.
+      schema:
+        type: string
+        enum:
+        - gross_notional
+    - name: filter[dimension]
+      in: query
+      required: false
+      description: Breakdown dimension.
+      schema:
+        type: string
+        enum:
+        - grade
+        - cleared_status
+    - name: filter[from]
+      in: query
+      required: false
+      description: Start date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: filter[to]
+      in: query
+      required: false
+      description: End date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+        minimum: 1
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved CDS market aggregates.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetCdsMarketAggregates_200_application_json.yaml#/Resp_GetCdsMarketAggregates_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Credit & Sovereign Risk

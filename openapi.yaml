@@ -60,6 +60,13 @@ tags:
   description: Environmental, Social, and Governance ratings (Investverte)
 - name: Investment Analytics
   description: Risk scoring, bond analysis, bank financials, reports (PRAAMS)
+- name: Credit & Sovereign Risk
+  description: Sovereign risk premiums, credit ratings, CDS spreads, and corporate
+    credit metrics
+- name: Sanctions
+  description: Sanctioned entities, vessels, programs, and sources (OFAC and others)
+- name: Interest Rates
+  description: Reference rates, central bank policy rates, and funding-stress spreads
 paths:
   /bulk-fundamentals/{EXCHANGE}:
     $ref: ./paths/bulk-fundamentals_EXCHANGE.yaml#/~1bulk-fundamentals~1{EXCHANGE}
@@ -75,6 +82,20 @@ paths:
     $ref: ./paths/calendar_trends.yaml#/~1calendar~1trends
   /commodities/historical/{code}:
     $ref: ./paths/commodities_historical_code.yaml#/~1commodities~1historical~1{code}
+  /credit-risk/sovereign/risk-premium:
+    $ref: ./paths/credit-risk_sovereign_risk-premium.yaml#/~1credit-risk~1sovereign~1risk-premium
+  /credit-risk/sovereign/credit-ratings:
+    $ref: ./paths/credit-risk_sovereign_credit-ratings.yaml#/~1credit-risk~1sovereign~1credit-ratings
+  /credit-risk/sovereign/cds-spreads:
+    $ref: ./paths/credit-risk_sovereign_cds-spreads.yaml#/~1credit-risk~1sovereign~1cds-spreads
+  /credit-risk/sovereign/default-spreads:
+    $ref: ./paths/credit-risk_sovereign_default-spreads.yaml#/~1credit-risk~1sovereign~1default-spreads
+  /credit-risk/corporate/cmdi:
+    $ref: ./paths/credit-risk_corporate_cmdi.yaml#/~1credit-risk~1corporate~1cmdi
+  /credit-risk/corporate/hqm-yields:
+    $ref: ./paths/credit-risk_corporate_hqm-yields.yaml#/~1credit-risk~1corporate~1hqm-yields
+  /credit-risk/cds-market/aggregates:
+    $ref: ./paths/credit-risk_cds-market_aggregates.yaml#/~1credit-risk~1cds-market~1aggregates
   /cboe/index:
     $ref: ./paths/cboe_index.yaml#/~1cboe~1index
   /cboe/indices:
@@ -163,8 +184,22 @@ paths:
     $ref: ./paths/news.yaml#/~1news
   /news-word-weights:
     $ref: ./paths/news-word-weights.yaml#/~1news-word-weights
+  /rates/reference-rates:
+    $ref: ./paths/rates_reference-rates.yaml#/~1rates~1reference-rates
+  /rates/policy-rates:
+    $ref: ./paths/rates_policy-rates.yaml#/~1rates~1policy-rates
   /real-time/{ticker}:
     $ref: ./paths/real-time_ticker.yaml#/~1real-time~1{ticker}
+  /sanctions/entities:
+    $ref: ./paths/sanctions_entities.yaml#/~1sanctions~1entities
+  /sanctions/vessels:
+    $ref: ./paths/sanctions_vessels.yaml#/~1sanctions~1vessels
+  /sanctions/programs:
+    $ref: ./paths/sanctions_programs.yaml#/~1sanctions~1programs
+  /sanctions/sources:
+    $ref: ./paths/sanctions_sources.yaml#/~1sanctions~1sources
+  /spreads/funding-stress:
+    $ref: ./paths/spreads_funding-stress.yaml#/~1spreads~1funding-stress
   /screener:
     $ref: ./paths/screener.yaml#/~1screener
   /search/{query}:

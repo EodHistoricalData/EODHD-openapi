@@ -1,0 +1,70 @@
+/spreads/funding-stress:
+  get:
+    summary: Get funding-stress spreads
+    description: Returns funding-stress spread series (in basis points) computed as
+      the difference between two rate legs, with the underlying formula and leg values.
+    operationId: GetFundingStressSpreads
+    parameters:
+    - name: filter[code]
+      in: query
+      required: false
+      description: Filter by spread code (e.g., 'SOFR_OIS').
+      schema:
+        type: string
+    - name: filter[from]
+      in: query
+      required: false
+      description: Start date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: filter[to]
+      in: query
+      required: false
+      description: End date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved funding-stress spreads.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetFundingStressSpreads_200_application_json.yaml#/Resp_GetFundingStressSpreads_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Interest Rates

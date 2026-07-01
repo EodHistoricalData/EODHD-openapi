@@ -1,0 +1,101 @@
+/sanctions/entities:
+  get:
+    summary: Get sanctioned entities
+    description: Returns sanctioned entities (individuals and organizations) aggregated
+      from OFAC and other sanctions sources, including programs, aliases, and identifiers.
+    operationId: GetSanctionsEntities
+    parameters:
+    - name: filter[name]
+      in: query
+      required: false
+      description: Filter by entity name (partial match).
+      schema:
+        type: string
+    - name: filter[program]
+      in: query
+      required: false
+      description: Filter by sanctions program code.
+      schema:
+        type: string
+    - name: filter[country]
+      in: query
+      required: false
+      description: Filter by country.
+      schema:
+        type: string
+    - name: filter[source]
+      in: query
+      required: false
+      description: Filter by sanctions source (e.g., 'OFAC').
+      schema:
+        type: string
+    - name: filter[entity_type]
+      in: query
+      required: false
+      description: Filter by entity type (e.g., 'individual', 'entity', 'vessel').
+      schema:
+        type: string
+    - name: filter[is_active]
+      in: query
+      required: false
+      description: Filter by active listing status.
+      schema:
+        type: boolean
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+        minimum: 1
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved sanctioned entities.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetSanctionsEntities_200_application_json.yaml#/Resp_GetSanctionsEntities_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Sanctions

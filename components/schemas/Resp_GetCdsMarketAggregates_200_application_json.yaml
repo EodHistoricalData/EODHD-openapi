@@ -1,0 +1,43 @@
+Resp_GetCdsMarketAggregates_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the aggregate.
+          release_date:
+            type: string
+            format: date-time
+            description: Release timestamp of the aggregate.
+          metric:
+            type: string
+            description: Aggregate metric name.
+          breakdown_dimension:
+            type: string
+            description: Dimension used for the breakdown.
+          breakdown_value:
+            type: string
+            description: Value of the breakdown dimension.
+          region:
+            type: string
+            description: Region.
+          usd_notional_mn:
+            type: number
+            description: Notional amount in USD millions.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

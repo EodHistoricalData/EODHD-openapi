@@ -139,3 +139,31 @@ schemas:
     $ref: ./schemas/IndexComponent.yaml#/IndexComponent
   HistoricalIndexComponent:
     $ref: ./schemas/HistoricalIndexComponent.yaml#/HistoricalIndexComponent
+  Resp_GetSovereignRiskPremium_200_application_json:
+    $ref: ./schemas/Resp_GetSovereignRiskPremium_200_application_json.yaml#/Resp_GetSovereignRiskPremium_200_application_json
+  Resp_GetSovereignCreditRatings_200_application_json:
+    $ref: ./schemas/Resp_GetSovereignCreditRatings_200_application_json.yaml#/Resp_GetSovereignCreditRatings_200_application_json
+  Resp_GetSovereignCdsSpreads_200_application_json:
+    $ref: ./schemas/Resp_GetSovereignCdsSpreads_200_application_json.yaml#/Resp_GetSovereignCdsSpreads_200_application_json
+  Resp_GetSovereignDefaultSpreads_200_application_json:
+    $ref: ./schemas/Resp_GetSovereignDefaultSpreads_200_application_json.yaml#/Resp_GetSovereignDefaultSpreads_200_application_json
+  Resp_GetCorporateCmdi_200_application_json:
+    $ref: ./schemas/Resp_GetCorporateCmdi_200_application_json.yaml#/Resp_GetCorporateCmdi_200_application_json
+  Resp_GetCorporateHqmYields_200_application_json:
+    $ref: ./schemas/Resp_GetCorporateHqmYields_200_application_json.yaml#/Resp_GetCorporateHqmYields_200_application_json
+  Resp_GetCdsMarketAggregates_200_application_json:
+    $ref: ./schemas/Resp_GetCdsMarketAggregates_200_application_json.yaml#/Resp_GetCdsMarketAggregates_200_application_json
+  Resp_GetSanctionsEntities_200_application_json:
+    $ref: ./schemas/Resp_GetSanctionsEntities_200_application_json.yaml#/Resp_GetSanctionsEntities_200_application_json
+  Resp_GetSanctionsVessels_200_application_json:
+    $ref: ./schemas/Resp_GetSanctionsVessels_200_application_json.yaml#/Resp_GetSanctionsVessels_200_application_json
+  Resp_GetSanctionsPrograms_200_application_json:
+    $ref: ./schemas/Resp_GetSanctionsPrograms_200_application_json.yaml#/Resp_GetSanctionsPrograms_200_application_json
+  Resp_GetSanctionsSources_200_application_json:
+    $ref: ./schemas/Resp_GetSanctionsSources_200_application_json.yaml#/Resp_GetSanctionsSources_200_application_json
+  Resp_GetReferenceRates_200_application_json:
+    $ref: ./schemas/Resp_GetReferenceRates_200_application_json.yaml#/Resp_GetReferenceRates_200_application_json
+  Resp_GetPolicyRates_200_application_json:
+    $ref: ./schemas/Resp_GetPolicyRates_200_application_json.yaml#/Resp_GetPolicyRates_200_application_json
+  Resp_GetFundingStressSpreads_200_application_json:
+    $ref: ./schemas/Resp_GetFundingStressSpreads_200_application_json.yaml#/Resp_GetFundingStressSpreads_200_application_json

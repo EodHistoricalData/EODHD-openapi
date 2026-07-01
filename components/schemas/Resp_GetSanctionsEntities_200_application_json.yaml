@@ -1,0 +1,57 @@
+Resp_GetSanctionsEntities_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          source:
+            type: string
+            description: Sanctions data source (e.g., 'OFAC').
+          source_uid:
+            type: string
+            description: Unique identifier of the entity within the source.
+          entity_type:
+            type: string
+            description: Type of entity (e.g., individual, entity, vessel).
+          name:
+            type: string
+            description: Primary name of the sanctioned entity.
+          programs:
+            type: array
+            description: Sanctions program codes the entity is listed under.
+            items:
+              type: string
+          country:
+            type: string
+            description: Associated country.
+          remarks:
+            type: string
+            description: Free-text remarks from the source listing.
+          listed_date:
+            type: string
+            description: Date the entity was listed.
+          is_active:
+            type: boolean
+            description: Whether the listing is currently active.
+          aliases:
+            type: array
+            description: Known aliases for the entity.
+            items:
+              type: string
+          identifiers:
+            type: array
+            description: Identification documents or numbers associated with the entity.
+            items:
+              type: object
+              additionalProperties: true
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

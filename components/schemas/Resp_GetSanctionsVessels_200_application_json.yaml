@@ -1,0 +1,77 @@
+Resp_GetSanctionsVessels_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          call_sign:
+            type:
+            - string
+            - 'null'
+            description: Vessel call sign.
+          vessel_type:
+            type:
+            - string
+            - 'null'
+            description: Type of vessel.
+          flag:
+            type:
+            - string
+            - 'null'
+            description: Flag (country of registration).
+          tonnage:
+            type:
+            - number
+            - 'null'
+            description: Vessel tonnage.
+          gross_tonnage:
+            type:
+            - number
+            - 'null'
+            description: Gross registered tonnage.
+          owner:
+            type:
+            - string
+            - 'null'
+            description: Vessel owner.
+          imo_number:
+            type:
+            - string
+            - 'null'
+            description: IMO number.
+          mmsi:
+            type:
+            - string
+            - 'null'
+            description: Maritime Mobile Service Identity.
+          entity_source_uid:
+            type: string
+            description: Source UID of the linked sanctioned entity.
+          entity_name:
+            type: string
+            description: Name of the linked sanctioned entity.
+          source:
+            type: string
+            description: Sanctions data source (e.g., 'OFAC').
+          programs:
+            type: array
+            description: Sanctions program codes the vessel is listed under.
+            items:
+              type: string
+          country:
+            type: string
+            description: Associated country.
+          is_active:
+            type: boolean
+            description: Whether the listing is currently active.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false
