@@ -5,42 +5,53 @@
       from OFAC and other sanctions sources, including programs, aliases, and identifiers.
     operationId: GetSanctionsEntities
     parameters:
-    - name: filter[name]
+    - name: source
       in: query
       required: false
-      description: Filter by entity name (partial match).
+      description: Filter by sanctions source.
       schema:
         type: string
-    - name: filter[program]
+        enum:
+        - ofac
+    - name: type
+      in: query
+      required: false
+      description: Filter by entity type.
+      schema:
+        type: string
+        enum:
+        - individual
+        - entity
+        - vessel
+        - aircraft
+    - name: program
       in: query
       required: false
       description: Filter by sanctions program code.
       schema:
         type: string
-    - name: filter[country]
+    - name: country
       in: query
       required: false
       description: Filter by country.
       schema:
         type: string
-    - name: filter[source]
+    - name: q
       in: query
       required: false
-      description: Filter by sanctions source (e.g., 'OFAC').
+      description: Free-text search query (minimum 2 characters).
       schema:
         type: string
-    - name: filter[entity_type]
-      in: query
-      required: false
-      description: Filter by entity type (e.g., 'individual', 'entity', 'vessel').
-      schema:
-        type: string
-    - name: filter[is_active]
+        minLength: 2
+    - name: active
       in: query
       required: false
       description: Filter by active listing status.
       schema:
-        type: boolean
+        type: string
+        enum:
+        - 'true'
+        - 'false'
     - name: page[offset]
       in: query
       required: false
@@ -52,10 +63,12 @@
     - name: page[limit]
       in: query
       required: false
-      description: Number of records per page.
+      description: Number of records per page. Default 20, maximum 100.
       schema:
         type: integer
         minimum: 1
+        maximum: 100
+        default: 20
     - name: fmt
       in: query
       required: false

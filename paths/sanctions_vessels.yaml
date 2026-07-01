@@ -5,40 +5,42 @@
       sources, including IMO/MMSI identifiers, flag, and linked sanctioned entity.
     operationId: GetSanctionsVessels
     parameters:
-    - name: filter[name]
+    - name: source
       in: query
       required: false
-      description: Filter by vessel name (partial match).
+      description: Filter by sanctions source.
       schema:
         type: string
-    - name: filter[imo_number]
+        enum:
+        - ofac
+    - name: imo
       in: query
       required: false
       description: Filter by IMO number.
       schema:
         type: string
-    - name: filter[flag]
+    - name: flag
       in: query
       required: false
       description: Filter by flag (country of registration).
       schema:
         type: string
-    - name: filter[program]
+    - name: vessel_type
+      in: query
+      required: false
+      description: Filter by vessel type.
+      schema:
+        type: string
+    - name: q
+      in: query
+      required: false
+      description: Free-text search query.
+      schema:
+        type: string
+    - name: program
       in: query
       required: false
       description: Filter by sanctions program code.
-      schema:
-        type: string
-    - name: filter[country]
-      in: query
-      required: false
-      description: Filter by country.
-      schema:
-        type: string
-    - name: filter[source]
-      in: query
-      required: false
-      description: Filter by sanctions source (e.g., 'OFAC').
       schema:
         type: string
     - name: page[offset]
@@ -52,10 +54,12 @@
     - name: page[limit]
       in: query
       required: false
-      description: Number of records per page.
+      description: Number of records per page. Default 20, maximum 100.
       schema:
         type: integer
         minimum: 1
+        maximum: 100
+        default: 20
     - name: fmt
       in: query
       required: false

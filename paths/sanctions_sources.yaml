@@ -15,10 +15,12 @@
     - name: page[limit]
       in: query
       required: false
-      description: Number of records per page.
+      description: Number of records per page. Default 20, maximum 100.
       schema:
         type: integer
         minimum: 1
+        maximum: 100
+        default: 20
     - name: fmt
       in: query
       required: false
