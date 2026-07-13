@@ -126,6 +126,8 @@ paths:
     $ref: ./paths/historical-market-cap_ticker.yaml#/~1historical-market-cap~1{ticker}
   /insider-transactions:
     $ref: ./paths/insider-transactions.yaml#/~1insider-transactions
+  /asx-corporate-actions:
+    $ref: ./paths/asx-corporate-actions.yaml#/~1asx-corporate-actions
   /internal-user:
     $ref: ./paths/internal-user.yaml#/~1internal-user
   /intraday/{ticker}:

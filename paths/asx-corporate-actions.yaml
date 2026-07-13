@@ -1,0 +1,122 @@
+/asx-corporate-actions:
+  get:
+    summary: ASX corporate actions
+    description: >-
+      Corporate action data for the Australian Securities Exchange (ASX):
+      dividends, splits, bonus issues, rights issues, buybacks, capital returns,
+      and share purchase plans. Data is sourced from ASX ReferencePoint (E34) and
+      refreshed daily. All tickers use the `.AU` suffix. Available on the
+      Fundamentals and All-in-One plans. Cost: 1 API call per request.
+    operationId: GetAsxCorporateActions
+    parameters:
+    - name: type
+      in: query
+      required: false
+      description: >-
+        Filter by action type. Omit to return all types. Each value maps to one
+        or more ASX ReferencePoint codes (dividends=DV, splits=RC,
+        bonus-issues=BN, rights-issues=RR/NR/PR/XR, buybacks=BB,
+        capital-returns=CR, spp=SP, other=AO/CC/CG/CL/CN/IN/OP).
+      schema:
+        type: string
+        enum:
+        - dividends
+        - splits
+        - bonus-issues
+        - rights-issues
+        - buybacks
+        - capital-returns
+        - spp
+        - other
+      example: dividends
+    - name: symbol
+      in: query
+      required: false
+      description: ASX ticker with the `.AU` suffix (e.g., 'PMV.AU'). If omitted, returns
+        data for all ASX symbols.
+      schema:
+        type: string
+      example: PMV.AU
+    - name: date_from
+      in: query
+      required: false
+      description: 'Start date (inclusive), applied to the event date (format: YYYY-MM-DD).'
+      schema:
+        type: string
+        format: date
+    - name: date_to
+      in: query
+      required: false
+      description: 'End date (inclusive), applied to the event date (format: YYYY-MM-DD).'
+      schema:
+        type: string
+        format: date
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset, zero-based. Default is 0.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Page size, from 1 to 1000. Default is 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+    - name: fmt
+      in: query
+      required: false
+      description: Output format (only 'json' supported).
+      schema:
+        type: string
+        enum:
+        - json
+        default: json
+    responses:
+      '200':
+        description: JSON envelope with paginated ASX corporate actions.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetAsxCorporateActions_200_application_json.yaml#/Resp_GetAsxCorporateActions_200_application_json
+            examples:
+              example1:
+                summary: Sample ASX dividend record
+                value:
+                  data:
+                  - code: PMV.AU
+                    date: '2026-08-03'
+                    value: 0.45
+                    unadjustedValue: 0.45
+                    period: Interim
+                    currency: AUD
+                    exchange: AU
+                    recordDate: '2026-08-04'
+                    paymentDate: '2026-08-20'
+                    declarationDate: null
+                    _asx_extra:
+                      asx_ticker: PMV
+                      franked_percent: 100
+                      comment: AUD 0.45 FRANKED, 30% CTR, DRP SUSP
+                  meta:
+                    total: 566
+                    page:
+                      offset: 0
+                      limit: 100
+                  links:
+                    next: https://eodhd.com/api/asx-corporate-actions?page%5Boffset%5D=100&page%5Blimit%5D=100
+      '401':
+        description: Unauthorized access, invalid or missing API token.
+      '403':
+        description: Forbidden — the plan does not include ASX corporate actions.
+      '422':
+        description: Validation error (invalid type, malformed date, or pagination out of range).
+      '429':
+        description: Too many requests — rate limit exceeded.
+    tags:
+    - Corporate Actions
