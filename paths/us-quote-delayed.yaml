@@ -75,4 +75,4 @@
       '401':
         description: Unauthorized. Invalid API token.
     tags:
-    - Intraday Data
+    - Live (Delayed) Data

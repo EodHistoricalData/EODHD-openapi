@@ -20,14 +20,18 @@ servers:
 security:
 - EODHDQueryKey: []
 tags:
-- name: Calendar
-  description: Calendar events including earnings, IPOs, splits, dividends, and trends
 - name: End-of-Day Data
   description: Historical and current end-of-day price data
-- name: Intraday Data
-  description: Real-time and intraday price data
 - name: Fundamentals
   description: Fundamental data for stocks and companies
+- name: Live (Delayed) Data
+  description: Delayed real-time stock prices and US delayed quotes
+- name: Intraday Data
+  description: Intraday historical price data (time-based bars)
+- name: Calendar
+  description: Calendar events including earnings, IPOs, splits, dividends, and trends
+- name: Tick Data
+  description: Historical and marketplace tick-level trade data
 - name: Exchanges
   description: Exchange information and symbols
 - name: Economic Data
