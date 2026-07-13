@@ -68,11 +68,68 @@ Resp_GetAsxCorporateActions_200_application_json:
               format: date
             _asx_extra:
               type: object
-              description: >-
-                ASX-specific dividend attributes (franking, DRP, withholding,
-                tax-advantaged). Keys such as `franked_percent`, `drp_indicator`,
-                `withholding_tax_rate`, and `comment` may be present.
+              description: ASX-specific dividend attributes (franking, DRP, withholding, tax-advantaged).
               additionalProperties: true
+              properties:
+                isin:
+                  type:
+                  - string
+                  - 'null'
+                  example: AU000000PMV2
+                asx_ticker:
+                  type: string
+                  example: PMV
+                corporate_action_id:
+                  type: string
+                  example: '000478776'
+                transaction_type:
+                  type: string
+                  example: A
+                franked_amount_aud:
+                  type: number
+                  description: Franked portion of the dividend in AUD.
+                  example: 0.45
+                franked_percent:
+                  type: number
+                  description: Franking percentage, 0-100.
+                  example: 100
+                drp_indicator:
+                  type: integer
+                  description: Dividend Reinvestment Plan status flag (ASX E34 code).
+                  example: 4
+                drp_price_aud:
+                  type:
+                  - number
+                  - 'null'
+                drp_discount_rate:
+                  type: number
+                  example: 0
+                bsp_indicator:
+                  type: integer
+                  description: Bonus Share Plan status flag.
+                  example: 0
+                special_indicator:
+                  type: string
+                  example: 'N'
+                pari_passu_indicator:
+                  type: string
+                withholding_tax_rate:
+                  type: number
+                tax_deferred_amount_aud:
+                  type: number
+                tax_advantaged_amount_aud:
+                  type: number
+                foreign_source_dividend_aud:
+                  type: number
+                special_dividend_amount_aud:
+                  type: number
+                estimated_trust_distribution_aud:
+                  type: number
+                comment:
+                  type:
+                  - string
+                  - 'null'
+                  example: AUD 0.45 FRANKED, 30% CTR, DRP SUSP
           additionalProperties: true
         - title: AsxSplitItem
           type: object
@@ -96,6 +153,13 @@ Resp_GetAsxCorporateActions_200_application_json:
             exchange:
               type: string
               example: AU
+            _asx_extra:
+              type: object
+              description: >-
+                ASX-specific split attributes (e.g. `asx_ticker`, `record_date`,
+                `effective_date`, `new_security_code`, `calculation_method`,
+                `corporate_action_id`).
+              additionalProperties: true
           additionalProperties: true
         - title: AsxBonusIssueItem
           type: object
