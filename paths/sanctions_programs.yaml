@@ -1,0 +1,67 @@
+/sanctions/programs:
+  get:
+    summary: Get sanctions programs
+    description: Returns the list of sanctions programs with the count of listed entities
+      per program.
+    operationId: GetSanctionsPrograms
+    parameters:
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 20, maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved sanctions programs.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetSanctionsPrograms_200_application_json.yaml#/Resp_GetSanctionsPrograms_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Sanctions

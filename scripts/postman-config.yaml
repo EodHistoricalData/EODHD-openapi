@@ -887,6 +887,127 @@ folders:
               "filter[year]": "2024"
               fmt: "json"
 
+  - name: "Interest Rates"
+    description: >
+      Reference interest rates (SOFR, EFFR, ESTR, and more), central bank policy rates, and
+      funding-stress spreads. Structured, filterable time series for macro research, fixed-income
+      analytics, and monetary-policy monitoring.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+    endpoints:
+      - path: "/rates/reference-rates"
+        variants:
+          - name: "Reference Rates — SOFR (USD)"
+            query_overrides:
+              "filter[code]": "SOFR"
+              "filter[currency]": "USD"
+              fmt: "json"
+      - path: "/rates/policy-rates"
+        variants:
+          - name: "Policy Rates — ECB"
+            query_overrides:
+              "filter[central_bank]": "ECB"
+              fmt: "json"
+      - path: "/spreads/funding-stress"
+        variants:
+          - name: "Funding-Stress Spread — EFFR-SOFR"
+            query_overrides:
+              "filter[code]": "EFFR_SOFR"
+              fmt: "json"
+
+  - name: "Credit & Sovereign Risk Data"
+    description: >
+      Sovereign and corporate credit-risk datasets — sovereign risk premiums, credit ratings,
+      CDS spreads, default spreads, the corporate CMDI market-distress index, HQM corporate bond
+      yield curves, and aggregate CDS market statistics.
+      Structured, filterable time series for credit research and fixed-income risk analytics.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+    endpoints:
+      - path: "/credit-risk/sovereign/risk-premium"
+        variants:
+          - name: "Sovereign Risk Premium — USA"
+            query_overrides:
+              "filter[country]": "USA"
+              fmt: "json"
+      - path: "/credit-risk/sovereign/credit-ratings"
+        variants:
+          - name: "Sovereign Credit Ratings — Germany"
+            query_overrides:
+              "filter[country]": "Germany"
+              fmt: "json"
+      - path: "/credit-risk/sovereign/cds-spreads"
+        variants:
+          - name: "Sovereign CDS Spreads — France"
+            query_overrides:
+              "filter[country]": "France"
+              fmt: "json"
+      - path: "/credit-risk/sovereign/default-spreads"
+        variants:
+          - name: "Sovereign Default Spreads — Aaa"
+            query_overrides:
+              "filter[rating]": "Aaa"
+              fmt: "json"
+      - path: "/credit-risk/corporate/cmdi"
+        variants:
+          - name: "Corporate CMDI — Date Range"
+            query_overrides:
+              "filter[from]": "2026-01-01"
+              "filter[to]": "2026-06-01"
+              fmt: "json"
+      - path: "/credit-risk/corporate/hqm-yields"
+        variants:
+          - name: "HQM Corporate Yields — Par (2, 5, 10Y)"
+            query_overrides:
+              "filter[tenor]": "2,5,10"
+              "filter[type]": "par"
+              fmt: "json"
+      - path: "/credit-risk/cds-market/aggregates"
+        variants:
+          - name: "CDS Market Aggregates — Gross Notional by Grade"
+            query_overrides:
+              "filter[metric]": "gross_notional"
+              "filter[dimension]": "grade"
+              fmt: "json"
+
+  - name: "Sanctions (OFAC Screening)"
+    description: >
+      OFAC sanctions screening data — sanctioned entities, vessels, program list, and data sources.
+      Search by program, flag state, IMO number, or free-text query. Uses bare query parameters
+      (not the `filter[...]` convention).
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 1 API call per request.
+    endpoints:
+      - path: "/sanctions/entities"
+        variants:
+          - name: "Sanctioned Entities — Program SDGT"
+            query_overrides:
+              program: "SDGT"
+              fmt: "json"
+          - name: "Sanctioned Entities — Search \"bank\""
+            query_overrides:
+              q: "bank"
+              fmt: "json"
+      - path: "/sanctions/vessels"
+        variants:
+          - name: "Sanctioned Vessels — Flag Iran"
+            query_overrides:
+              flag: "Iran"
+              fmt: "json"
+      - path: "/sanctions/programs"
+        variants:
+          - name: "Sanctions Programs List"
+            query_overrides:
+              fmt: "json"
+      - path: "/sanctions/sources"
+        variants:
+          - name: "Sanctions Sources List"
+            query_overrides:
+              fmt: "json"
+
   - name: "Commodities Historical Data"
     description: >
       Historical price data for 23 commodities including energy (WTI, Brent, Natural Gas),

@@ -151,4 +151,4 @@
       '404':
         description: Ticker not found.
     tags:
-    - Intraday Data
+    - Live (Delayed) Data

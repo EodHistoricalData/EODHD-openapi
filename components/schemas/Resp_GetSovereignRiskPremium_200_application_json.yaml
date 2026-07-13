@@ -1,0 +1,50 @@
+Resp_GetSovereignRiskPremium_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          country_iso3:
+            type: string
+            description: ISO Alpha-3 country code.
+          country_name:
+            type: string
+            description: Country name.
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the values.
+          moodys_rating:
+            type: string
+            description: Moody's sovereign credit rating.
+          adj_default_spread:
+            type: number
+            description: Adjusted default spread.
+          country_risk_premium:
+            type: number
+            description: Country risk premium.
+          equity_risk_premium:
+            type: number
+            description: Total equity risk premium.
+          corporate_tax_rate:
+            type: number
+            description: Corporate tax rate.
+          sovereign_cds:
+            type:
+            - number
+            - 'null'
+            description: Sovereign CDS spread, if available.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

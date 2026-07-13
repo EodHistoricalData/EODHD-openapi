@@ -72,4 +72,4 @@
       '404':
         description: Tick data not found.
     tags:
-    - Intraday Data
+    - Tick Data

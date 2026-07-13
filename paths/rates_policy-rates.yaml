@@ -1,0 +1,97 @@
+/rates/policy-rates:
+  get:
+    summary: Get central bank policy rates
+    description: Returns central bank policy (target) interest rates by code, country,
+      and central bank.
+    operationId: GetPolicyRates
+    parameters:
+    - name: filter[code]
+      in: query
+      required: false
+      description: Filter by policy rate code.
+      schema:
+        type: string
+    - name: filter[country]
+      in: query
+      required: false
+      description: Filter by country.
+      schema:
+        type: string
+    - name: filter[central_bank]
+      in: query
+      required: false
+      description: Filter by central bank (e.g., 'FED', 'ECB').
+      schema:
+        type: string
+    - name: filter[from]
+      in: query
+      required: false
+      description: Start date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: filter[to]
+      in: query
+      required: false
+      description: End date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+        minimum: 1
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved policy rates.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetPolicyRates_200_application_json.yaml#/Resp_GetPolicyRates_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Interest Rates

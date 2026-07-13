@@ -1,0 +1,42 @@
+Resp_GetFundingStressSpreads_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+            description: Observation date.
+          code:
+            type: string
+            description: Spread code.
+          value_bps:
+            type: number
+            description: Spread value in basis points.
+          formula:
+            type: string
+            description: Formula used to compute the spread.
+          leg_a:
+            type: string
+            description: First rate leg code.
+          leg_b:
+            type: string
+            description: Second rate leg code.
+          leg_a_rate:
+            type: number
+            description: Rate value of the first leg.
+          leg_b_rate:
+            type: number
+            description: Rate value of the second leg.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

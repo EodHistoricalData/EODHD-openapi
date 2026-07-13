@@ -1,0 +1,105 @@
+/sanctions/vessels:
+  get:
+    summary: Get sanctioned vessels
+    description: Returns sanctioned vessels aggregated from OFAC and other sanctions
+      sources, including IMO/MMSI identifiers, flag, and linked sanctioned entity.
+    operationId: GetSanctionsVessels
+    parameters:
+    - name: source
+      in: query
+      required: false
+      description: Filter by sanctions source.
+      schema:
+        type: string
+        enum:
+        - ofac
+    - name: imo
+      in: query
+      required: false
+      description: Filter by IMO number.
+      schema:
+        type: string
+    - name: flag
+      in: query
+      required: false
+      description: Filter by flag (country of registration).
+      schema:
+        type: string
+    - name: vessel_type
+      in: query
+      required: false
+      description: Filter by vessel type.
+      schema:
+        type: string
+    - name: q
+      in: query
+      required: false
+      description: Free-text search query.
+      schema:
+        type: string
+    - name: program
+      in: query
+      required: false
+      description: Filter by sanctions program code.
+      schema:
+        type: string
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 20, maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved sanctioned vessels.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetSanctionsVessels_200_application_json.yaml#/Resp_GetSanctionsVessels_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Sanctions

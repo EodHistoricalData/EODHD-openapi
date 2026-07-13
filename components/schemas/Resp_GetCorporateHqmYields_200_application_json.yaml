@@ -1,0 +1,36 @@
+Resp_GetCorporateHqmYields_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          series_id:
+            type: string
+            description: Source series identifier.
+          tenor_years:
+            type: number
+            description: Tenor in years.
+          yield_type:
+            type: string
+            description: Yield curve type (par or spot).
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the yield value.
+          yield_value:
+            type: number
+            description: Yield value.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

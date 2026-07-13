@@ -1,0 +1,23 @@
+Resp_GetSanctionsPrograms_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          program:
+            type: string
+            description: Sanctions program code.
+          count:
+            type: integer
+            description: Number of entities listed under the program.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

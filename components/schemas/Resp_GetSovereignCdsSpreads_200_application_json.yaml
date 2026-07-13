@@ -1,0 +1,43 @@
+Resp_GetSovereignCdsSpreads_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          country_iso3:
+            type: string
+            description: ISO Alpha-3 country code.
+          country_name:
+            type: string
+            description: Country name.
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the spreads.
+          moodys_rating:
+            type: string
+            description: Moody's sovereign credit rating.
+          cds_spread:
+            type:
+            - number
+            - 'null'
+            description: Sovereign CDS spread.
+          cds_spread_net_of_switzerland:
+            type:
+            - number
+            - 'null'
+            description: CDS spread net of Switzerland.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

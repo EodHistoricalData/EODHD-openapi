@@ -1,0 +1,95 @@
+/rates/reference-rates:
+  get:
+    summary: Get reference interest rates
+    description: Returns benchmark reference interest rates (e.g., SOFR, SONIA, ESTR)
+      by code and currency.
+    operationId: GetReferenceRates
+    parameters:
+    - name: filter[code]
+      in: query
+      required: false
+      description: Filter by reference rate code (e.g., 'SOFR').
+      schema:
+        type: string
+    - name: filter[currency]
+      in: query
+      required: false
+      description: Filter by currency.
+      schema:
+        type: string
+        enum:
+        - USD
+        - GBP
+        - EUR
+    - name: filter[from]
+      in: query
+      required: false
+      description: Start date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: filter[to]
+      in: query
+      required: false
+      description: End date (YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page.
+      schema:
+        type: integer
+        minimum: 1
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved reference rates.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetReferenceRates_200_application_json.yaml#/Resp_GetReferenceRates_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Interest Rates

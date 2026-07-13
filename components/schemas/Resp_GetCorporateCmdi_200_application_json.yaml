@@ -1,0 +1,33 @@
+Resp_GetCorporateCmdi_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the index values.
+          market_cmdi:
+            type: number
+            description: Overall market CMDI value.
+          ig_cmdi:
+            type: number
+            description: Investment-grade CMDI value.
+          hy_cmdi:
+            type: number
+            description: High-yield CMDI value.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

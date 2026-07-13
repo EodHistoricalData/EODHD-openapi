@@ -133,4 +133,4 @@
       '404':
         description: Ticker data not found for the specified query.
     tags:
-    - Intraday Data
+    - Tick Data

@@ -1,0 +1,39 @@
+Resp_GetPolicyRates_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+            description: Observation date.
+          code:
+            type: string
+            description: Policy rate code.
+          country:
+            type: string
+            description: Country.
+          central_bank:
+            type: string
+            description: Central bank.
+          rate:
+            type: number
+            description: Policy rate value.
+          source:
+            type: string
+            description: Data source.
+          source_series_id:
+            type: string
+            description: Source series identifier.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

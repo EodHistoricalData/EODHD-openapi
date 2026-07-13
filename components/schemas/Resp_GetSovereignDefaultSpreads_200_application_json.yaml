@@ -1,0 +1,30 @@
+Resp_GetSovereignDefaultSpreads_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      $ref: ./MetaPagination.yaml#/MetaPagination
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          rating:
+            type: string
+            description: Credit rating bucket.
+          as_of_date:
+            type: string
+            format: date-time
+            description: As-of timestamp for the spread.
+          default_spread:
+            type: number
+            description: Default spread for the rating bucket.
+          source:
+            type: string
+            description: Data source.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false
