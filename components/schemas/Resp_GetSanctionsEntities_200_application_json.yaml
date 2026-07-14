@@ -12,6 +12,9 @@ Resp_GetSanctionsEntities_200_application_json:
       items:
         type: object
         properties:
+          id:
+            type: integer
+            description: Unique identifier of the record.
           source:
             type: string
             description: Sanctions data source (e.g., 'OFAC').
@@ -30,13 +33,19 @@ Resp_GetSanctionsEntities_200_application_json:
             items:
               type: string
           country:
-            type: string
+            type:
+            - string
+            - 'null'
             description: Associated country.
           remarks:
-            type: string
+            type:
+            - string
+            - 'null'
             description: Free-text remarks from the source listing.
           listed_date:
-            type: string
+            type:
+            - string
+            - 'null'
             description: Date the entity was listed.
           is_active:
             type: boolean

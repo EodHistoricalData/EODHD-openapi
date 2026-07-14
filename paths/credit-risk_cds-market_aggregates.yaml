@@ -22,6 +22,18 @@
         enum:
         - grade
         - cleared_status
+    - name: filter[value]
+      in: query
+      required: false
+      description: Filter by the value of the breakdown dimension.
+      schema:
+        type: string
+    - name: filter[region]
+      in: query
+      required: false
+      description: Filter by region.
+      schema:
+        type: string
     - name: filter[from]
       in: query
       required: false
@@ -47,10 +59,12 @@
     - name: page[limit]
       in: query
       required: false
-      description: Number of records per page.
+      description: Number of records per page. Default 20, maximum 100.
       schema:
         type: integer
         minimum: 1
+        maximum: 100
+        default: 20
     - name: fmt
       in: query
       required: false
@@ -82,6 +96,13 @@
               $ref: ../components/schemas/Error.yaml#/Error
       '404':
         description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
         content:
           application/json:
             schema:

@@ -12,6 +12,9 @@ Resp_GetSanctionsVessels_200_application_json:
       items:
         type: object
         properties:
+          id:
+            type: integer
+            description: Unique identifier of the record.
           call_sign:
             type:
             - string
