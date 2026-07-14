@@ -104,6 +104,13 @@
           application/json:
             schema:
               $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
       '429':
         description: Too Many Requests
         content:

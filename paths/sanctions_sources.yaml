@@ -4,23 +4,6 @@
     description: Returns the list of sanctions data sources available in the dataset.
     operationId: GetSanctionsSources
     parameters:
-    - name: page[offset]
-      in: query
-      required: false
-      description: Pagination offset (records to skip).
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    - name: page[limit]
-      in: query
-      required: false
-      description: Number of records per page. Default 20, maximum 100.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
     - name: fmt
       in: query
       required: false
@@ -52,6 +35,13 @@
               $ref: ../components/schemas/Error.yaml#/Error
       '404':
         description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
         content:
           application/json:
             schema:

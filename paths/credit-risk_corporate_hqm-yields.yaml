@@ -8,19 +8,17 @@
     - name: filter[tenor]
       in: query
       required: false
-      description: Filter by tenor in years (e.g., 1, 2, 3, 5, 7, 10, 15, 20, 25, 30).
+      description: Filter by tenor in years, single value or comma-separated list (e.g., '10' or '2,5,10'). Allowed values 1, 2, 3, 5, 7, 10, 15, 20, 25, 30.
       schema:
-        type: integer
-        example: 10
+        type: string
+        example: '2,5,10'
     - name: filter[type]
       in: query
       required: false
-      description: Yield curve type.
+      description: Yield curve type, single value or comma-separated list (e.g., 'par' or 'par,spot'). Allowed values par, spot (case-insensitive).
       schema:
         type: string
-        enum:
-        - par
-        - spot
+        example: par
     - name: filter[from]
       in: query
       required: false
@@ -46,10 +44,12 @@
     - name: page[limit]
       in: query
       required: false
-      description: Number of records per page.
+      description: Number of records per page. Default 20, maximum 100.
       schema:
         type: integer
         minimum: 1
+        maximum: 100
+        default: 20
     - name: fmt
       in: query
       required: false
@@ -81,6 +81,13 @@
               $ref: ../components/schemas/Error.yaml#/Error
       '404':
         description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
         content:
           application/json:
             schema:

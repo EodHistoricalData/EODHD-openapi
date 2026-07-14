@@ -34,9 +34,10 @@
     - name: q
       in: query
       required: false
-      description: Free-text search query.
+      description: Free-text search query (minimum 2 characters).
       schema:
         type: string
+        minLength: 2
     - name: program
       in: query
       required: false
@@ -91,6 +92,13 @@
               $ref: ../components/schemas/Error.yaml#/Error
       '404':
         description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
         content:
           application/json:
             schema:
