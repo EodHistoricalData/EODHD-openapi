@@ -1008,6 +1008,34 @@ folders:
             query_overrides:
               fmt: "json"
 
+  - name: "Congressional Trades"
+    description: >
+      US Senate and House stock-trade disclosures filed under the STOCK Act, from the official
+      Senate EFD and House Clerk sources. Filter by ticker, chamber, member, transaction type, and
+      transaction or disclosure date range. Uses bare query parameters (not the `filter[...]`
+      convention); only pagination uses `page[offset]` / `page[limit]`.
+
+      **Plans:** All-In-One.
+      **Cost:** 10 API calls per request.
+    endpoints:
+      - path: "/congressional-trades"
+        variants:
+          - name: "Congressional Trades — Latest"
+            query_overrides:
+              fmt: "json"
+          - name: "Congressional Trades — Senate purchases & sales 2026"
+            query_overrides:
+              chamber: "senate"
+              transaction_type: "purchase,sale"
+              transaction_date_from: "2026-01-01"
+              "page[limit]": "5"
+              fmt: "json"
+          - name: "Congressional Trades — By member (S000250) in AAPL"
+            query_overrides:
+              bioguide_id: "S000250"
+              symbol: "AAPL"
+              fmt: "json"
+
   - name: "Commodities Historical Data"
     description: >
       Historical price data for 23 commodities including energy (WTI, Brent, Natural Gas),
