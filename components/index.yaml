@@ -153,6 +153,8 @@ schemas:
     $ref: ./schemas/Resp_GetCorporateHqmYields_200_application_json.yaml#/Resp_GetCorporateHqmYields_200_application_json
   Resp_GetCdsMarketAggregates_200_application_json:
     $ref: ./schemas/Resp_GetCdsMarketAggregates_200_application_json.yaml#/Resp_GetCdsMarketAggregates_200_application_json
+  Resp_GetCongressionalTrades_200_application_json:
+    $ref: ./schemas/Resp_GetCongressionalTrades_200_application_json.yaml#/Resp_GetCongressionalTrades_200_application_json
   Resp_GetSanctionsEntities_200_application_json:
     $ref: ./schemas/Resp_GetSanctionsEntities_200_application_json.yaml#/Resp_GetSanctionsEntities_200_application_json
   Resp_GetSanctionsVessels_200_application_json:
