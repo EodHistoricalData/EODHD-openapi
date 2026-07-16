@@ -1,0 +1,126 @@
+/congressional-trades:
+  get:
+    summary: Get congressional trades
+    description: >-
+      Returns US Congress stock-trade disclosures filed under the STOCK Act,
+      collected from the official Senate Electronic Financial Disclosure (EFD)
+      system and the House Clerk disclosure site. Senate and House filings are
+      normalised into a single schema. Requires the All-in-One plan; each
+      request costs 10 API calls.
+    operationId: GetCongressionalTrades
+    parameters:
+    - name: symbol
+      in: query
+      required: false
+      description: Filter by a single ticker symbol, for example AAPL.
+      schema:
+        type: string
+    - name: chamber
+      in: query
+      required: false
+      description: Filter by chamber of Congress.
+      schema:
+        type: string
+        enum:
+        - senate
+        - house
+    - name: bioguide_id
+      in: query
+      required: false
+      description: >-
+        Filter by a single member's Congressional Biographical Directory ID,
+        for example S000250. Format is one letter followed by six digits.
+      schema:
+        type: string
+        pattern: '^[A-Za-z][0-9]{6}$'
+    - name: transaction_type
+      in: query
+      required: false
+      description: >-
+        Filter by one or more transaction types, comma-separated, for example
+        purchase,sale. Allowed values: purchase, sale, exchange.
+      schema:
+        type: string
+    - name: transaction_date_from
+      in: query
+      required: false
+      description: Earliest transaction date, YYYY-MM-DD, inclusive.
+      schema:
+        type: string
+        format: date
+    - name: transaction_date_to
+      in: query
+      required: false
+      description: >-
+        Latest transaction date, YYYY-MM-DD, inclusive. Must be on or after
+        transaction_date_from.
+      schema:
+        type: string
+        format: date
+    - name: disclosure_date_from
+      in: query
+      required: false
+      description: Earliest disclosure date, YYYY-MM-DD, inclusive.
+      schema:
+        type: string
+        format: date
+    - name: disclosure_date_to
+      in: query
+      required: false
+      description: >-
+        Latest disclosure date, YYYY-MM-DD, inclusive. Must be on or after
+        disclosure_date_from.
+      schema:
+        type: string
+        format: date
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 20, maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    responses:
+      '200':
+        description: Successfully retrieved congressional trades.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetCongressionalTrades_200_application_json.yaml#/Resp_GetCongressionalTrades_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden. Requires the All-in-One plan.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Congressional Trades

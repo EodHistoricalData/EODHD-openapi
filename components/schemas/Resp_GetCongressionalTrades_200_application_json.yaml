@@ -1,0 +1,148 @@
+Resp_GetCongressionalTrades_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          chamber:
+            type: string
+            description: Chamber of Congress (senate or house).
+          member:
+            type: object
+            description: The Congress member who filed the disclosure.
+            properties:
+              bioguide_id:
+                type:
+                - string
+                - 'null'
+                description: Congressional Biographical Directory identifier, when matched.
+              first_name:
+                type: string
+                description: Member first name.
+              last_name:
+                type: string
+                description: Member last name.
+              full_name:
+                type: string
+                description: Member full name as filed.
+              office:
+                type:
+                - string
+                - 'null'
+                description: Office label as it appears in the source filing.
+              state:
+                type:
+                - string
+                - 'null'
+                description: Two-letter US state code, when available.
+              party:
+                type:
+                - string
+                - 'null'
+                description: Political party, when available.
+              district:
+                type:
+                - integer
+                - 'null'
+                description: House district number. Null for senators.
+          asset:
+            type: object
+            description: The traded asset.
+            properties:
+              symbol:
+                type:
+                - string
+                - 'null'
+                description: Ticker symbol, or null for assets without a ticker.
+              description:
+                type: string
+                description: Asset description as filed.
+              asset_type:
+                type: string
+                description: Normalised asset class, for example Stock, Bond, or Other.
+          transaction:
+            type: object
+            description: The disclosed transaction.
+            properties:
+              type:
+                type: string
+                description: Transaction type (purchase, sale, or exchange).
+              transaction_date:
+                type: string
+                format: date
+                description: Date the trade took place.
+              disclosure_date:
+                type: string
+                format: date
+                description: Date the trade was disclosed.
+              owner:
+                type:
+                - string
+                - 'null'
+                description: Account owner (Self, Spouse, or Joint).
+              amount_range:
+                type: string
+                description: Disclosed amount band, as filed, for example $1,001 - $15,000.
+              amount_low:
+                type:
+                - number
+                - 'null'
+                description: Lower bound of the amount range, in US dollars.
+              amount_high:
+                type:
+                - number
+                - 'null'
+                description: Upper bound of the amount range, in US dollars.
+              days_to_disclose:
+                type: integer
+                description: Days between transaction_date and disclosure_date.
+              is_late:
+                type: boolean
+                description: True when the filing missed the 45-day STOCK Act disclosure window.
+              comment:
+                type:
+                - string
+                - 'null'
+                description: Free-text note from the filing, when present.
+          source:
+            type: object
+            description: Provenance of the filing.
+            properties:
+              filing_url:
+                type: string
+                description: Link to the original filing on the official government portal.
+              source_system:
+                type: string
+                description: Origin of the filing (senate or house).
+              filing_identifier:
+                type: string
+                description: Identifier of the filing at the source system.
+    meta:
+      type: object
+      required:
+      - total
+      - page
+      properties:
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of records matching the current filter.
+        page:
+          type: object
+          properties:
+            offset:
+              type: integer
+              minimum: 0
+            limit:
+              type: integer
+              minimum: 1
+      additionalProperties: false
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

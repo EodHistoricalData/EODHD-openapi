@@ -71,6 +71,8 @@ tags:
   description: Sanctioned entities, vessels, programs, and sources (OFAC and others)
 - name: Interest Rates
   description: Reference rates, central bank policy rates, and funding-stress spreads
+- name: Congressional Trades
+  description: US Senate and House stock-trade disclosures filed under the STOCK Act
 paths:
   /bulk-fundamentals/{EXCHANGE}:
     $ref: ./paths/bulk-fundamentals_EXCHANGE.yaml#/~1bulk-fundamentals~1{EXCHANGE}
@@ -194,6 +196,8 @@ paths:
     $ref: ./paths/rates_policy-rates.yaml#/~1rates~1policy-rates
   /real-time/{ticker}:
     $ref: ./paths/real-time_ticker.yaml#/~1real-time~1{ticker}
+  /congressional-trades:
+    $ref: ./paths/congressional-trades.yaml#/~1congressional-trades
   /sanctions/entities:
     $ref: ./paths/sanctions_entities.yaml#/~1sanctions~1entities
   /sanctions/vessels:
