@@ -71,6 +71,8 @@ tags:
   description: Sanctioned entities, vessels, programs, and sources (OFAC and others)
 - name: Interest Rates
   description: Reference rates, central bank policy rates, and funding-stress spreads
+- name: Real Estate
+  description: Real estate property prices (BIS Selected and Detailed Property Prices)
 paths:
   /bulk-fundamentals/{EXCHANGE}:
     $ref: ./paths/bulk-fundamentals_EXCHANGE.yaml#/~1bulk-fundamentals~1{EXCHANGE}
@@ -194,6 +196,14 @@ paths:
     $ref: ./paths/rates_policy-rates.yaml#/~1rates~1policy-rates
   /real-time/{ticker}:
     $ref: ./paths/real-time_ticker.yaml#/~1real-time~1{ticker}
+  /real-estate/countries:
+    $ref: ./paths/real-estate_countries.yaml#/~1real-estate~1countries
+  /real-estate/{code}:
+    $ref: ./paths/real-estate_code.yaml#/~1real-estate~1{code}
+  /real-estate/{code}/detailed:
+    $ref: ./paths/real-estate_code_detailed.yaml#/~1real-estate~1{code}~1detailed
+  /real-estate/{code}/detailed/series:
+    $ref: ./paths/real-estate_code_detailed_series.yaml#/~1real-estate~1{code}~1detailed~1series
   /sanctions/entities:
     $ref: ./paths/sanctions_entities.yaml#/~1sanctions~1entities
   /sanctions/vessels:

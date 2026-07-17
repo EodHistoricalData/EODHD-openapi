@@ -1,0 +1,135 @@
+/real-estate/{code}/detailed:
+  get:
+    summary: Get detailed real estate property prices
+    description: Returns the granular national Detailed Property Prices (DPP) series
+      for a country, sourced from BIS, broken down by covered area, property type,
+      and vintage.
+    operationId: GetRealEstateDetailedPrices
+    parameters:
+    - name: code
+      in: path
+      required: true
+      description: Country code (ISO Alpha-2, case-insensitive), e.g. 'AE'.
+      schema:
+        type: string
+    - name: filter[area]
+      in: query
+      required: false
+      description: BIS covered-area dimension code.
+      schema:
+        type: string
+    - name: filter[property_type]
+      in: query
+      required: false
+      description: Property type dimension code.
+      schema:
+        type: string
+    - name: filter[vintage]
+      in: query
+      required: false
+      description: Vintage (new / existing / all) dimension code.
+      schema:
+        type: string
+    - name: filter[freq]
+      in: query
+      required: false
+      description: Series frequency.
+      schema:
+        type: string
+        enum:
+        - Q
+        - A
+        - M
+        - H
+    - name: filter[from]
+      in: query
+      required: false
+      description: Start period; format follows the series frequency (e.g. '2020-01'
+        or '2020-Q1').
+      schema:
+        type: string
+    - name: filter[to]
+      in: query
+      required: false
+      description: End period; format follows the series frequency (e.g. '2020-01'
+        or '2020-Q1').
+      schema:
+        type: string
+    - name: sort
+      in: query
+      required: false
+      description: Sort order for the returned series.
+      schema:
+        type: string
+        enum:
+        - period
+        - -period
+        - value
+        - -value
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 50, maximum 500.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 50
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved the detailed property prices series.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetRealEstateDetailedPrices_200_application_json.yaml#/Resp_GetRealEstateDetailedPrices_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Real Estate
