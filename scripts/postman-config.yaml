@@ -1044,6 +1044,48 @@ folders:
               to: "2024-12-31"
               fmt: "json"
 
+  - name: "Real Estate Data API (beta)"
+    description: >
+      Residential property prices for 60+ countries from the Bank for International Settlements —
+      Selected Property Prices (harmonised headline index; nominal and real; index and year-on-year)
+      and Detailed Property Prices (granular national series by area, dwelling type and vintage),
+      plus a catalogue of the detailed series available per country.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 5 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/real-estate-data-api/
+    endpoints:
+      - path: "/real-estate/countries"
+        variants:
+          - name: "Countries — with dataset flags"
+            query_overrides:
+              sort: "name"
+              fmt: "json"
+      - path: "/real-estate/{code}"
+        variants:
+          - name: "Selected Property Prices — US (real, index)"
+            path_params:
+              code: "US"
+            query_overrides:
+              "filter[type]": "real"
+              "filter[metric]": "index"
+              fmt: "json"
+      - path: "/real-estate/{code}/detailed"
+        variants:
+          - name: "Detailed Property Prices — AE"
+            path_params:
+              code: "AE"
+            query_overrides:
+              "filter[property_type]": "1"
+              fmt: "json"
+      - path: "/real-estate/{code}/detailed/series"
+        variants:
+          - name: "Detailed Series Catalogue — US"
+            path_params:
+              code: "US"
+            query_overrides:
+              fmt: "json"
+
   - name: "ID Mapping"
     description: >
       Map between financial identifiers — look up securities by symbol, exchange, ISIN, FIGI, LEI, CUSIP, or CIK.
