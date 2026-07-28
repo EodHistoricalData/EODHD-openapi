@@ -1,78 +1,60 @@
 /ust/long-term-rates:
   get:
     summary: Get US Treasury long-term rates
-    description: Returns US Treasury long-term average rates and extrapolation factors for maturities beyond 30 years.
+    description: Returns daily US Treasury long-term rates. This feed combines "Daily Treasury Long-Term Rates" and "Daily Treasury Real Long-Term Rate Averages" into one dataset, keyed by rate_type. The endpoint returns the full dataset for the selected year; it does not support pagination.
     operationId: GetUSTLongTermRates
     parameters:
-    - name: from
-      in: query
-      required: false
-      description: Start date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
-    - name: to
-      in: query
-      required: false
-      description: End date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
     - name: filter[year]
       in: query
       required: false
-      description: Filter by year (e.g., 2024).
+      description: Filter by calendar year (1900 – current year + 1). Defaults to the current year when omitted. Returns the full dataset for the selected year.
       schema:
         type: integer
         example: 2024
-    - name: page[limit]
-      in: query
-      required: false
-      description: Number of records per page.
-      schema:
-        type: integer
-    - name: page[offset]
-      in: query
-      required: false
-      description: Pagination offset.
-      schema:
-        type: integer
-    - name: fmt
-      in: query
-      required: false
-      description: Output format.
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        default: json
+        minimum: 1900
     responses:
       '200':
-        description: Successfully retrieved long-term rates.
+        description: Successfully retrieved Treasury long-term rates.
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  date:
-                    type: string
-                    format: date
-                    description: Date of the rate.
-                  lt_composite_gt_10:
-                    type: number
-                    description: Long-term composite rate (over 10 years).
-                  treasury_20_year_cmt:
-                    type: number
-                    description: Treasury 20-year constant maturity rate.
-                  extrapolation_factor:
-                    type: number
-                    description: Extrapolation factor.
+              type: object
+              properties:
+                meta:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+                      description: Total number of records in the response.
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                        description: Observation date.
+                      rate_type:
+                        type: string
+                        description: Rate series identifier (e.g., BC_20year, Over_10_Years, Real_Rate).
+                      rate:
+                        type: number
+                        description: Rate value.
+                      extrapolation_factor:
+                        type: [number, "null"]
+                        description: Extrapolation factor where applicable; null otherwise.
+                links:
+                  type: object
+                  properties:
+                    next:
+                      type: [string, "null"]
+                      description: Reserved for pagination; always null — the endpoint returns the full dataset.
       '401':
-        description: Unauthorized. Invalid API token.
-      '404':
-        description: Data not found for specified date range.
+        description: Unauthorized. Invalid or missing API token.
+      '403':
+        description: Access forbidden. The user's plan does not include US Treasury data.
+      '422':
+        description: Unprocessable entity. Invalid query parameter (e.g., filter[year] out of range).
     tags:
     - US Treasury

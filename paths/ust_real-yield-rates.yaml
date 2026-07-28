@@ -1,84 +1,57 @@
 /ust/real-yield-rates:
   get:
     summary: Get US Treasury real yield curve rates
-    description: Returns daily US Treasury real yield curve rates (TIPS-derived real yields for 5-year, 7-year, 10-year, 20-year, and 30-year maturities).
+    description: Returns daily US Treasury Par Real Yield Curve Rates (TIPS-derived real yields by tenor, 5-year through 30-year). The endpoint returns the full dataset for the selected year; it does not support pagination.
     operationId: GetUSTRealYieldRates
     parameters:
-    - name: from
-      in: query
-      required: false
-      description: Start date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
-    - name: to
-      in: query
-      required: false
-      description: End date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
     - name: filter[year]
       in: query
       required: false
-      description: Filter by year (e.g., 2024).
+      description: Filter by calendar year (1900 – current year + 1). Defaults to the current year when omitted. Returns the full dataset for the selected year.
       schema:
         type: integer
         example: 2024
-    - name: page[limit]
-      in: query
-      required: false
-      description: Number of records per page.
-      schema:
-        type: integer
-    - name: page[offset]
-      in: query
-      required: false
-      description: Pagination offset.
-      schema:
-        type: integer
-    - name: fmt
-      in: query
-      required: false
-      description: Output format.
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        default: json
+        minimum: 1900
     responses:
       '200':
-        description: Successfully retrieved real yield rates.
+        description: Successfully retrieved Treasury real yield curve rates.
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  date:
-                    type: string
-                    format: date
-                    description: Date of the rate.
-                  5_years:
-                    type: number
-                    description: 5-year real yield rate.
-                  7_years:
-                    type: number
-                    description: 7-year real yield rate.
-                  10_years:
-                    type: number
-                    description: 10-year real yield rate.
-                  20_years:
-                    type: number
-                    description: 20-year real yield rate.
-                  30_years:
-                    type: number
-                    description: 30-year real yield rate.
+              type: object
+              properties:
+                meta:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+                      description: Total number of records in the response.
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                        description: Observation date.
+                      tenor:
+                        type: string
+                        description: Maturity tenor (e.g., 5Y, 10Y, 30Y).
+                      rate:
+                        type: number
+                        description: Real yield for the given tenor.
+                links:
+                  type: object
+                  properties:
+                    next:
+                      type: [string, "null"]
+                      description: Reserved for pagination; always null — the endpoint returns the full dataset.
       '401':
-        description: Unauthorized. Invalid API token.
-      '404':
-        description: Data not found for specified date range.
+        description: Unauthorized. Invalid or missing API token.
+      '403':
+        description: Access forbidden. The user's plan does not include US Treasury data.
+      '422':
+        description: Unprocessable entity. Invalid query parameter (e.g., filter[year] out of range).
     tags:
     - US Treasury
