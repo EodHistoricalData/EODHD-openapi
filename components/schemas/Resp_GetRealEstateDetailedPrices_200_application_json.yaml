@@ -1,0 +1,79 @@
+Resp_GetRealEstateDetailedPrices_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      type: object
+      properties:
+        country_code:
+          type: string
+          description: ISO Alpha-2 country code.
+        source:
+          type: string
+          description: Data source.
+        dataset:
+          type: string
+          description: Dataset identifier.
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of matching observations.
+        offset:
+          type: integer
+          minimum: 0
+          description: Pagination offset applied.
+        limit:
+          type: integer
+          minimum: 1
+          description: Page size applied.
+        filters:
+          type: object
+          description: Filters applied to the query.
+          additionalProperties: true
+      additionalProperties: false
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          period:
+            type: string
+            description: Observation period.
+          value:
+            type: number
+            description: Observation value.
+          frequency:
+            type: string
+            description: Series frequency.
+          covered_area:
+            type: string
+            description: Covered area dimension code.
+          covered_area_label:
+            type: string
+            description: Human-readable covered area label.
+          property_type:
+            type: string
+            description: Property type dimension code.
+          property_type_label:
+            type: string
+            description: Human-readable property type label.
+          vintage:
+            type: string
+            description: Vintage dimension code.
+          vintage_label:
+            type: string
+            description: Human-readable vintage label.
+          unit_measure:
+            type: string
+            description: Unit of measure dimension code.
+          unit_measure_label:
+            type:
+            - string
+            - 'null'
+            description: Human-readable unit of measure label (may be null).
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

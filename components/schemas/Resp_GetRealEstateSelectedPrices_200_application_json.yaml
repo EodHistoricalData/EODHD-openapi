@@ -1,0 +1,74 @@
+Resp_GetRealEstateSelectedPrices_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      type: object
+      properties:
+        country_code:
+          type: string
+          description: ISO Alpha-2 country code.
+        country_name:
+          type: string
+          description: Country name.
+        type:
+          type: string
+          description: Price basis (nominal or real).
+        metric:
+          type: string
+          description: Metric representation (index or yoy).
+        base_year:
+          type: string
+          description: Index base year.
+        frequency:
+          type: string
+          description: Series frequency.
+        source:
+          type: string
+          description: Data source.
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of matching observations.
+        from:
+          type:
+          - string
+          - 'null'
+          description: Start period of the returned window.
+        to:
+          type:
+          - string
+          - 'null'
+          description: End period of the returned window.
+        offset:
+          type: integer
+          minimum: 0
+          description: Pagination offset applied.
+        limit:
+          type: integer
+          minimum: 1
+          description: Page size applied.
+      additionalProperties: false
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          period:
+            type: string
+            description: Observation period (e.g. '2020-Q1').
+          value:
+            type: number
+            description: Observation value.
+          type:
+            type: string
+            description: Price basis (nominal or real).
+          metric:
+            type: string
+            description: Metric representation (index or yoy).
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

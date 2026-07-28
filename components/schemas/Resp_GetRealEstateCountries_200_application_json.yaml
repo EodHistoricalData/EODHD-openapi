@@ -1,0 +1,43 @@
+Resp_GetRealEstateCountries_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  - links
+  properties:
+    meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of matching countries.
+        offset:
+          type: integer
+          minimum: 0
+          description: Pagination offset applied.
+        limit:
+          type: integer
+          minimum: 1
+          description: Page size applied.
+      additionalProperties: false
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: ISO Alpha-2 country code.
+          name:
+            type: string
+            description: Country name.
+          has_spp:
+            type: boolean
+            description: Whether Selected Property Prices are available for this country.
+          has_dpp:
+            type: boolean
+            description: Whether Detailed Property Prices are available for this country.
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

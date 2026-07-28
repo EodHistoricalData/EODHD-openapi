@@ -1,0 +1,53 @@
+/real-estate/{code}/detailed/series:
+  get:
+    summary: List available detailed real estate series
+    description: Returns the catalogue of available Detailed Property Prices (DPP)
+      series for a country. This endpoint always returns JSON (fmt=csv is not honoured).
+    operationId: GetRealEstateDetailedSeries
+    parameters:
+    - name: code
+      in: path
+      required: true
+      description: Country code (ISO Alpha-2, case-insensitive), e.g. 'US'.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successfully retrieved the catalogue of available series.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetRealEstateDetailedSeries_200_application_json.yaml#/Resp_GetRealEstateDetailedSeries_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Real Estate

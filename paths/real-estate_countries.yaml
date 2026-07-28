@@ -1,0 +1,86 @@
+/real-estate/countries:
+  get:
+    summary: List covered real estate countries
+    description: Returns the list of countries covered by the Real Estate Data API
+      (BIS property prices), including which datasets each country carries (Selected
+      Property Prices and/or Detailed Property Prices).
+    operationId: GetRealEstateCountries
+    parameters:
+    - name: sort
+      in: query
+      required: false
+      description: Sort order for the returned countries.
+      schema:
+        type: string
+        enum:
+        - code
+        - -code
+        - name
+        - -name
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 50, maximum 500.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 50
+    - name: fmt
+      in: query
+      required: false
+      description: Output format.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        default: json
+    responses:
+      '200':
+        description: Successfully retrieved the list of covered countries.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetRealEstateCountries_200_application_json.yaml#/Resp_GetRealEstateCountries_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Real Estate

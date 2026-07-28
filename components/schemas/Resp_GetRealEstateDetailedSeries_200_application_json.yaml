@@ -1,0 +1,61 @@
+Resp_GetRealEstateDetailedSeries_200_application_json:
+  type: object
+  required:
+  - meta
+  - data
+  properties:
+    meta:
+      type: object
+      properties:
+        country_code:
+          type: string
+          description: ISO Alpha-2 country code.
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of available series.
+      additionalProperties: false
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          covered_area:
+            type: string
+            description: Covered area dimension code.
+          covered_area_label:
+            type: string
+            description: Human-readable covered area label.
+          property_type:
+            type: string
+            description: Property type dimension code.
+          property_type_label:
+            type: string
+            description: Human-readable property type label.
+          vintage:
+            type: string
+            description: Vintage dimension code.
+          vintage_label:
+            type: string
+            description: Human-readable vintage label.
+          compiling_org:
+            type: string
+            description: Organisation compiling the series.
+          priced_unit:
+            type: string
+            description: Priced unit.
+          seasonal_adj:
+            type: string
+            description: Seasonal adjustment indicator.
+          unit_measure:
+            type: string
+            description: Unit of measure dimension code.
+          unit_measure_label:
+            type:
+            - string
+            - 'null'
+            description: Human-readable unit of measure label (may be null).
+          title:
+            type: string
+            description: Human-readable series title.
+  additionalProperties: false
