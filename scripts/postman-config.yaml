@@ -848,40 +848,24 @@ folders:
     endpoints:
       - path: "/ust/bill-rates"
         variants:
-          - name: "US Treasury Bill Rates (date range)"
-            query_overrides:
-              from: "2024-01-01"
-              fmt: "json"
           - name: "US Treasury Bill Rates (by year)"
             query_overrides:
               "filter[year]": "2024"
               fmt: "json"
       - path: "/ust/yield-rates"
         variants:
-          - name: "US Treasury Yield Curve Rates (date range)"
-            query_overrides:
-              from: "2024-01-01"
-              fmt: "json"
           - name: "US Treasury Yield Curve Rates (by year)"
             query_overrides:
               "filter[year]": "2024"
               fmt: "json"
       - path: "/ust/long-term-rates"
         variants:
-          - name: "US Treasury Long-Term Rates (date range)"
-            query_overrides:
-              from: "2024-01-01"
-              fmt: "json"
           - name: "US Treasury Long-Term Rates (by year)"
             query_overrides:
               "filter[year]": "2024"
               fmt: "json"
       - path: "/ust/real-yield-rates"
         variants:
-          - name: "US Treasury Real Yield Rates (date range)"
-            query_overrides:
-              from: "2024-01-01"
-              fmt: "json"
           - name: "US Treasury Real Yield Rates (by year)"
             query_overrides:
               "filter[year]": "2024"
