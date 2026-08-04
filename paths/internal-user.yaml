@@ -101,7 +101,6 @@
               availableDataFeeds:
               - Bulk Splits and Dividends API
               - Fundamental Data
-              - Bond Fundamentals API
               - Stock Options Data
               - News API
               - commodities
