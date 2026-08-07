@@ -505,6 +505,38 @@ folders:
               limit: "10"
               fmt: "json"
 
+  - name: "SEC Filings API"
+    description: >
+      SEC EDGAR filings for US-listed companies — a per-company filing overview plus annual reports
+      (10-K), quarterly reports (10-Q), and material-event reports (8-K). Financial statements are
+      parsed from XBRL; 8-K reports are broken into item sections and exhibits.
+
+      **Plans:** All-In-One.
+      **Cost:** 10 API calls per request. Pagination: page[offset]/page[limit] (default 20, max 100).
+      **Demo tickers (free):** AAPL.US, TSLA.US, AMZN.US.
+      **Docs:** https://eodhd.com/financial-apis/sec-filings-api/
+    endpoints:
+      - path: "/sec-filings/{symbol}"
+        variants:
+          - name: "Filing Overview — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+      - path: "/sec-filings/{symbol}/10k"
+        variants:
+          - name: "Annual Reports (10-K) — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+      - path: "/sec-filings/{symbol}/10q"
+        variants:
+          - name: "Quarterly Reports (10-Q) — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+      - path: "/sec-filings/{symbol}/8k"
+        variants:
+          - name: "Material Events (8-K) — AAPL.US"
+            path_params:
+              symbol: "AAPL.US"
+
   - name: "Historical Market Capitalization"
     description: >
       Historical market cap data at weekly granularity for all US stocks (NYSE, NASDAQ)
