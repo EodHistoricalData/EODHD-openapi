@@ -1,0 +1,46 @@
+/sec-filings/{symbol}:
+  get:
+    summary: Get SEC filings overview
+    description: Returns a filing overview for a US-listed company, including company
+      identifiers and per-form-type filing counts, latest filing dates, and links.
+    operationId: GetSecFilingsOverview
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Ticker symbol (e.g., 'AAPL.US'). The '.US' exchange suffix is optional.
+      schema:
+        type: string
+    responses:
+      '200':
+        description: Successfully retrieved SEC filings overview.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetSecFilingsOverview_200_application_json.yaml#/Resp_GetSecFilingsOverview_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Corporate Actions

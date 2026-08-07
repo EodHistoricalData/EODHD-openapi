@@ -214,6 +214,14 @@ paths:
     $ref: ./paths/sanctions_sources.yaml#/~1sanctions~1sources
   /spreads/funding-stress:
     $ref: ./paths/spreads_funding-stress.yaml#/~1spreads~1funding-stress
+  /sec-filings/{symbol}:
+    $ref: ./paths/sec-filings_symbol.yaml#/~1sec-filings~1{symbol}
+  /sec-filings/{symbol}/10k:
+    $ref: ./paths/sec-filings_symbol_10k.yaml#/~1sec-filings~1{symbol}~110k
+  /sec-filings/{symbol}/10q:
+    $ref: ./paths/sec-filings_symbol_10q.yaml#/~1sec-filings~1{symbol}~110q
+  /sec-filings/{symbol}/8k:
+    $ref: ./paths/sec-filings_symbol_8k.yaml#/~1sec-filings~1{symbol}~18k
   /screener:
     $ref: ./paths/screener.yaml#/~1screener
   /search/{query}:

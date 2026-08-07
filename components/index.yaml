@@ -167,3 +167,11 @@ schemas:
     $ref: ./schemas/Resp_GetPolicyRates_200_application_json.yaml#/Resp_GetPolicyRates_200_application_json
   Resp_GetFundingStressSpreads_200_application_json:
     $ref: ./schemas/Resp_GetFundingStressSpreads_200_application_json.yaml#/Resp_GetFundingStressSpreads_200_application_json
+  Resp_GetSecFilingsOverview_200_application_json:
+    $ref: ./schemas/Resp_GetSecFilingsOverview_200_application_json.yaml#/Resp_GetSecFilingsOverview_200_application_json
+  Resp_GetSecFilings10K_200_application_json:
+    $ref: ./schemas/Resp_GetSecFilings10K_200_application_json.yaml#/Resp_GetSecFilings10K_200_application_json
+  Resp_GetSecFilings10Q_200_application_json:
+    $ref: ./schemas/Resp_GetSecFilings10Q_200_application_json.yaml#/Resp_GetSecFilings10Q_200_application_json
+  Resp_GetSecFilings8K_200_application_json:
+    $ref: ./schemas/Resp_GetSecFilings8K_200_application_json.yaml#/Resp_GetSecFilings8K_200_application_json

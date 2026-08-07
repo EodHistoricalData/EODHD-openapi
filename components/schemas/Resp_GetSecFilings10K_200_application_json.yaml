@@ -1,0 +1,278 @@
+Resp_GetSecFilings10K_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: array
+      description: Annual report (Form 10-K) financial statements.
+      items:
+        type: object
+        properties:
+          accession_number:
+            type: string
+            description: SEC accession number of the filing.
+          filed_at:
+            type: string
+            format: date
+            description: Date the filing was submitted to the SEC.
+          period_of_report:
+            type: string
+            format: date
+            description: Reporting period end date covered by the filing.
+          fiscal_year_end:
+            type: string
+            format: date-time
+            description: Fiscal year end date.
+          revenue:
+            type:
+            - integer
+            - 'null'
+            description: Total revenue.
+          cost_of_revenue:
+            type:
+            - integer
+            - 'null'
+            description: Cost of revenue.
+          gross_profit:
+            type:
+            - integer
+            - 'null'
+            description: Gross profit.
+          research_and_development:
+            type:
+            - integer
+            - 'null'
+            description: Research and development expense.
+          selling_general_admin:
+            type:
+            - integer
+            - 'null'
+            description: Selling, general and administrative expense.
+          operating_expenses:
+            type:
+            - integer
+            - 'null'
+            description: Total operating expenses.
+          operating_income:
+            type:
+            - integer
+            - 'null'
+            description: Operating income.
+          interest_expense:
+            type:
+            - integer
+            - 'null'
+            description: Interest expense.
+          interest_income:
+            type:
+            - integer
+            - 'null'
+            description: Interest income.
+          income_before_tax:
+            type:
+            - integer
+            - 'null'
+            description: Income before income taxes.
+          income_tax_expense:
+            type:
+            - integer
+            - 'null'
+            description: Income tax expense.
+          net_income:
+            type:
+            - integer
+            - 'null'
+            description: Net income.
+          ebitda:
+            type:
+            - integer
+            - 'null'
+            description: Earnings before interest, taxes, depreciation and amortization.
+          depreciation_amortization:
+            type:
+            - integer
+            - 'null'
+            description: Depreciation and amortization.
+          eps_basic:
+            type:
+            - number
+            - 'null'
+            description: Basic earnings per share.
+          eps_diluted:
+            type:
+            - number
+            - 'null'
+            description: Diluted earnings per share.
+          weighted_avg_shares_basic:
+            type:
+            - integer
+            - 'null'
+            description: Weighted average basic shares outstanding.
+          weighted_avg_shares_diluted:
+            type:
+            - integer
+            - 'null'
+            description: Weighted average diluted shares outstanding.
+          shares_outstanding:
+            type:
+            - integer
+            - 'null'
+            description: Shares outstanding.
+          cash_and_equivalents:
+            type:
+            - integer
+            - 'null'
+            description: Cash and cash equivalents.
+          short_term_investments:
+            type:
+            - integer
+            - 'null'
+            description: Short-term investments.
+          accounts_receivable:
+            type:
+            - integer
+            - 'null'
+            description: Accounts receivable.
+          inventory:
+            type:
+            - integer
+            - 'null'
+            description: Inventory.
+          total_current_assets:
+            type:
+            - integer
+            - 'null'
+            description: Total current assets.
+          property_plant_equipment:
+            type:
+            - integer
+            - 'null'
+            description: Property, plant and equipment (net).
+          goodwill:
+            type:
+            - integer
+            - 'null'
+            description: Goodwill.
+          intangible_assets:
+            type:
+            - integer
+            - 'null'
+            description: Intangible assets.
+          total_assets:
+            type:
+            - integer
+            - 'null'
+            description: Total assets.
+          accounts_payable:
+            type:
+            - integer
+            - 'null'
+            description: Accounts payable.
+          short_term_debt:
+            type:
+            - integer
+            - 'null'
+            description: Short-term debt.
+          total_current_liabilities:
+            type:
+            - integer
+            - 'null'
+            description: Total current liabilities.
+          long_term_debt:
+            type:
+            - integer
+            - 'null'
+            description: Long-term debt.
+          total_liabilities:
+            type:
+            - integer
+            - 'null'
+            description: Total liabilities.
+          common_stock:
+            type:
+            - integer
+            - 'null'
+            description: Common stock.
+          retained_earnings:
+            type:
+            - integer
+            - 'null'
+            description: Retained earnings.
+          stockholders_equity:
+            type:
+            - integer
+            - 'null'
+            description: Stockholders' equity.
+          total_equity:
+            type:
+            - integer
+            - 'null'
+            description: Total equity.
+          operating_cash_flow:
+            type:
+            - integer
+            - 'null'
+            description: Net cash from operating activities.
+          capital_expenditure:
+            type:
+            - integer
+            - 'null'
+            description: Capital expenditure.
+          free_cash_flow:
+            type:
+            - integer
+            - 'null'
+            description: Free cash flow.
+          investing_cash_flow:
+            type:
+            - integer
+            - 'null'
+            description: Net cash from investing activities.
+          financing_cash_flow:
+            type:
+            - integer
+            - 'null'
+            description: Net cash from financing activities.
+          dividends_paid:
+            type:
+            - integer
+            - 'null'
+            description: Dividends paid.
+          share_repurchase:
+            type:
+            - integer
+            - 'null'
+            description: Share repurchases.
+    meta:
+      type: object
+      description: Pagination metadata.
+      required:
+      - total
+      - page
+      properties:
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of records available.
+        page:
+          type: object
+          required:
+          - offset
+          - limit
+          properties:
+            offset:
+              type: integer
+              minimum: 0
+              description: Current page offset (records skipped).
+            limit:
+              type: integer
+              minimum: 1
+              description: Current page size.
+          additionalProperties: false
+      additionalProperties: false
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false

@@ -1,0 +1,70 @@
+/sec-filings/{symbol}/10q:
+  get:
+    summary: Get SEC 10-Q quarterly reports
+    description: Returns parsed financial statement data from Form 10-Q quarterly report
+      filings for a US-listed company.
+    operationId: GetSecFilings10Q
+    parameters:
+    - name: symbol
+      in: path
+      required: true
+      description: Ticker symbol (e.g., 'AAPL.US'). The '.US' exchange suffix is optional.
+      schema:
+        type: string
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (records to skip).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Number of records per page. Default 20, maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    responses:
+      '200':
+        description: Successfully retrieved 10-Q quarterly report data.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetSecFilings10Q_200_application_json.yaml#/Resp_GetSecFilings10Q_200_application_json
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '422':
+        description: |
+          Validation error. Returned when a parameter is malformed or a filter value is invalid.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+      '429':
+        description: Too Many Requests
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Error.yaml#/Error
+    tags:
+    - Corporate Actions
