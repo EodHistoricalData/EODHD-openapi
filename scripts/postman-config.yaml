@@ -93,7 +93,8 @@ folders:
   - name: "Real-Time Data via WebSockets"
     description: >
       Streaming real-time market data over persistent WebSocket connections.
-      Four channels: US Trades, US Quotes, Forex, and Crypto.
+      Ten channels: the Cboe equity markets each serve trades, quotes, one-minute bars and
+      trading status, for both US and Europe, plus Forex and Crypto.
       Transport latency under 50ms. Does not consume REST API calls (separate billing).
 
 
@@ -102,6 +103,18 @@ folders:
       - US Trades: `wss://ws.eodhistoricaldata.com/ws/us?api_token=YOUR_KEY`
 
       - US Quotes: `wss://ws.eodhistoricaldata.com/ws/us-quote?api_token=YOUR_KEY`
+
+      - US Minute Bars: `wss://ws.eodhistoricaldata.com/ws/us-candles?api_token=YOUR_KEY`
+
+      - US Trading Status: `wss://ws.eodhistoricaldata.com/ws/us-status?api_token=YOUR_KEY`
+
+      - European Trades: `wss://ws.eodhistoricaldata.com/ws/eu?api_token=YOUR_KEY`
+
+      - European Quotes: `wss://ws.eodhistoricaldata.com/ws/eu-quote?api_token=YOUR_KEY`
+
+      - European Minute Bars: `wss://ws.eodhistoricaldata.com/ws/eu-candles?api_token=YOUR_KEY`
+
+      - European Trading Status: `wss://ws.eodhistoricaldata.com/ws/eu-status?api_token=YOUR_KEY`
 
       - Forex: `wss://ws.eodhistoricaldata.com/ws/forex?api_token=YOUR_KEY`
 
@@ -112,7 +125,17 @@ folders:
 
       **Unsubscribe:** `{"action": "unsubscribe", "symbols": "AAPL"}`
 
-      **Limit:** 50 concurrent subscriptions per connection (upgradeable via dashboard).
+      **Symbols:** US equities use plain tickers; European equities use TICKER.EXCHANGE
+      (`GSK.LSE`). A European dual-class ticker also accepts its un-hyphenated alias
+      (`ERICB.ST` for `ERIC-B.ST`), but every message answers with the canonical hyphenated
+      form in `s` — key your state on what arrives, not on what you sent.
+
+      **Limits:** 50 concurrent symbol subscriptions per connection (upgradeable via
+      dashboard), and 64 concurrent connections per API token shared across all markets.
+
+      **Errors:** authentication failures use the key `status` and arrive over the socket
+      after a successful handshake; everything else uses `status_code`. A parser checking only
+      `status_code` will read an auth denial as market data.
 
       **Demo tickers (free):** AAPL, MSFT, TSLA, EURUSD, ETH-USD, BTC-USD.
 
@@ -135,10 +158,42 @@ folders:
           Then send: `{"action": "subscribe", "symbols": "AAPL,TSLA"}`
 
 
-          **Response fields:** `s` (ticker), `p` (price), `v` (volume), `c` (condition), `dp` (dark pool), `ms` (market status), `t` (timestamp ms).
+          **Response fields:** `s` (ticker), `p` (price), `v` (size in shares), `c` (trade conditions — an array, and ALWAYS EMPTY on this feed), `dp` (dark pool — always false on this feed), `ms` (`open` | `closed` | `extended-hours`), `t` (timestamp ms UTC).
         examples:
           - name: "US Trade message"
-            body: '{"s":"AAPL","p":227.31,"v":100,"c":12,"dp":false,"ms":"open","t":1725198451165}'
+            body: '{"s":"AAPL","p":309.19,"c":[],"v":2,"dp":false,"ms":"open","t":1787671313868}'
+      - name: "Minute Bars over REST — AAPL (fill a gap after a dropped socket)"
+        method: "GET"
+        url: "https://ws.eodhistoricaldata.com/history?market=us&symbol=AAPL&api_token={{api_token}}"
+        description: >
+          **Served by the real-time host, not by `{{api_url}}`** — the URL is absolute for that reason.
+
+
+          Returns the recent CLOSED one-minute OHLCV bars the real-time service holds for one
+          symbol, oldest first. This is how you fill the gap after a WebSocket drop instead of
+          waiting for the streams to rebuild.
+
+
+          `market` takes `us` or `eu`. `symbol` takes the same form you subscribe with: a plain
+          ticker for US, `TICKER.EXCHANGE` for Europe. The reply always reports the canonical
+          EODHD ticker in `s`, even when an alias was requested.
+
+
+          **Only minutes in which the symbol actually traded produce a bar**, so the array is
+          sparse rather than one bar per consecutive minute. An unknown market or symbol, and
+          the crypto and forex markets, return an empty array rather than an error.
+
+
+          Note `c` is the CLOSE price here, unlike the trade streams where `c` is the conditions array.
+        examples:
+          - name: "Minute bars"
+            body: '[{"s":"AAPL","i":"1m","t":1787701620000,"o":309.32,"h":309.32,"l":309.31,"c":309.31,"v":223}]'
+      - name: "Minute Bars over REST — GSK.LSE (Europe)"
+        method: "GET"
+        url: "https://ws.eodhistoricaldata.com/history?market=eu&symbol=GSK.LSE&api_token={{api_token}}"
+        description: >
+          European variant. Symbols use `TICKER.EXCHANGE`; the native Cboe symbol and the
+          un-hyphenated alias of a dual-class ticker (`ERICB.ST` for `ERIC-B.ST`) are accepted too.
       - name: "WebSocket — US Quotes (example)"
         method: "GET"
         url: "wss://ws.eodhistoricaldata.com/ws/us-quote?api_token={{api_token}}"
