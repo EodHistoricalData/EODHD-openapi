@@ -873,24 +873,6 @@ folders:
               fmt: "json"
               from: "2024-01-01"
 
-  - name: "Bonds Fundamentals"
-    description: >
-      Static fundamental data for US corporate and government bonds — coupon, maturity date,
-      credit ratings (Moody's, S&P), issuer details, and classification.
-      Supports lookup by CUSIP or ISIN. For historical bond prices, use the EOD endpoint with .BOND suffix.
-
-      **Plans:** All-In-One, Fundamentals Data Feed.
-      **Cost:** 10 API calls per request.
-    endpoints:
-      - path: "/bond-fundamentals/{symbol}"
-        variants:
-          - name: "Bond Fundamentals — US Treasury (CUSIP)"
-            path_params:
-              symbol: "910047AG4"
-          - name: "Bond Fundamentals — Corporate Bond (ISIN)"
-            path_params:
-              symbol: "US037833AK68"
-
   - name: "US Treasury Interest Rates (beta)"
     description: >
       Official US Treasury interest rate datasets: T-bill rates, par yield curve rates,
