@@ -1,0 +1,122 @@
+/history:
+  get:
+    summary: Retrieve recent closed one-minute bars for a real-time symbol
+    description: |
+      Returns the recent **closed** one-minute OHLCV bars held by the real-time service for a single
+      symbol. Intended for filling the gap after a dropped WebSocket connection, instead of waiting
+      for the streams to rebuild.
+
+      Note that only minutes in which the symbol actually traded produce a bar, so the array is
+      sparse rather than one bar per consecutive minute.
+
+      This endpoint is served by the real-time host `ws.eodhistoricaldata.com`, not by the main REST
+      host, which is why the operation carries its own `servers` entry.
+    operationId: GetRealTimeHistory
+    tags:
+    - Real-Time Data
+    servers:
+    - url: https://ws.eodhistoricaldata.com
+      description: Real-time streaming host
+    parameters:
+    - name: market
+      in: query
+      required: true
+      description: 'Real-time market to read bars from. Only the Cboe equity markets keep bars;
+        ''crypto'' and ''forex'' have none and return an empty array.'
+      schema:
+        type: string
+        enum:
+        - us
+        - eu
+    - name: symbol
+      in: query
+      required: true
+      description: |
+        Symbol in the same form used to subscribe on the WebSocket feed. US symbols are plain
+        tickers (`AAPL`); European symbols use `TICKER.EXCHANGE` (`GSK.LSE`). The native Cboe
+        symbol and the un-hyphenated alias of a dual-class ticker (`ERICB.ST` for `ERIC-B.ST`) are
+        both accepted, and the response always reports the canonical EODHD ticker in `s`.
+      schema:
+        type: string
+      examples:
+        us:
+          value: AAPL
+        eu:
+          value: GSK.LSE
+    responses:
+      '200':
+        description: |
+          Closed one-minute bars, oldest first. An unknown market, an unknown symbol, and the
+          markets that keep no bars all return an empty array rather than an error.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  s:
+                    type: string
+                    description: Canonical EODHD ticker, regardless of the form requested.
+                    examples:
+                    - AAPL
+                  i:
+                    type: string
+                    description: Bar interval.
+                    examples:
+                    - 1m
+                  t:
+                    type: integer
+                    format: int64
+                    description: Bar OPEN time, epoch milliseconds UTC.
+                    examples:
+                    - 1787701620000
+                  o:
+                    type: number
+                    description: Open price.
+                  h:
+                    type: number
+                    description: High price.
+                  l:
+                    type: number
+                    description: Low price.
+                  c:
+                    type: number
+                    description: Close price. Note this differs from the trade streams, where `c`
+                      is the array of trade conditions.
+                  v:
+                    type: integer
+                    format: int64
+                    description: Volume in shares accumulated within the bar.
+      '403':
+        description: |
+          Token not recognised, or without the real-time entitlement. Note the key is `status`, not
+          `status_code` as on every other frame of this service.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  examples:
+                  - 403
+                message:
+                  type: string
+                  examples:
+                  - Server error
+      '422':
+        description: The `api_token` parameter is missing.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  examples:
+                  - 422
+                message:
+                  type: string
+                  examples:
+                  - Server error

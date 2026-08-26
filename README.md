@@ -25,7 +25,19 @@ This repository contains a complete, modular OpenAPI specification for the EODHD
 - **Risk Analytics**: Performance, risk, volatility analysis (illio)
 - **Investment Analytics**: Risk scoring, bond analysis, bank financials (PRAAMS)
 
-> **Note**: EODHD also provides a WebSocket endpoint (`wss://ws.eodhistoricaldata.com/ws/{market}`) for real-time streaming data, which is documented separately and not included in this REST specification.
+> **Note**: EODHD also provides real-time streaming over WebSockets at
+> `wss://ws.eodhistoricaldata.com/ws/{market}`. Streaming itself is not expressible in a REST
+> specification and stays [documented separately](https://eodhd.com/financial-apis/new-real-time-data-api-websockets);
+> the markets are `us`, `us-quote`, `eu`, `eu-quote`, `us-candles`, `eu-candles`, `us-status`,
+> `eu-status`, `forex` and `crypto`.
+>
+> The one request/response endpoint of that service, `GET /history` (recent closed one-minute bars
+> for a single symbol), **is** in this specification. It carries its own `servers` entry because it
+> is served by the real-time host rather than the main REST host.
+>
+> Two behaviours of the streams are worth knowing even from here, since they surprise clients:
+> authentication failures use the key `status` while every other frame uses `status_code`, and the
+> `s` field always reports the canonical EODHD ticker even when a symbol was requested by an alias.
 
 ## Specification Structure
 

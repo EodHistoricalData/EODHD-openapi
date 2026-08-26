@@ -73,7 +73,11 @@ tags:
   description: Reference rates, central bank policy rates, and funding-stress spreads
 - name: Real Estate
   description: Real estate property prices (BIS Selected and Detailed Property Prices)
+- name: Real-Time Data
+  description: Real-time WebSocket streams and the closed one-minute bars behind them
 paths:
+  /history:
+    $ref: ./paths/history.yaml#/~1history
   /bulk-fundamentals/{EXCHANGE}:
     $ref: ./paths/bulk-fundamentals_EXCHANGE.yaml#/~1bulk-fundamentals~1{EXCHANGE}
   /calendar/dividends:
