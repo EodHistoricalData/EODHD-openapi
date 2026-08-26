@@ -1,0 +1,479 @@
+Resp_GetAsxCorporateActions_200_application_json:
+  type: object
+  description: JSON envelope for paginated ASX corporate actions.
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: array
+      items:
+        description: >-
+          Union of all ASX corporate action record shapes. Field presence
+          depends on the action type requested via the `type` query parameter.
+          The record matches at least one of the type-specific shapes below.
+        anyOf:
+        - title: AsxDividendItem
+          type: object
+          required:
+          - code
+          - date
+          - value
+          - currency
+          - exchange
+          properties:
+            code:
+              type: string
+              description: Ticker with exchange suffix.
+              example: PMV.AU
+            date:
+              type: string
+              format: date
+              description: Ex-dividend date.
+              example: '2026-08-03'
+            value:
+              type: number
+              description: Dividend amount in the local currency.
+              example: 0.45
+            unadjustedValue:
+              type: number
+              example: 0.45
+            period:
+              type:
+              - string
+              - 'null'
+              description: Dividend period (Interim, Final, Special, etc.).
+              example: Interim
+            currency:
+              type: string
+              example: AUD
+            exchange:
+              type: string
+              example: AU
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            paymentDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            declarationDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            _asx_extra:
+              type: object
+              description: ASX-specific dividend attributes (franking, DRP, withholding, tax-advantaged).
+              additionalProperties: true
+              properties:
+                isin:
+                  type:
+                  - string
+                  - 'null'
+                  example: AU000000PMV2
+                asx_ticker:
+                  type: string
+                  example: PMV
+                corporate_action_id:
+                  type: string
+                  example: '000478776'
+                transaction_type:
+                  type: string
+                  example: A
+                franked_amount_aud:
+                  type: number
+                  description: Franked portion of the dividend in AUD.
+                  example: 0.45
+                franked_percent:
+                  type: number
+                  description: Franking percentage, 0-100.
+                  example: 100
+                drp_indicator:
+                  type: integer
+                  description: Dividend Reinvestment Plan status flag (ASX E34 code).
+                  example: 4
+                drp_price_aud:
+                  type:
+                  - number
+                  - 'null'
+                drp_discount_rate:
+                  type: number
+                  example: 0
+                bsp_indicator:
+                  type: integer
+                  description: Bonus Share Plan status flag.
+                  example: 0
+                special_indicator:
+                  type: string
+                  example: 'N'
+                pari_passu_indicator:
+                  type: string
+                withholding_tax_rate:
+                  type: number
+                tax_deferred_amount_aud:
+                  type: number
+                tax_advantaged_amount_aud:
+                  type: number
+                foreign_source_dividend_aud:
+                  type: number
+                special_dividend_amount_aud:
+                  type: number
+                estimated_trust_distribution_aud:
+                  type: number
+                comment:
+                  type:
+                  - string
+                  - 'null'
+                  example: AUD 0.45 FRANKED, 30% CTR, DRP SUSP
+          additionalProperties: true
+        - title: AsxSplitItem
+          type: object
+          required:
+          - code
+          - date
+          - split
+          - exchange
+          properties:
+            code:
+              type: string
+              example: NTM.AU
+            date:
+              type: string
+              format: date
+              example: '2026-06-03'
+            split:
+              type: string
+              description: Split ratio in the form "new:old".
+              example: '2000:3'
+            exchange:
+              type: string
+              example: AU
+            _asx_extra:
+              type: object
+              description: >-
+                ASX-specific split attributes (e.g. `asx_ticker`, `record_date`,
+                `effective_date`, `new_security_code`, `calculation_method`,
+                `corporate_action_id`).
+              additionalProperties: true
+          additionalProperties: true
+        - title: AsxBonusIssueItem
+          type: object
+          required:
+          - code
+          - date
+          - ratio
+          - exchange
+          properties:
+            code:
+              type: string
+              example: RDM.AU
+            date:
+              type: string
+              format: date
+            ratio:
+              type: string
+              description: Bonus ratio in the form "new:held".
+              example: '4:21'
+            exchange:
+              type: string
+              example: AU
+            pariPassu:
+              type: boolean
+              example: false
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            despatchDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+        - title: AsxRightsIssueItem
+          type: object
+          required:
+          - code
+          - date
+          - type
+          - ratio
+          - exchange
+          properties:
+            code:
+              type: string
+              example: CRR.AU
+            date:
+              type: string
+              format: date
+            type:
+              type: string
+              description: Rights issue sub-type.
+              enum:
+              - renounceable
+              - non-renounceable
+              - prospectus-rights
+              - xr
+              example: non-renounceable
+            ratio:
+              type: string
+              example: '1:10'
+            currency:
+              type: string
+              example: AUD
+            exchange:
+              type: string
+              example: AU
+            pariPassu:
+              type: boolean
+              example: false
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            despatchDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            applicationPrice:
+              type:
+              - number
+              - 'null'
+              example: 0.001
+            applicationCloseDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+        - title: AsxCapitalReturnItem
+          type: object
+          required:
+          - code
+          - date
+          - value
+          - currency
+          - exchange
+          properties:
+            code:
+              type: string
+              example: FAR.AU
+            date:
+              type: string
+              format: date
+            value:
+              type: number
+              example: 0.0035
+            currency:
+              type: string
+              example: AUD
+            exchange:
+              type: string
+              example: AU
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            paymentDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+        - title: AsxSppItem
+          type: object
+          description: Share Purchase Plan.
+          required:
+          - code
+          - currency
+          - exchange
+          properties:
+            code:
+              type: string
+              example: WBT.AU
+            price:
+              type:
+              - number
+              - 'null'
+              description: SPP price per share.
+              example: 405
+            currency:
+              type: string
+              example: AUD
+            exchange:
+              type: string
+              example: AU
+            maxAmount:
+              type:
+              - number
+              - 'null'
+              description: Maximum participation amount per shareholder.
+            maxShares:
+              type:
+              - number
+              - 'null'
+            minAmount:
+              type:
+              - number
+              - 'null'
+            minShares:
+              type:
+              - number
+              - 'null'
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            despatchDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            offerCloseDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+        - title: AsxBuybackItem
+          type: object
+          description: >-
+            Share buyback (ASX ReferencePoint code BB). Covers on-market and
+            off-market buybacks; monetary and share-count fields are present when
+            announced.
+          required:
+          - code
+          - date
+          - exchange
+          properties:
+            code:
+              type: string
+              example: CBA.AU
+            date:
+              type: string
+              format: date
+              description: Effective / announcement date of the buyback.
+            buybackType:
+              type:
+              - string
+              - 'null'
+              description: Buyback sub-type (on-market, off-market, equal-access, etc.).
+              example: on-market
+            currency:
+              type: string
+              example: AUD
+            exchange:
+              type: string
+              example: AU
+            price:
+              type:
+              - number
+              - 'null'
+              description: Buyback price per share, when fixed.
+            shares:
+              type:
+              - number
+              - 'null'
+              description: Number of shares targeted by the buyback.
+            amount:
+              type:
+              - number
+              - 'null'
+              description: Total monetary value of the buyback in the local currency.
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+            closeDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+        - title: AsxOtherCorporateActionItem
+          type: object
+          description: >-
+            Catch-all for ASX corporate actions that do not map to a dedicated
+            shape (ReferencePoint codes AO, CC, CG, CL, CN, IN, OP). `actionCode`
+            carries the raw ASX code; remaining attributes pass through verbatim.
+          required:
+          - code
+          - date
+          - actionCode
+          - exchange
+          properties:
+            code:
+              type: string
+              example: XYZ.AU
+            date:
+              type: string
+              format: date
+              description: Effective / announcement date of the action.
+            actionCode:
+              type: string
+              description: Raw ASX ReferencePoint code.
+              enum:
+              - AO
+              - CC
+              - CG
+              - CL
+              - CN
+              - IN
+              - OP
+              example: AO
+            actionType:
+              type:
+              - string
+              - 'null'
+              description: Human-readable action description, when provided by the feed.
+            exchange:
+              type: string
+              example: AU
+            recordDate:
+              type:
+              - string
+              - 'null'
+              format: date
+          additionalProperties: true
+    meta:
+      type: object
+      required:
+      - total
+      - page
+      properties:
+        total:
+          type: integer
+          description: Total number of records matching the query.
+          example: 566
+        page:
+          type: object
+          required:
+          - offset
+          - limit
+          properties:
+            offset:
+              type: integer
+              example: 0
+            limit:
+              type: integer
+              example: 100
+    links:
+      type: object
+      additionalProperties: true
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL of the next page of results, or null if this is the last page.
+          example: https://eodhd.com/api/asx-corporate-actions?page%5Boffset%5D=100&page%5Blimit%5D=100
