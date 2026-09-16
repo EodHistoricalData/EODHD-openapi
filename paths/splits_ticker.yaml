@@ -31,13 +31,15 @@
     - name: fmt
       in: query
       required: false
-      description: Output format, either 'json' or 'csv'. Defaults to 'json'.
+      description: Output format, either 'json' or 'csv'. Defaults to 'csv' when the
+        parameter is omitted. The value is case-sensitive, so any value other than
+        exactly 'json' returns CSV.
       schema:
         type: string
         enum:
         - json
         - csv
-        default: json
+        default: csv
     responses:
       '200':
         description: Successfully retrieved historical split data.
@@ -68,11 +70,18 @@
               split: 7.000000/1.000000
             - date: '2020-08-31'
               split: 4.000000/1.000000
-      '400':
-        description: Invalid request parameters.
+          text/csv:
+            schema:
+              type: string
+            example: |
+              Date,"Stock Splits"
+              2000-06-21,2.000000/1.000000
+              2014-06-09,7.000000/1.000000
       '401':
         description: Unauthorized. Invalid API token.
+      '403':
+        description: Forbidden. The API key's subscription does not cover this ticker.
       '404':
-        description: Split data not found for the specified ticker or date range.
+        description: Ticker not found.
     tags:
     - Dividends & Splits
