@@ -44,11 +44,12 @@
     - name: offset
       in: query
       required: false
-      description: The offset of the data
+      description: The offset of the data. Maximum 9000; to reach older articles, narrow the period with from and to
       schema:
         type: integer
         default: 0
         minimum: 0
+        maximum: 9000
     - name: fmt
       in: query
       required: false
