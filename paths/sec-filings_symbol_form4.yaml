@@ -55,7 +55,11 @@
       '403':
         description: Forbidden — subscription plan does not include SEC Form 4 access.
       '404':
-        description: No filings found for the specified symbol.
+        description: Symbol not found in the SEC Form 4 dataset (non-US issuer, ticker typo, or unknown share class).
+      '422':
+        description: Validation error, for example page[limit] greater than 100, page[offset] negative, or page passed as a scalar instead of an array.
+      '429':
+        description: Rate limit exceeded.
     tags:
     - Corporate Actions
     externalDocs:

@@ -71,3 +71,18 @@ Form4Derivative:
       - 'null'
       format: date-time
       description: Expiration date of the derivative.
+    footnote_refs:
+      type:
+      - object
+      - array
+      description: 'Footnote IDs per field, keyed by field name, e.g. {"transaction_code": ["F1"]}.
+        Returned as an empty array when the row has no footnotes.'
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    footnote_ids:
+      type: array
+      description: All footnote IDs referenced by this row; resolve against the filing's footnotes array.
+      items:
+        type: string
