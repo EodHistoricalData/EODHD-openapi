@@ -1,0 +1,86 @@
+Resp_GetSecFilings8K_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: array
+      description: Material event reports (Form 8-K).
+      items:
+        type: object
+        properties:
+          accession_number:
+            type: string
+            description: SEC accession number of the filing.
+          filed_at:
+            type: string
+            format: date
+            description: Date the filing was submitted to the SEC.
+          period_of_report:
+            type: string
+            format: date
+            description: Reporting period / event date covered by the filing.
+          items:
+            type: array
+            description: SEC item codes reported in the 8-K (e.g. '2.02', '9.01').
+            items:
+              type: string
+          item_sections:
+            type: array
+            description: Parsed item sections of the 8-K.
+            items:
+              type: object
+              properties:
+                item:
+                  type: string
+                  description: SEC item code (e.g. '2.02').
+                title:
+                  type: string
+                  description: Item title.
+                text:
+                  type: string
+                  description: Item body text.
+          exhibits:
+            type: array
+            description: Exhibits attached to the filing.
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Exhibit number.
+                description:
+                  type: string
+                  description: Exhibit description.
+    meta:
+      type: object
+      description: Pagination metadata.
+      required:
+      - total
+      - page
+      properties:
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of records available.
+        page:
+          type: object
+          required:
+          - offset
+          - limit
+          properties:
+            offset:
+              type: integer
+              minimum: 0
+              description: Current page offset (records skipped).
+            limit:
+              type: integer
+              minimum: 1
+              description: Current page size.
+          additionalProperties: false
+      additionalProperties: false
+    links:
+      $ref: ./Links.yaml#/Links
+  additionalProperties: false
