@@ -44,12 +44,22 @@
     - name: offset
       in: query
       required: false
-      description: The offset of the data. Maximum 9000; to reach older articles, narrow the period with from and to
+      description: The offset of the data. The sum of offset and limit must not exceed 10000; to reach older articles, narrow the period with from and to
       schema:
         type: integer
         default: 0
         minimum: 0
-        maximum: 9000
+        maximum: 10000
+    - name: direction
+      in: query
+      required: false
+      description: Sort order. 0 returns the newest articles first. 1 returns articles in the order they entered the database, so you can page forward through a period with offset without duplicates. With 1, from and to are required and the window between them must not exceed 31 days
+      schema:
+        type: integer
+        default: 0
+        enum:
+        - 0
+        - 1
     - name: fmt
       in: query
       required: false
@@ -130,5 +140,7 @@
         description: Unauthorized
       '404':
         description: No news articles found
+      '422':
+        description: Validation error, for example direction=1 without from and to, a from-to window longer than 31 days, or offset plus limit above 10000
     tags:
     - News
