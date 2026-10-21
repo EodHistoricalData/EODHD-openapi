@@ -799,6 +799,15 @@ folders:
               t: "earnings"
               limit: "10"
               fmt: "json"
+          - name: "News — Forward Paging (direction=1)"
+            query_overrides:
+              s: "AAPL.US"
+              direction: "1"
+              from: "2025-01-01"
+              to: "2025-01-07"
+              limit: "10"
+              offset: "0"
+              fmt: "json"
       - path: "/sentiments"
         variants:
           - name: "News Sentiment — AAPL.US, BTC-USD.CC"
