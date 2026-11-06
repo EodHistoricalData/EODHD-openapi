@@ -1,0 +1,63 @@
+Resp_GetSecFilingsOverview_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: object
+      description: Filing overview for the requested symbol.
+      properties:
+        ticker:
+          type: string
+          description: Ticker symbol (without exchange suffix).
+        exchange:
+          type: string
+          description: Exchange code.
+        name:
+          type: string
+          description: Company name.
+        cik:
+          type: string
+          description: SEC Central Index Key (CIK) of the company.
+        filings:
+          type: object
+          description: Filing counts and latest filing per form type, keyed by form
+            type (e.g. '10k', '10q', '8k', 'form4').
+          properties:
+            '10k':
+              $ref: '#/SecFilingFormSummary'
+            '10q':
+              $ref: '#/SecFilingFormSummary'
+            '8k':
+              $ref: '#/SecFilingFormSummary'
+            form4:
+              $ref: '#/SecFilingFormSummary'
+          additionalProperties:
+            $ref: '#/SecFilingFormSummary'
+    meta:
+      type: array
+      description: Empty array for this endpoint (no pagination metadata is returned).
+      items:
+        type: object
+    links:
+      type: array
+      description: Empty array for this endpoint (no pagination links are returned).
+      items:
+        type: object
+  additionalProperties: false
+SecFilingFormSummary:
+  type: object
+  description: Summary of a single SEC form type for the symbol.
+  properties:
+    count:
+      type: integer
+      description: Number of filings available for this form type.
+    latest:
+      type: string
+      format: date
+      description: Date of the most recent filing of this form type.
+    url:
+      type: string
+      description: URL to the most recent filing of this form type.
