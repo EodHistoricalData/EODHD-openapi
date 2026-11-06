@@ -1,108 +1,57 @@
 /ust/yield-rates:
   get:
     summary: Get US Treasury yield curve rates
-    description: Returns daily US Treasury yield curve rates (constant maturity rates for 1-month through 30-year maturities).
+    description: Returns daily US Treasury Par Yield Curve Rates (nominal constant-maturity yields by tenor, 1-month through 30-year). The endpoint returns the full dataset for the selected year; it does not support pagination.
     operationId: GetUSTYieldRates
     parameters:
-    - name: from
-      in: query
-      required: false
-      description: Start date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
-    - name: to
-      in: query
-      required: false
-      description: End date in 'YYYY-MM-DD' format.
-      schema:
-        type: string
-        format: date
     - name: filter[year]
       in: query
       required: false
-      description: Filter by year (e.g., 2024).
+      description: Filter by calendar year (1900 – current year + 1). Defaults to the current year when omitted. Returns the full dataset for the selected year.
       schema:
         type: integer
         example: 2024
-    - name: page[limit]
-      in: query
-      required: false
-      description: Number of records per page.
-      schema:
-        type: integer
-    - name: page[offset]
-      in: query
-      required: false
-      description: Pagination offset.
-      schema:
-        type: integer
-    - name: fmt
-      in: query
-      required: false
-      description: Output format.
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        default: json
+        minimum: 1900
     responses:
       '200':
-        description: Successfully retrieved Treasury yield rates.
+        description: Successfully retrieved Treasury yield curve rates.
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  date:
-                    type: string
-                    format: date
-                    description: Date of the rate.
-                  1_month:
-                    type: number
-                    description: 1-month constant maturity rate.
-                  2_months:
-                    type: number
-                    description: 2-month constant maturity rate.
-                  3_months:
-                    type: number
-                    description: 3-month constant maturity rate.
-                  4_months:
-                    type: number
-                    description: 4-month constant maturity rate.
-                  6_months:
-                    type: number
-                    description: 6-month constant maturity rate.
-                  1_year:
-                    type: number
-                    description: 1-year constant maturity rate.
-                  2_years:
-                    type: number
-                    description: 2-year constant maturity rate.
-                  3_years:
-                    type: number
-                    description: 3-year constant maturity rate.
-                  5_years:
-                    type: number
-                    description: 5-year constant maturity rate.
-                  7_years:
-                    type: number
-                    description: 7-year constant maturity rate.
-                  10_years:
-                    type: number
-                    description: 10-year constant maturity rate.
-                  20_years:
-                    type: number
-                    description: 20-year constant maturity rate.
-                  30_years:
-                    type: number
-                    description: 30-year constant maturity rate.
+              type: object
+              properties:
+                meta:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+                      description: Total number of records in the response.
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                        description: Observation date.
+                      tenor:
+                        type: string
+                        description: Maturity tenor (e.g., 1M, 6M, 2Y, 10Y, 30Y).
+                      rate:
+                        type: number
+                        description: Par yield for the given tenor.
+                links:
+                  type: object
+                  properties:
+                    next:
+                      type: [string, "null"]
+                      description: Reserved for pagination; always null — the endpoint returns the full dataset.
       '401':
-        description: Unauthorized. Invalid API token.
-      '404':
-        description: Data not found for specified date range.
+        description: Unauthorized. Invalid or missing API token.
+      '403':
+        description: Access forbidden. The user's plan does not include US Treasury data.
+      '422':
+        description: Unprocessable entity. Invalid query parameter (e.g., filter[year] out of range).
     tags:
     - US Treasury
