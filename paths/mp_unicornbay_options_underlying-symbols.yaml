@@ -2,25 +2,9 @@
   get:
     summary: List underlying symbols with options
     description: Returns the list of all supported stock symbols for which option
-      contracts are available. May be paginated.
+      contracts are available. Not paginated, the full list comes back in one response.
     operationId: listUnderlyingSymbols
     parameters:
-    - name: page[offset]
-      in: query
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 10000
-        default: 0
-      description: Pagination offset (records to skip).
-    - name: page[limit]
-      in: query
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 1000
-      description: Pagination limit. Default & max 1000.
     - name: fmt
       in: query
       schema:
@@ -42,7 +26,7 @@
                 summary: First page (truncated)
                 value:
                   meta:
-                    total: 5972
+                    total: 7019
                     fields:
                     - underlying_symbol
                     compact: true
