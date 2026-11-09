@@ -1241,7 +1241,7 @@ folders:
 
   - name: "US Stock Options Data (Marketplace)"
     description: >
-      End-of-day and historical options chains for 6,000+ top-traded US stock symbols.
+      End-of-day and historical options chains for 7,000+ US stock symbols.
       Includes bid/ask prices, Greeks (Delta, Gamma, Theta, Vega, Rho), implied volatility,
       and contract details with 2+ years of historical depth. 43 data fields per contract.
 

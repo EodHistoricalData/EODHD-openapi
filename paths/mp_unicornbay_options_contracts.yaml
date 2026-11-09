@@ -2,7 +2,10 @@
   get:
     summary: Get options contracts
     description: Fetch options contracts filtered by underlying symbol, expiration,
-      strike, type, or contract name. Supports sorting, pagination, and field selection.
+      strike, type, or contract name. One of `filter[underlying_symbol]` or `filter[contract]`
+      is required. Supports sorting, pagination, and field selection. There is no
+      `meta.total`, follow `links.next` (it does not carry `api_token`, add it) until
+      it is `null`. One query returns at most 11000 records.
     operationId: getOptionsContracts
     parameters:
     - name: filter[contract]
@@ -122,7 +125,6 @@
                   meta:
                     offset: 0
                     limit: 5
-                    total: 14394
                     fields:
                     - contract
                     - underlying_symbol

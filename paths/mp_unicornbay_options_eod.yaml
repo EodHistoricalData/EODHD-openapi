@@ -2,8 +2,10 @@
   get:
     summary: Get end-of-day options data
     description: Returns EOD trades/bid data for options, with the same filter set
-      as contracts. Supports compact mode (`compact=1`) to return arrays instead of
-      objects.
+      as contracts. One of `filter[contract]` or `filter[underlying_symbol]` is required.
+      Supports compact mode (`compact=1`) to return arrays instead of objects. There
+      is no `meta.total`, follow `links.next` (it does not carry `api_token`, add it)
+      until it is `null`. One query returns at most 11000 records.
     operationId: getOptionsEOD
     parameters:
     - name: filter[contract]
@@ -134,7 +136,6 @@
                   meta:
                     offset: 0
                     limit: 5
-                    total: 227
                     fields:
                     - contract
                     - underlying_symbol
