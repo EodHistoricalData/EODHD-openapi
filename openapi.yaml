@@ -69,6 +69,8 @@ tags:
     credit metrics
 - name: Sanctions
   description: Sanctioned entities, vessels, programs, and sources (OFAC and others)
+- name: ETF Holdings
+  description: Beta. ETF holdings and reverse lookup (funds holding a security), from SEC N-PORT filings; US-listed ETFs only
 - name: Interest Rates
   description: Reference rates, central bank policy rates, and funding-stress spreads
 - name: Real Estate
@@ -216,6 +218,10 @@ paths:
     $ref: ./paths/sanctions_programs.yaml#/~1sanctions~1programs
   /sanctions/sources:
     $ref: ./paths/sanctions_sources.yaml#/~1sanctions~1sources
+  /etf/holdings/{ticker}:
+    $ref: ./paths/etf_holdings_ticker.yaml#/~1etf~1holdings~1{ticker}
+  /etf/security/{ticker}/held-by:
+    $ref: ./paths/etf_security_ticker_held-by.yaml#/~1etf~1security~1{ticker}~1held-by
   /spreads/funding-stress:
     $ref: ./paths/spreads_funding-stress.yaml#/~1spreads~1funding-stress
   /screener:

@@ -1,0 +1,33 @@
+EtfHoldingsError:
+  type: object
+  description: |
+    Error body of the ETF Holdings endpoints. 404 uses a list of objects with a coded reason
+    (NOT_COVERED, FUND_NOT_FOUND, NO_HOLDINGS_YET); the held-by endpoint returns 404 without a code.
+    422 uses the Laravel style, where "errors" is an object keyed by parameter name with lists of messages.
+    401 and 403 return a plain text body.
+  properties:
+    errors:
+      oneOf:
+      - type: array
+        items:
+          type: object
+          properties:
+            status:
+              type: string
+              example: '404'
+            title:
+              type: string
+              example: Symbol not found
+            code:
+              type: string
+              description: |
+                Machine-readable reason. FUND_NOT_FOUND: no fund with this ticker. NOT_COVERED: outside ETF holdings coverage (for example commodity or crypto ETPs and ETNs, some small funds). NO_HOLDINGS_YET: known fund with no N-PORT filing yet.
+              example: NOT_COVERED
+            detail:
+              type: string
+              example: This ticker is outside ETF holdings coverage.
+      - type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
