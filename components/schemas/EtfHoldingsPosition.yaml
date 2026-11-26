@@ -1,0 +1,52 @@
+EtfHoldingsPosition:
+  type: object
+  description: A single position of an ETF, as reported in its latest SEC N-PORT filing.
+  properties:
+    Code:
+      type:
+      - string
+      - 'null'
+      description: Ticker of the held security; null when the position has no ticker.
+    Exchange:
+      type:
+      - string
+      - 'null'
+      description: Exchange code of the held security; null when the position has no ticker.
+    Name:
+      type: string
+      description: Name of the held security.
+    Sector:
+      type:
+      - string
+      - 'null'
+      description: Sector of the held security.
+    Industry:
+      type:
+      - string
+      - 'null'
+      description: Industry of the held security.
+    Country:
+      type: string
+      description: Country name (for example "United States").
+    Country_Code:
+      type: string
+      description: Two-letter country code.
+    Region:
+      type:
+      - string
+      - 'null'
+      description: Region of the held security.
+    Assets_%:
+      type: number
+      description: Weight of the position in the fund, in percent. Can be negative; the sum over all positions can be above or below 100.
+    Shares:
+      type: number
+      description: Number of shares (or units) held.
+    Value_USD:
+      type: number
+      description: Value of the position in USD.
+    Contract_Code:
+      type:
+      - string
+      - 'null'
+      description: Identifier of the option or other derivative contract, when the position is one.

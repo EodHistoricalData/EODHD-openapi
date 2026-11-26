@@ -1,0 +1,66 @@
+Resp_GetEtfHeldBy_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: object
+      properties:
+        security:
+          type: object
+          properties:
+            ticker:
+              type: string
+            exchange:
+              type: string
+            name:
+              type: string
+        held_by_count:
+          type: integer
+          description: Number of funds holding the security.
+        funds:
+          type: array
+          description: Funds holding the security, sorted by weight descending. Empty when the page is past the end.
+          items:
+            type: object
+            properties:
+              ticker:
+                type: string
+                description: Fund ticker.
+              name:
+                type: string
+                description: Fund name.
+              weight:
+                type: number
+                description: Weight of the security in the fund, in percent.
+              shares:
+                type: number
+              value_usd:
+                type: number
+              report_date:
+                type: string
+                format: date
+    meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          minimum: 0
+        offset:
+          type: integer
+          minimum: 0
+        limit:
+          type: integer
+          minimum: 1
+    links:
+      type: object
+      required:
+      - next
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+          description: Relative URL of the next page, without the API token (add api_token yourself); null on the last page.

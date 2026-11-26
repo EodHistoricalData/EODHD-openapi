@@ -1,0 +1,10 @@
+EtfHoldingsAllocation:
+  type: object
+  description: Long, short and net share of fund assets for one asset class.
+  properties:
+    Long_%:
+      type: number
+    Short_%:
+      type: number
+    Net_Assets_%:
+      type: number

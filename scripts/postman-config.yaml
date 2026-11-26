@@ -1090,6 +1090,29 @@ folders:
             query_overrides:
               fmt: "json"
 
+  - name: "ETF Holdings (Beta)"
+    description: >
+      Beta. ETF holdings from SEC N-PORT filings, US-listed ETFs only. Fund holdings (all positions,
+      top 10, asset allocation, sector and region weights, performance) and reverse lookup of the
+      funds holding a security.
+
+      **Plans:** All-In-One, Fundamentals Data Feed.
+      **Cost:** 10 API calls per request.
+      **Docs:** https://eodhd.com/financial-apis/etf-holdings-api
+    endpoints:
+      - path: "/etf/holdings/{ticker}"
+        variants:
+          - name: "ETF Holdings — VTI"
+            path_params:
+              ticker: "VTI"
+      - path: "/etf/security/{ticker}/held-by"
+        variants:
+          - name: "Funds Holding a Security — NVDA"
+            path_params:
+              ticker: "NVDA"
+            query_overrides:
+              "page[limit]": "5"
+
   - name: "Commodities Historical Data"
     description: >
       Historical price data for 23 commodities including energy (WTI, Brent, Natural Gas),

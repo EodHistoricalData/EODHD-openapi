@@ -1,0 +1,9 @@
+EtfHoldingsPositions:
+  description: Positions keyed by position key (CODE.EXCHANGE, for example NVDA.US or ASML.AS). A position without a ticker gets another opaque key, possibly with a "~" suffix; treat keys as opaque. For a fund with no positions the API returns an empty list instead of an object.
+  oneOf:
+  - type: object
+    additionalProperties:
+      $ref: ./EtfHoldingsPosition.yaml#/EtfHoldingsPosition
+  - type: array
+    maxItems: 0
+    items: {}

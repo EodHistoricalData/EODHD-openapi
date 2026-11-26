@@ -179,3 +179,15 @@ schemas:
     $ref: ./schemas/Resp_GetPolicyRates_200_application_json.yaml#/Resp_GetPolicyRates_200_application_json
   Resp_GetFundingStressSpreads_200_application_json:
     $ref: ./schemas/Resp_GetFundingStressSpreads_200_application_json.yaml#/Resp_GetFundingStressSpreads_200_application_json
+  EtfHoldingsPosition:
+    $ref: ./schemas/EtfHoldingsPosition.yaml#/EtfHoldingsPosition
+  EtfHoldingsPositions:
+    $ref: ./schemas/EtfHoldingsPositions.yaml#/EtfHoldingsPositions
+  EtfHoldingsAllocation:
+    $ref: ./schemas/EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+  EtfHoldingsError:
+    $ref: ./schemas/EtfHoldingsError.yaml#/EtfHoldingsError
+  Resp_GetEtfHoldings_200_application_json:
+    $ref: ./schemas/Resp_GetEtfHoldings_200_application_json.yaml#/Resp_GetEtfHoldings_200_application_json
+  Resp_GetEtfHeldBy_200_application_json:
+    $ref: ./schemas/Resp_GetEtfHeldBy_200_application_json.yaml#/Resp_GetEtfHeldBy_200_application_json

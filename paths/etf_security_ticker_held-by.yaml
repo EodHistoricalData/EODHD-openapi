@@ -1,0 +1,71 @@
+/etf/security/{ticker}/held-by:
+  get:
+    summary: Funds holding a security (beta)
+    description: |
+      Beta. Reverse lookup: lists the US-listed ETFs that hold a given security, sorted by weight
+      descending, based on SEC N-PORT filings. US-listed ETFs only. Paginated; `fmt` is not supported.
+
+      Cost: 10 API calls per request. Plans: Fundamentals Data Feed and All-In-One.
+      The demo token returns 403 on this endpoint.
+    operationId: GetEtfHeldBy
+    parameters:
+    - name: ticker
+      in: path
+      required: true
+      description: The security that is looked up, not a fund. US tickers ("NVDA", "XOM") and foreign tickers with an exchange suffix ("ASML.AS") are accepted.
+      schema:
+        type: string
+    - name: api_token
+      in: query
+      required: true
+      description: API token for authentication.
+      schema:
+        type: string
+    - name: page[offset]
+      in: query
+      required: false
+      description: Pagination offset (zero-based).
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: page[limit]
+      in: query
+      required: false
+      description: Page size, between 1 and 5000.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+        default: 100
+    responses:
+      '200':
+        description: |
+          Successful response. A request past the end returns an empty `funds` list. `links.next` is null on the last page.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Resp_GetEtfHeldBy_200_application_json.yaml#/Resp_GetEtfHeldBy_200_application_json
+      '401':
+        description: Unauthenticated. Plain text body `Unauthenticated` (missing or invalid token).
+      '403':
+        description: Forbidden. Plain text; the plan does not include the ETF Holdings API, or the demo token was used.
+      '404':
+        description: Not found. Unknown ticker; JSON error without a `code`.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/EtfHoldingsError.yaml#/EtfHoldingsError
+      '422':
+        description: Validation error, for example page[limit] greater than 5000 or less than 1.
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/EtfHoldingsError.yaml#/EtfHoldingsError
+      '429':
+        description: Too Many Requests. Rate limit of the plan.
+    tags:
+    - ETF Holdings
+    externalDocs:
+      description: ETF Holdings API documentation
+      url: https://eodhd.com/financial-apis/etf-holdings-api

@@ -1,0 +1,129 @@
+Resp_GetEtfHoldings_200_application_json:
+  type: object
+  required:
+  - data
+  - meta
+  - links
+  properties:
+    data:
+      type: object
+      properties:
+        General:
+          type: object
+          properties:
+            Code:
+              type: string
+            Type:
+              type: string
+              description: Always "ETF".
+            Name:
+              type: string
+            Exchange:
+              type: string
+              description: Always "US".
+            Issuer:
+              type: string
+            Fund_Type:
+              type: string
+              description: Always "etf".
+            Net_Assets:
+              type: number
+              description: Net assets of the fund, in USD.
+            Report_Date:
+              type: string
+              format: date
+              description: End of the filing period (not the request date).
+            Source:
+              type: string
+              description: Data source, "nport".
+            Is_Complete:
+              type: boolean
+            Mapped_Weight_%:
+              type: number
+              description: Share of the fund weight whose positions have a ticker.
+            Filed_Positions_Count:
+              type: integer
+              description: Number of positions in the filing itself.
+        Holdings:
+          $ref: ./EtfHoldingsPositions.yaml#/EtfHoldingsPositions
+        Top_10_Holdings:
+          $ref: ./EtfHoldingsPositions.yaml#/EtfHoldingsPositions
+        Holdings_Count:
+          type: integer
+          description: Number of entries in Holdings. Lots of one security are summed, so it can be below Filed_Positions_Count.
+        Asset_Allocation:
+          type: object
+          properties:
+            Cash:
+              $ref: ./EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+            Bond:
+              $ref: ./EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+            Stock_US:
+              $ref: ./EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+            Stock_non-US:
+              $ref: ./EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+            Other:
+              $ref: ./EtfHoldingsAllocation.yaml#/EtfHoldingsAllocation
+        Sector_Weights:
+          type: object
+          description: Sector name to equity weight. Equities only; may contain "Unclassified"; empty for funds without equities.
+          additionalProperties:
+            type: object
+            properties:
+              Equity_%:
+                type: number
+        World_Regions:
+          type: object
+          description: Region name to equity weight. Equities only; may contain "Unclassified"; empty for funds without equities.
+          additionalProperties:
+            type: object
+            properties:
+              Equity_%:
+                type: number
+        Performance:
+          type:
+          - object
+          - 'null'
+          properties:
+            Returns_YTD:
+              type:
+              - number
+              - 'null'
+            Returns_1Y:
+              type:
+              - number
+              - 'null'
+            Returns_3Y:
+              type:
+              - number
+              - 'null'
+            Returns_5Y:
+              type:
+              - number
+              - 'null'
+            Returns_10Y:
+              type:
+              - number
+              - 'null'
+            1y_Volatility:
+              type:
+              - number
+              - 'null'
+            3y_Volatility:
+              type:
+              - number
+              - 'null'
+            3y_SharpRatio:
+              type:
+              - number
+              - 'null'
+    meta:
+      type: array
+      maxItems: 0
+      description: Always an empty list.
+      items: {}
+    links:
+      type: array
+      maxItems: 0
+      description: Always an empty list.
+      items: {}
